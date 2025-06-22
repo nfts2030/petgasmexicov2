@@ -1,0 +1,564 @@
+import React from 'react'; // Eliminado useEffect no utilizado
+import { Link } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
+
+// Animaciones
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
+const pulse = keyframes`
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+`;
+
+const FooterContainer = styled.footer`
+  position: relative;
+  overflow: hidden;
+  background: #0a1a1a;
+  color: #fff;
+  padding: 30px 0 15px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  
+  /* Asegurar que los iconos de Font Awesome se vean */
+  .fa-brands, .fas, .far, .fab {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #7cda24, #0a4b2a, #7cda24);
+    background-size: 200% 100%;
+    animation: ${pulse} 3s infinite;
+  }
+`;
+
+const FooterBackground = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/img/04/fdoverdeiconos.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 1;
+  opacity: 0.1;
+  filter: grayscale(100%) brightness(0.8);
+`;
+
+const FooterOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(10, 26, 26, 0.9) 0%, rgba(10, 75, 42, 0.9) 100%);
+  z-index: 2;
+`;
+
+const FooterContent = styled.div`
+  position: relative;
+  z-index: 3;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  
+  @media (max-width: 768px) {
+    padding: 0 15px;
+  }
+`;
+
+const FooterGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  position: relative;
+  z-index: 3;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+`;
+
+const FooterLogo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  
+  p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    font-size: 0.9rem;
+    max-width: 100%;
+    margin: 0;
+  }
+  
+  @media (max-width: 992px) {
+    grid-column: 1 / -1;
+    text-align: center;
+    
+    p {
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+`;
+
+const LogoImage = styled.img`
+  max-width: 100px;
+  height: auto;
+  display: block;
+  margin: 0 auto 10px;
+  transition: all 0.3s ease;
+  
+  @media (max-width: 480px) {
+    max-width: 80px;
+  }
+  
+  @media (max-width: 992px) {
+    margin: 0 auto 20px auto;
+  }
+`;
+
+const FooterSection = styled.div`
+  margin-bottom: 20px;
+  
+  h3 {
+    color: #7cda24;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background: #7cda24;
+    }
+    
+    @media (min-width: 768px) {
+      text-align: left;
+      
+      &::after {
+        left: 0;
+        transform: none;
+      }
+    }
+  }
+  
+  @media (min-width: 768px) {
+    flex: 0 0 48%;
+    text-align: left;
+  }
+  
+  @media (min-width: 1024px) {
+    flex: 1;
+    padding: 0 15px;
+  }
+`;
+
+const FooterMenu = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+  li {
+    margin-bottom: 8px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: ${fadeIn} 0.5s ease-out forwards;
+    
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{0.2 + ($i * 0.05)}s;
+      }
+    }
+  }
+  
+  a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    display: inline-block;
+    position: relative;
+    padding: 5px 0;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #7cda24;
+      transition: width 0.3s ease;
+    }
+    
+    &:hover {
+      color: #fff;
+      transform: translateX(5px);
+      
+      &::after {
+        width: 100%;
+      }
+    }
+    
+    &.highlight {
+      color: #7cda24;
+      font-weight: 600;
+      
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+  
+  @media (max-width: 992px) {
+    text-align: center;
+    
+    a {
+      &::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      
+      &:hover {
+        transform: translateX(0) translateY(-2px);
+        
+        &::after {
+          width: 40%;
+        }
+      }
+    }
+  }
+`;
+
+const ContactInfo = styled.div`
+  p {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: ${fadeIn} 0.5s ease-out forwards;
+    
+    @for $i from 1 through 5 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{0.3 + ($i * 0.1)}s;
+      }
+    }
+    
+    i {
+      margin-right: 10px;
+      color: #7cda24;
+      width: 16px;
+      text-align: center;
+      font-size: 1rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background-color: #7cda24;
+        transition: width 0.3s ease;
+      }
+      
+      &:hover {
+        color: #7cda24;
+        
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 992px) {
+    p {
+      justify-content: center;
+      text-align: center;
+      flex-direction: column;
+      
+      i {
+        margin: 0 auto 8px;
+      }
+    }
+  }
+`;
+
+const SocialIcons = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 15px 0;
+  
+  a {
+    color: white;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    
+    &:hover {
+      transform: translateY(-2px);
+      background: #7cda24;
+      color: #0a1a1a;
+    }
+  }
+  opacity: 0;
+  transform: translateY(10px);
+  animation: ${fadeIn} 0.5s ease-out forwards;
+  animation-delay: 0.8s;
+  
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(124, 218, 36, 0.2), rgba(10, 75, 42, 0.8));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    i {
+      position: relative;
+      z-index: 1;
+    }
+    
+    &:hover {
+      background-color: transparent;
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      
+      &::before {
+        opacity: 1;
+      }
+    }
+    
+    &:nth-child(1):hover { color: #1DA1F2; } /* Twitter */
+    &:nth-child(2):hover { color: #E1306C; } /* Instagram */
+    &:nth-child(3):hover { color: #FF0000; } /* YouTube */
+  }
+  
+  @media (max-width: 992px) {
+    justify-content: center;
+  }
+`;
+
+const FooterBottom = styled.div`
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 15px 0 0;
+  margin-top: 15px;
+  text-align: center;
+`;
+
+const Copyright = styled.div`
+  p {
+    margin: 0 0 12px 0;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+`;
+
+const LegalLinks = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  
+  a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0 5px;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: #7cda24;
+      transition: width 0.3s ease;
+    }
+    
+    &:hover {
+      color: #7cda24;
+      
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+  
+  span {
+    color: rgba(255, 255, 255, 0.2);
+    user-select: none;
+  }
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 10px;
+    
+    span {
+      display: block; // Asegurar que los iconos sean visibles
+    }
+  }
+`;
+
+const Footer: React.FC = () => {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <FooterContainer>
+      <FooterBackground />
+      <FooterOverlay />
+      <FooterContent>
+        <FooterGrid>
+          <FooterLogo>
+            <Link to="/" className="logo-container">
+              <LogoImage src="/img/logoGlow.png" alt="PETGAS Logo" className="footer-main-logo" />
+            </Link>
+            <p>Transformando residuos en energía limpia y sostenible para un futuro mejor.</p>
+            
+            <SocialIcons>
+              <a href="https://twitter.com/petgasmx" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-twitter"></i>
+              </a>
+              <a href="https://instagram.com/petgasmx/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-instagram"></i>
+              </a>
+              <a href="https://www.youtube.com/@PETGASMX" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-youtube"></i>
+              </a>
+            </SocialIcons>
+          </FooterLogo>
+          
+          <FooterSection>
+            <h3>Enlaces rápidos</h3>
+            <FooterMenu>
+              <li><Link to="/">INICIO</Link></li>
+              <li><Link to="/equipo">EQUIPO</Link></li>
+              <li><Link to="/maquinas">MÁQUINAS</Link></li>
+              <li><Link to="/combustibles">COMBUSTIBLES</Link></li>
+              <li><Link to="/creditos">CRÉDITOS</Link></li>
+              <li><Link to="/contacto">CONTACTO</Link></li>
+              <li><Link to="/intranet" className="highlight">INTRANET</Link></li>
+            </FooterMenu>
+          </FooterSection>
+          
+          <FooterSection>
+            <h3>Contacto</h3>
+            <ContactInfo>
+              <p>
+                <i className="fas fa-map-marker-alt"></i>
+                <span>Ciudad de México, México</span>
+              </p>
+              <p>
+                <i className="fas fa-phone-alt"></i>
+                <a href="tel:+522295484549">+52 229 548 4549</a>
+              </p>
+              <p>
+                <i className="fas fa-envelope"></i>
+                <a href="mailto:enlace@petgas.com.mx">enlace@petgas.com.mx</a>
+              </p>
+              <p>
+                <i className="fas fa-clock"></i>
+                <span>Lun-Vie: 9:00 AM - 6:00 PM<br />Sáb: 9:00 AM - 2:00 PM</span>
+              </p>
+            </ContactInfo>
+          </FooterSection>
+        </FooterGrid>
+        
+        <FooterBottom>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Copyright>
+              <p>&copy; {currentYear} PETGAS. Todos los derechos reservados.</p>
+              <LegalLinks>
+                <a href="#">Términos y Condiciones</a>
+                <span>|</span>
+                <a href="#">Aviso de Privacidad</a>
+              </LegalLinks>
+            </Copyright>
+          </div>
+        </FooterBottom>
+      </FooterContent>
+    </FooterContainer>
+  );
+};
+
+export default Footer;
