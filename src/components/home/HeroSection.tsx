@@ -55,7 +55,7 @@ const HeroContainer = styled.section`
 
 const HeroContent = styled.div`
   max-width: 800px;
-  margin: 6rem auto 0;
+  margin: 8rem auto 0;
   width: 100%;
   position: relative;
   z-index: 2;
@@ -65,9 +65,9 @@ const HeroContent = styled.div`
 `;
 
 const Logo3DContainer = styled.div`
-  margin: 0 auto 20px;
-  width: 160px;
-  height: 160px;
+  margin: 0 auto 15px;
+  width: 120px;
+  height: 120px;
   position: relative;
   perspective: 1000px;
 `;
@@ -221,9 +221,9 @@ const LogoShadow = styled.div`
 `;
 
 const HeroTitle = styled.h1`
-  font-size: 2.5rem;
+  font-size: 2.3rem;
   font-weight: 800;
-  margin: 2rem 0 1.5rem;
+  margin: 1.5rem 0 1.2rem;
   line-height: 1.3;
   color: #0a4b2a;
   
