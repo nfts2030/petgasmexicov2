@@ -96,8 +96,9 @@ p {
 
 .container {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 1rem;
   padding: 0 1rem;
 }
 
@@ -155,6 +156,18 @@ p {
   }
   
   .section {
-    padding: 3rem 1rem;
+    padding: 2rem 1rem;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+  
+  .container {
+    padding: 0 0.5rem;
+  }
+  
+  body {
+    overflow-x: hidden;
+    width: 100%;
   }
 }

@@ -356,7 +356,7 @@ const CombustiblesPage: React.FC = () => {
     {
       id: 3,
       icon: <FaOilCan />,
-      title: 'Proceso de Pirólisis',
+      title: 'Proceso de Pirólisis NO Catalítica',
       description: 'Transformación térmica de plásticos a 400-500°C en ausencia de oxígeno.'
     },
     {
@@ -446,10 +446,9 @@ const CombustiblesPage: React.FC = () => {
     <div className="combustibles-page">
       <HeroSection>
         <HeroContent>
-          <HeroTitle>COMBUSTIBLES SINTÉTICOS</HeroTitle>
+          <HeroTitle>COMBUSTIBLES NO FÓSILES</HeroTitle>
           <HeroSubtitle>
-            Transformamos residuos plásticos en combustibles de alto rendimiento a través de un proceso de pirólisis avanzada, 
-            contribuyendo a la economía circular y reduciendo la huella de carbono.
+            A través de un proceso de Pirólisis No Catalítica o Ingeniería Inversa el cual se realiza en ausencia de oxígeno. No quemamos plástico. Realizamos un proceso de gasificación cerrado. No generamos ninguna clase de emisión al medio ambiente. Transformamos los residuos plásticos de su estado original sólido a gaseoso, para posteriormente condensar mediante un proceso cuántico innovador a partir de la longitud de la cadena de carbonos de cada combustible, obteniendo productos de mejor calidad que los combustibles fósiles actualmente utilizados.
           </HeroSubtitle>
         </HeroContent>
       </HeroSection>

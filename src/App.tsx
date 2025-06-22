@@ -24,6 +24,9 @@ const AppContainer = styled.div`
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
   background-image: url('/img/04/fdoverdeiconos.jpg');
   background-size: cover;
@@ -35,11 +38,13 @@ const AppContainer = styled.div`
 const MainContent = styled.main`
   flex: 1;
   width: 100%;
-  margin: 40px 0 0 0; /* Añadir margen superior para la marquesina fija */
+  max-width: 100%;
+  margin: 40px 0 0 0;
   padding: 0;
+  overflow: hidden;
   
   @media (min-width: 768px) {
-    margin-top: 46px; /* Ajustar para pantallas más grandes si es necesario */
+    margin-top: 46px;
   }
 `;
 

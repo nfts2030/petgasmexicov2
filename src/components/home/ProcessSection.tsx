@@ -173,7 +173,7 @@ const processSteps = [
   },
   {
     id: 3,
-    title: 'Pirólisis Catalítica',
+    title: 'Pirólisis NO Catalítica',
     description: 'Mediante un proceso térmico controlado en ausencia de oxígeno, los plásticos se descomponen en moléculas más pequeñas, generando gases que luego se condensan en combustibles líquidos.',
     icon: 'fas fa-fire',
     isEven: false

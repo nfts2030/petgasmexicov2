@@ -42,7 +42,7 @@ const MaquinasPage: React.FC = () => {
       {/* Hero Section */}
       <section className="equipment-hero">
         <div className="container">
-          <h1>Nuestras Plantas de Pirólisis</h1>
+          <h1>Nuestras Plantas de Pirólisis NO Catalítica</h1>
           <p>Soluciones industriales para la transformación de residuos plásticos en combustibles limpios</p>
         </div>
       </section>
@@ -53,7 +53,7 @@ const MaquinasPage: React.FC = () => {
           {/* Equipo P-90 */}
           <div className="equipment-card">
             <div className="equipment-image-container">
-              <img src="/img/p01.jpeg" alt="Planta de Pirólisis PETGAS P-90" className="equipment-image" />
+              <img src="/img/p01.jpeg" alt="Planta de Pirólisis NO Catalítica PETGAS P-90" className="equipment-image" />
               <span className="equipment-badge">90 kg/ciclo • Inicio Rápido</span>
             </div>
             <div className="equipment-info">
@@ -92,7 +92,7 @@ const MaquinasPage: React.FC = () => {
           {/* Equipo 4K-1R */}
           <div className="equipment-card">
             <div className="equipment-image-container">
-              <img src="/img/4k-1R.jpeg" alt="Planta de Pirólisis PETGAS 4K-1R" className="equipment-image" />
+              <img src="/img/4k-1R.jpeg" alt="Planta de Pirólisis NO Catalítica PETGAS 4K-1R" className="equipment-image" />
               <span className="equipment-badge">8,000 kg/día • 1 Reactor</span>
             </div>
             <div className="equipment-info">
@@ -131,7 +131,7 @@ const MaquinasPage: React.FC = () => {
           {/* Equipo 4K-2R */}
           <div className="equipment-card">
             <div className="equipment-image-container">
-              <img src="/img/Planta4k-2r.jpeg" alt="Planta de Pirólisis PETGAS 4K-2R" className="equipment-image" />
+              <img src="/img/Planta4k-2r.jpeg" alt="Planta de Pirólisis NO Catalítica PETGAS 4K-2R" className="equipment-image" />
               <span className="equipment-badge">16,000+ kg/día • 2 Reactores</span>
             </div>
             <div className="equipment-info">
