@@ -2,13 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 
-// Animation for the gradient effect
-const gradientAnimation = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-`;
-
 // Animations
 const float3d = keyframes`
   0%, 100% { 
@@ -368,28 +361,7 @@ const CtaButton = styled(Link)`
   }
 `;
 
-const SecondaryButton = styled(Link)`
-  display: inline-block;
-  padding: 1rem 2rem;
-  background-color: transparent;
-  color: white;
-  border: 2px solid white;
-  border-radius: 50px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  text-align: center;
-  min-width: 180px;
-  
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
-  }
-  
-  @media (max-width: 480px) {
-    width: 100%;
-  }
-`;
+
 
 const HeroSection: React.FC = React.memo(() => {
   return (
