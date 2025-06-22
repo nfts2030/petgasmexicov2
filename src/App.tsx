@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
@@ -48,24 +48,36 @@ const MainContent = styled.main`
   }
 `;
 
-function App() {
-  console.log('App se está renderizando');
+// Memoize the main App component
+const App: React.FC = () => {
+  // Only log in development
+  useEffect(() => {
+    // This will only log once when the component mounts in development
+    if (import.meta.env.DEV) {
+      console.log('App se está renderizando');
+    }
+  }, []);
+  
+  // Memoize routes to prevent unnecessary re-renders
+  const routes = useMemo(() => (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/equipo" element={<EquipoPage />} />
+      <Route path="/maquinas" element={<MaquinasPage />} />
+      <Route path="/combustibles" element={<CombustiblesPage />} />
+      <Route path="/creditos" element={<CreditosPage />} />
+      <Route path="/contacto" element={<ContactoPage />} />
+      <Route path="/intranet" element={<IntranetPage />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
+  ), []);
   
   return (
     <AppContainer>
       <Header />
       <MainContent>
         <Suspense fallback={<LoadingSpinner />}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/equipo" element={<EquipoPage />} />
-            <Route path="/maquinas" element={<MaquinasPage />} />
-            <Route path="/combustibles" element={<CombustiblesPage />} />
-            <Route path="/creditos" element={<CreditosPage />} />
-            <Route path="/contacto" element={<ContactoPage />} />
-            <Route path="/intranet" element={<IntranetPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+          {routes}
         </Suspense>
       </MainContent>
       <Footer />

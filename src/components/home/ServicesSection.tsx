@@ -96,46 +96,41 @@ const ServiceCard = styled(motion.div).attrs({
   }
 `;
 
-const ServiceImage = styled.div<{ image?: string }>`
+interface ServiceImageProps {
+  $image?: string;
+}
+
+const ServiceImage = styled.div.attrs<ServiceImageProps>(({ $image }) => ({
+  style: {
+    backgroundImage: $image ? `url(${$image})` : 'none'
+  }
+}))`
   width: 100%;
   height: 200px;
-  background-color: #e0f0e6;
-  background-image: ${props => props.image ? `url(${props.image})` : 'none'};
   background-size: cover;
   background-position: center;
-  border-radius: 10px 10px 0 0;
+  background-repeat: no-repeat;
   position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #11914b;
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
   
-  &::before {
+  &::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: ${props => props.image ? 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4))' : 'none'};
-  }
-  
-  i {
-    position: relative;
-    z-index: 1;
-    font-size: 3rem;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
     text-shadow: 0 2px 10px rgba(0,0,0,0.1);
   }
   
-  .service-title {
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     position: relative;
     z-index: 1;
     padding: 0 1rem;
-    display: ${props => props.image ? 'none' : 'block'};
+    display: ${props => props.$image ? 'block' : 'none'};
   }
 `;
 
@@ -229,7 +224,7 @@ const ServicesSection: React.FC = () => {
       <ServicesGrid>
         {services.map((service) => (
           <ServiceCard key={service.id}>
-            <ServiceImage image={service.image}>
+            <ServiceImage $image={service.image} key={service.id}>
               {service.image && (
                 <img 
                   src={service.image} 

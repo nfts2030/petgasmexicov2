@@ -1,8 +1,15 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
 
-// Animaciones
+// Animation for the gradient effect
+const gradientAnimation = keyframes`
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+`;
+
+// Animations
 const float3d = keyframes`
   0%, 100% { 
     transform: translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg);
@@ -101,7 +108,7 @@ const LogoEffects = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  transform: translateZ(0px);
+  pointer-events: none;
 `;
 
 const LogoGlow = styled.div`
@@ -109,19 +116,12 @@ const LogoGlow = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(17, 145, 75, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
   border-radius: 50%;
-  background: radial-gradient(
-    circle, 
-    rgba(17, 145, 75, 0.6) 0%, 
-    rgba(17, 145, 75, 0.2) 60%, 
-    rgba(0, 0, 0, 0) 80%
-  );
-  filter: blur(8px);
-  animation: ${pulse} 4s infinite alternate;
-  z-index: 1;
-  opacity: 0.8;
+  animation: ${pulse} 4s ease-in-out infinite;
+  z-index: -1;
 `;
 
 const LogoBorder = styled.div`
@@ -130,38 +130,30 @@ const LogoBorder = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
+  border: 2px solid rgba(17, 145, 75, 0.3);
   border-radius: 50%;
-  box-shadow: 0 0 15px 3px rgba(17, 145, 75, 0.3);
+  box-shadow: 0 0 20px rgba(17, 145, 75, 0.5);
+  z-index: -1;
 `;
 
 const LogoShine = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  animation: ${shine} 8s linear infinite;
   z-index: 2;
-  opacity: 0.7;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      45deg, 
-      rgba(255, 255, 255, 0) 0%, 
-      rgba(255, 255, 255, 0.08) 50%, 
-      rgba(255, 255, 255, 0) 100%
-    );
-    transform: rotate(30deg);
-    animation: ${shine} 8s linear infinite;
-    filter: blur(1px);
-  }
+  pointer-events: none;
 `;
 
 interface LogoLightProps {
@@ -177,40 +169,41 @@ const LogoLight = styled.div<LogoLightProps>`
   left: ${props => props.left};
   width: ${props => props.size};
   height: ${props => props.size};
-  background: rgba(255, 255, 255, 0.8);
+  background: white;
   border-radius: 50%;
-  filter: blur(1.5px);
-  animation: ${twinkle} 4s ${props => props.delay} infinite alternate;
-  z-index: 3;
-  box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.4);
+  filter: blur(2px);
+  opacity: 0.7;
+  animation: ${twinkle} 4s ease-in-out infinite;
+  animation-delay: ${props => props.delay};
+  z-index: 1;
 `;
 
 const LogoReflection = styled.div`
   position: absolute;
   top: 10%;
-  left: 20%;
-  width: 60%;
+  left: 10%;
+  width: 30%;
   height: 30%;
-  border-radius: 50%;
   background: radial-gradient(
-    ellipse at center, 
-    rgba(255, 255, 255, 0.15) 0%, 
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.8) 0%,
     rgba(255, 255, 255, 0) 70%
   );
-  transform: rotate(20deg);
-  filter: blur(3px);
+  border-radius: 50%;
+  z-index: 2;
   opacity: 0.6;
 `;
 
 const LogoShadow = styled.div`
   position: absolute;
   bottom: -15px;
-  left: 15%;
-  width: 70%;
-  height: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 20px;
   background: radial-gradient(
-    ellipse at center, 
-    rgba(0, 0, 0, 0.3) 0%, 
+    ellipse at center,
+    rgba(0, 0, 0, 0.4) 0%,
     rgba(0, 0, 0, 0) 80%
   );
   filter: blur(4px);
@@ -220,19 +213,64 @@ const LogoShadow = styled.div`
   border-radius: 50%;
 `;
 
-const HeroTitle = styled.h1`
-  font-size: 2.3rem;
-  font-weight: 800;
-  margin: 1.5rem 0 1.2rem;
-  line-height: 1.3;
-  color: #0a4b2a;
+// Gradient text component
+interface GradientTextProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const GradientText: React.FC<GradientTextProps> = ({ children, className }) => {
+  return (
+    <GradientTextWrapper className={className}>
+      {children}
+    </GradientTextWrapper>
+  );
+};
+
+const GradientTextWrapper = styled.span`
+  background: linear-gradient(90deg, #4ade80, #facc15, #4ade80);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: ${gradientAnimation} 3s linear infinite;
+  display: inline-block;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
   
-  @media (max-width: 768px) {
-    font-size: 2rem;
+  /* For better browser compatibility */
+  @supports (-webkit-background-clip: text) or (background-clip: text) {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
+`;
+
+const HeroTitle = styled.h1`
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1rem;
   
-  @media (max-width: 480px) {
-    font-size: 1.8rem;
+  /* Remove any text color to allow gradient to show */
+  color: transparent;
+
+  @media (min-width: 768px) {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 4rem;
+    margin-bottom: 2.5rem;
   }
 `;
 
@@ -246,19 +284,20 @@ const HeroSubtitle = styled.p`
   
   @media (max-width: 768px) {
     font-size: 1.1rem;
+    margin-bottom: 1.5rem;
   }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   flex-wrap: wrap;
   justify-content: center;
   
   @media (max-width: 480px) {
     flex-direction: column;
-    gap: 1rem;
+    width: 100%;
   }
 `;
 
@@ -267,24 +306,23 @@ const CtaButton = styled(Link)`
   padding: 1rem 2rem;
   background-color: #11914b;
   color: white;
-  border: 2px solid #11914b;
+  border: none;
   border-radius: 50px;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
   text-align: center;
   min-width: 180px;
+  box-shadow: 0 4px 15px rgba(17, 145, 75, 0.3);
   
   &:hover {
-    background-color: #0d6e3a;
-    border-color: #0d6e3a;
+    background-color: #0d7a3f;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(17, 145, 75, 0.3);
+    box-shadow: 0 6px 20px rgba(17, 145, 75, 0.4);
   }
   
   @media (max-width: 480px) {
-    flex-direction: column;
-    gap: 0.75rem;
+    width: 100%;
   }
 `;
 
@@ -311,7 +349,7 @@ const SecondaryButton = styled(Link)`
   }
 `;
 
-const HeroSection: React.FC = () => {
+const HeroSection: React.FC = React.memo(() => {
   return (
     <HeroContainer>
       <HeroContent>
@@ -341,7 +379,11 @@ const HeroSection: React.FC = () => {
           <LogoShadow />
         </Logo3DContainer>
 
-        <HeroTitle>Transformando residuos plásticos en energía limpia y sostenible</HeroTitle>
+        <HeroTitle>
+          <GradientText>
+            ENERGETIZANDO EL FUTURO CON ACCIONES POSITIVAS PARA EL PLANETA
+          </GradientText>
+        </HeroTitle>
         <HeroSubtitle>Soluciones innovadoras para el manejo de residuos plásticos y la generación de combustibles limpios.</HeroSubtitle>
 
         <ButtonContainer>
@@ -351,6 +393,8 @@ const HeroSection: React.FC = () => {
       </HeroContent>
     </HeroContainer>
   );
-};
+});
+
+HeroSection.displayName = 'HeroSection';
 
 export default HeroSection;

@@ -84,6 +84,51 @@ const MarqueeLogo = styled.img`
   }
 `;
 
+// Animación para las barras de señal celular
+const signalBars = keyframes`
+  0%, 100% { opacity: 0.6; transform: scaleY(1); }
+  25% { opacity: 1; transform: scaleY(1.2); }
+  50% { opacity: 0.8; transform: scaleY(0.8); }
+  75% { opacity: 1; transform: scaleY(1.1); }
+`;
+
+const MobileModeIndicator = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 5px 12px;
+  border-radius: 20px;
+  margin: 0 10px;
+  
+  span {
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  
+  .signal-bars {
+    display: flex;
+    align-items: flex-end;
+    height: 16px;
+    gap: 2px;
+    
+    .bar {
+      width: 4px;
+      background: #4ade80;
+      border-radius: 2px;
+      animation: ${signalBars} 2s ease-in-out infinite;
+      
+      &:nth-child(1) { height: 25%; animation-delay: 0.1s; }
+      &:nth-child(2) { height: 50%; animation-delay: 0.2s; }
+      &:nth-child(3) { height: 75%; animation-delay: 0.3s; }
+      &:nth-child(4) { height: 100%; animation-delay: 0.4s; }
+    }
+  }
+`;
+
 const HeaderContainer = styled.header`
   position: fixed;
   top: 0;
@@ -104,6 +149,7 @@ const Nav = styled.div`
   position: relative;
   height: 80px;
   background-color: #0a4b2a;
+  gap: 10px;
 `;
 
 const Logo = styled(Link)`
@@ -366,6 +412,16 @@ const Header: React.FC = () => {
           <Logo to="/">
             <img src="/img/logo-header.png" alt="PETGAS Logo" />
           </Logo>
+          
+          <MobileModeIndicator>
+            <div className="signal-bars">
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+            </div>
+            <span>Mobile Mode</span>
+          </MobileModeIndicator>
           
           <MenuButton 
             onClick={toggleMenu} 
