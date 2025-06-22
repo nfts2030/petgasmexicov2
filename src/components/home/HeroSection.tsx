@@ -227,24 +227,58 @@ const GradientText: React.FC<GradientTextProps> = ({ children, className }) => {
   );
 };
 
+const gradientKeyframes = keyframes`
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+`;
+
 const GradientTextWrapper = styled.span`
-  background: linear-gradient(90deg, #4ade80, #facc15, #4ade80);
-  background-size: 200% auto;
-  background-clip: text;
+  /* Fallback for older browsers */
+  color: #00ff9d;
+  
+  /* Gradient text for modern browsers */
+  background: linear-gradient(
+    90deg,
+    #00ff9d,
+    #b3ff00,
+    #fff700,
+    #ffde00,
+    #b3ff00,
+    #00ff9d
+  );
+  background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   color: transparent;
-  animation: ${gradientAnimation} 3s linear infinite;
+  animation: ${gradientKeyframes} 8s ease infinite;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
   display: inline-block;
-  font-weight: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
+  transition: all 0.3s ease;
   
-  /* For better browser compatibility */
-  @supports (-webkit-background-clip: text) or (background-clip: text) {
-    background-clip: text;
+  /* For WebKit browsers */
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    background: linear-gradient(
+      90deg,
+      #00ff9d,
+      #b3ff00,
+      #fff700,
+      #ffde00,
+      #b3ff00,
+      #00ff9d
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 300% 100%;
+  }
+  
+  &:hover {
+    text-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+    transform: scale(1.01);
   }
 `;
 
@@ -260,8 +294,16 @@ const HeroTitle = styled.h1`
   margin-right: auto;
   padding: 0 1rem;
   
-  /* Remove any text color to allow gradient to show */
-  color: transparent;
+  /* Reset any inherited background */
+  background: none;
+  animation: ${gradientKeyframes} 8s ease infinite;
+  text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+  
+  /* Fallback for older browsers */
+  @supports not (background-clip: text) {
+    background: none;
+    color: #00ff9d; /* Fallback color */
+  }
 
   @media (min-width: 768px) {
     font-size: 3.5rem;
@@ -388,7 +430,6 @@ const HeroSection: React.FC = React.memo(() => {
 
         <ButtonContainer>
           <CtaButton to="/contacto">Contáctanos</CtaButton>
-          <SecondaryButton to="/proceso">Conoce más</SecondaryButton>
         </ButtonContainer>
       </HeroContent>
     </HeroContainer>

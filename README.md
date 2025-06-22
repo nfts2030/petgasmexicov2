@@ -3,8 +3,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![React](https://img.shields.io/badge/React-18.2.0-61DAFB?logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+[![Styled Components](https://img.shields.io/badge/styled--components-DB7093?logo=styled-components&logoColor=white)](https://styled-components.com/)
 
-Versión móvil optimizada del sitio web oficial de [PETGAS México](https://petgas.com.mx/). Este proyecto es una adaptación fiel del sitio web original, diseñada específicamente para ofrecer la mejor experiencia en dispositivos móviles.
+Versión móvil optimizada del sitio web oficial de [PETGAS México](https://petgas.com.mx/). Este proyecto es una adaptación fiel del sitio web original, diseñada específicamente para ofrecer la mejor experiencia en dispositivos móviles, con mejoras en la interfaz de usuario y rendimiento.
 
 ## 🎯 Objetivo
 
@@ -13,23 +14,29 @@ Crear una versión móvil del sitio web de PETGAS que:
 - Ofrezca una experiencia de usuario optimizada para dispositivos móviles
 - Mantenga la misma estructura de navegación y contenido que la versión de escritorio
 - Sea rápida, accesible y fácil de usar en cualquier dispositivo móvil
+- Incluya efectos visuales modernos como gradientes animados y transiciones suaves
 
 ## 🚀 Características Principales
 
 - **Diseño responsive** que se adapta a cualquier dispositivo móvil
 - **Navegación intuitiva** con menú desplegable
 - **Páginas optimizadas** para carga rápida
-- **Animaciones suaves** con Framer Motion
+- **Efectos visuales modernos** con gradientes animados y transiciones suaves
+- **Animaciones optimizadas** con Framer Motion y CSS puro
 - **Accesibilidad** siguiendo las mejores prácticas WCAG
 - **Tipografía e iconografía** optimizadas para móviles
 - **Formularios accesibles** con validación
+- **Iconos de servicios** con efectos de hover y animaciones
+- **Títulos con gradiente animado** para mayor impacto visual
 
 ## 🛠️ Tecnologías Utilizadas
 
 - **Frontend**: React 18 con TypeScript
-- **Estilado**: Styled Components
+- **Estilado**: Styled Components + CSS moderno (variables CSS, flexbox, grid)
+- **Efectos Visuales**: Gradientes CSS, animaciones con keyframes
 - **Enrutamiento**: React Router DOM v6
-- **Animaciones**: Framer Motion
+- **Animaciones**: Framer Motion + CSS Animations
+- **Iconos**: React Icons (FontAwesome)
 - **Gestión de Estado**: React Context API
 - **Bundler**: Vite
 - **Linting**: ESLint + Prettier
@@ -42,10 +49,16 @@ src/
 ├── components/           # Componentes reutilizables
 │   ├── layout/          # Componentes de diseño (Header, Footer, etc.)
 │   ├── home/            # Componentes específicos de la página de inicio
+│   │   ├── HeroSection/  # Sección hero con título animado
+│   │   ├── ServicesSection/  # Sección de servicios con iconos interactivos
+│   │   └── ProcessSection/   # Sección del proceso con animaciones
 │   └── ui/              # Componentes de interfaz de usuario genéricos
 ├── pages/               # Componentes de página
 ├── assets/              # Recursos estáticos (imágenes, fuentes, etc.)
 ├── styles/              # Estilos globales y temas
+│   ├── animations.ts    # Definiciones de animaciones
+│   ├── global.css       # Estilos globales
+│   └── theme.ts         # Tema y variables de diseño
 ├── hooks/               # Custom hooks
 ├── utils/               # Funciones de utilidad
 ├── services/            # Llamadas a APIs y servicios
@@ -54,7 +67,11 @@ src/
 
 ## 🚀 Páginas Principales
 
-- **Inicio** (`/`) - Página principal con información destacada
+- **Inicio** (`/`) - Página principal con información destacada y efectos visuales modernos
+  - Hero con título con gradiente animado
+  - Tarjetas de servicios con iconos interactivos
+  - Sección de proceso con animaciones fluidas
+  - Estadísticas impactantes
 - **Equipo** (`/equipo`) - Conoce a nuestro equipo
 - **Nuestras Máquinas** (`/maquinas`) - Tecnología y equipamiento
 - **Combustibles** (`/combustibles`) - Productos y soluciones energéticas
@@ -94,10 +111,25 @@ src/
 
 4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador
 
+## ✨ Últimas Mejoras
+
+### UI/UX Mejorada
+- **Título Hero con Gradiente Animado**: Efecto de gradiente que fluye suavemente en el título principal
+- **Iconos de Servicios Interactivos**: Efectos de hover y animaciones en los iconos de servicios
+- **Transiciones Suaves**: Mejoras en las transiciones entre páginas y elementos interactivos
+- **Diseño Responsive Mejorado**: Mejoras en la adaptabilidad a diferentes tamaños de pantalla
+
+### Rendimiento
+- Optimización de animaciones CSS para mejor rendimiento en móviles
+- Carga perezosa de componentes para mejorar el tiempo de carga inicial
+- Optimización de imágenes y recursos estáticos
+
 ## 📦 Scripts Disponibles
 
 - `npm run dev` - Inicia el servidor de desarrollo
 - `npm run build` - Construye la aplicación para producción
+- `npm run preview` - Previsualiza la versión de producción localmente
+- `npm run lint` - Ejecuta el linter para verificar la calidad del código
 - `npm run preview` - Previsualiza la versión de producción
 - `npm run lint` - Ejecuta el linter
 - `npm run format` - Formatea el código

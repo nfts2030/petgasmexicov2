@@ -100,6 +100,44 @@ interface ServiceImageProps {
   $image?: string;
 }
 
+const ServiceIcon = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  i {
+    font-size: 3rem;
+    color: #11914b;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(17, 145, 75, 0.2);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0; }
+  }
+`;
+
 const ServiceImage = styled.div.attrs<ServiceImageProps>(({ $image }) => ({
   style: {
     backgroundImage: $image ? `url(${$image})` : 'none'
@@ -111,6 +149,7 @@ const ServiceImage = styled.div.attrs<ServiceImageProps>(({ $image }) => ({
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
+  overflow: hidden;
   
   &::after {
     content: '';
@@ -119,8 +158,8 @@ const ServiceImage = styled.div.attrs<ServiceImageProps>(({ $image }) => ({
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
-    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    background: linear-gradient(135deg, rgba(17, 145, 75, 0.85) 0%, rgba(10, 75, 42, 0.9) 100%);
+    transition: all 0.4s ease;
   }
   
   img {
@@ -129,8 +168,43 @@ const ServiceImage = styled.div.attrs<ServiceImageProps>(({ $image }) => ({
     object-fit: cover;
     position: relative;
     z-index: 1;
-    padding: 0 1rem;
+    transition: transform 0.5s ease;
     display: ${props => props.$image ? 'block' : 'none'};
+  }
+  
+  .service-title {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    z-index: 2;
+    padding: 0 1rem;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.4s ease;
+  }
+  
+  &:hover {
+    .service-title {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    ${ServiceIcon} {
+      transform: translate(-50%, -100%) scale(0.8);
+      
+      i {
+        transform: scale(1.1);
+      }
+    }
+    
+    img {
+      transform: scale(1.1);
+    }
   }
 `;
 
@@ -240,7 +314,9 @@ const ServicesSection: React.FC = () => {
                   }}
                 />
               )}
-              <i className={service.icon}></i>
+              <ServiceIcon>
+                <i className={service.icon}></i>
+              </ServiceIcon>
               <div className="service-title">
                 {service.title}
               </div>

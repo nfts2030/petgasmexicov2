@@ -58,14 +58,47 @@ const HeroContent = styled.div`
   z-index: 2;
 `;
 
+const gradientAnimation = keyframes`
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+`;
+
 const HeroTitle = styled.h1`
   font-size: 4.5rem;
   margin: 0 0 25px 0;
   line-height: 1.1;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   font-weight: 800;
   letter-spacing: -0.5px;
-  color: white;
+  background: linear-gradient(
+    90deg,
+    #00ff9d,
+    #b3ff00,
+    #fff700,
+    #ffde00,
+    #b3ff00,
+    #00ff9d
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  animation: ${gradientAnimation} 8s ease infinite;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  display: inline-block;
+  padding: 0 10px;
+  
+  @media (max-width: 992px) {
+    font-size: 3.5rem;
+    background-size: 200% 100%;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    background-size: 150% 100%;
+  }
   
   @media (max-width: 992px) {
     font-size: 3.5rem;
@@ -281,35 +314,7 @@ const HomePage: React.FC = () => {
           <HeroTitle>ENERGETIZANDO EL FUTURO CON ACCIONES POSITIVAS PARA EL PLANETA</HeroTitle>
           <HeroSubtitle>La tecnología de Petgas transforma plásticos no reciclables en: Gasolina, Diesel, Parafina, Queroseno y Gas.</HeroSubtitle>
           
-          <Button 
-            variant="success" 
-            size="lg" 
-            style={{
-              background: 'linear-gradient(135deg, #7CDA24, #11914B)',
-              border: 'none',
-              padding: '12px 30px',
-              borderRadius: '50px',
-              fontSize: '1.1rem',
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
-              transition: 'all 0.3s ease',
-              position: 'relative',
-              overflow: 'hidden',
-              zIndex: 1
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'translateY(-3px)';
-              e.currentTarget.style.boxShadow = '0 8px 25px rgba(17, 145, 75, 0.4)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
-            }}
-          >
-            Conoce más <FaArrowRight className="ms-2" style={{ transition: 'transform 0.3s ease' }} />
-          </Button>
+          
         </HeroContent>
       </HeroSection>
 
