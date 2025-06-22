@@ -1,7 +1,17 @@
+/* Animated Gradient Background */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 :root {
   --primary-color: #11914b;
   --primary-dark: #0a4b2a;
   --primary-light: #e0f0e6;
+  --gradient-start: #4CAF50; /* Verde */
+  --gradient-mid: #8BC34A;  /* Verde amarillento */
+  --gradient-end: #FFEB3B;  /* Amarillo */
   --text-color: #333;
   --text-light: #666;
   --background: #ffffff;
@@ -54,7 +64,14 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1rem;
-  color: var(--primary-dark);
+  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  animation: gradientBG 5s ease infinite;
+  -webkit-animation: gradientBG 5s ease infinite;
 }
 
 h1 {

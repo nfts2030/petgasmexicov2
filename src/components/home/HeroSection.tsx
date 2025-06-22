@@ -55,7 +55,7 @@ const HeroContainer = styled.section`
 
 const HeroContent = styled.div`
   max-width: 800px;
-  margin: 0 auto;
+  margin: 6rem auto 0;
   width: 100%;
   position: relative;
   z-index: 2;

@@ -25,6 +25,11 @@ const AppContainer = styled.div`
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
+  background-image: url('/img/04/fdoverdeiconos.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 `;
 
 const MainContent = styled.main`

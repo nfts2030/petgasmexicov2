@@ -275,26 +275,39 @@ const CombustiblesPage: React.FC = () => {
       chartInstance.current.destroy();
     }
 
+    // Datos reales de la versión original
     chartInstance.current = new Chart(ctx, {
-      type: 'bar',
+      type: 'doughnut',
       data: {
-        labels: ['Gasolina', 'Diesel', 'Aceites', 'Gases'],
+        labels: [
+          'PETGAS ULTRA (48%)',
+          'PETDIESEL (28%)',
+          'PETSENO (12%)',
+          'PETFINA (5%)',
+          'PETSOLEO (5%)',
+          'RESIDUO (2%)'
+        ],
         datasets: [{
-          label: 'Rendimiento (%)',
-          data: [45, 35, 15, 5],
+          data: [48, 28, 12, 5, 5, 2],
           backgroundColor: [
-            'rgba(124, 218, 36, 0.8)',
-            'rgba(17, 145, 75, 0.8)',
-            'rgba(10, 75, 42, 0.8)',
-            'rgba(0, 0, 0, 0.8)'
+            'rgba(17, 145, 75, 0.8)',   // Verde PETGAS
+            'rgba(124, 218, 36, 0.8)',   // Verde claro PETDIESEL
+            'rgba(76, 175, 80, 0.8)',    // Verde PETSENO
+            'rgba(139, 195, 74, 0.8)',   // Verde claro PETFINA
+            'rgba(205, 220, 57, 0.8)',   // Amarillo PETSOLEO
+            'rgba(158, 158, 158, 0.8)'   // Gris RESIDUO
           ],
-          borderColor: [
-            'rgba(124, 218, 36, 1)',
+          borderColor: '#fff',
+          borderWidth: 2,
+          hoverOffset: 20,
+          hoverBackgroundColor: [
             'rgba(17, 145, 75, 1)',
-            'rgba(10, 75, 42, 1)',
-            'rgba(0, 0, 0, 1)'
-          ],
-          borderWidth: 1
+            'rgba(124, 218, 36, 1)',
+            'rgba(76, 175, 80, 1)',
+            'rgba(139, 195, 74, 1)',
+            'rgba(205, 220, 57, 1)',
+            'rgba(158, 158, 158, 1)'
+          ]
         }]
       },
       options: {
@@ -326,62 +339,83 @@ const CombustiblesPage: React.FC = () => {
     });
   };
 
-  // Process steps data
+  // Proceso de conversión - Datos reales de la versión original
   const processSteps = [
     {
       id: 1,
       icon: <FaTrashAlt />,
-      title: 'Recolección y Clasificación',
-      description: 'Recolección de residuos plásticos post-consumo y su clasificación por tipo de polímero.'
+      title: 'Recolección de Residuos',
+      description: 'Recolección de residuos plásticos post-consumo de diferentes fuentes.'
     },
     {
       id: 2,
       icon: <FaRecycle />,
-      title: 'Limpieza y Acondicionamiento',
-      description: 'Lavado y secado de los plásticos para eliminar impurezas y contaminantes.'
+      title: 'Clasificación y Limpieza',
+      description: 'Separación por tipo de plástico y limpieza para eliminar impurezas.'
     },
     {
       id: 3,
       icon: <FaOilCan />,
-      title: 'Pirólisis',
-      description: 'Descomposición térmica en ausencia de oxígeno para convertir los plásticos en combustibles.'
+      title: 'Proceso de Pirólisis',
+      description: 'Transformación térmica de plásticos a 400-500°C en ausencia de oxígeno.'
     },
     {
       id: 4,
       icon: <FaTint />,
-      title: 'Destilación Fraccionada',
-      description: 'Separación de los diferentes componentes del crudo obtenido en la pirólisis.'
+      title: 'Refinación',
+      description: 'Purificación y separación de los diferentes hidrocarburos obtenidos.'
     },
     {
       id: 5,
       icon: <FaCheckDouble />,
       title: 'Control de Calidad',
-      description: 'Análisis y pruebas para garantizar que los combustibles cumplan con los estándares de calidad.'
+      description: 'Análisis de laboratorio para garantizar los estándares de calidad requeridos.'
     }
   ];
 
-  // Fuels data
+  // Datos reales de combustibles de la versión original
   const fuels = [
     {
       id: 1,
-      name: 'Diesel Sintético',
-      image: '/combustibles/diesel.jpg',
-      description: 'Combustible diésel de alto rendimiento con bajo contenido de azufre, ideal para motores diésel modernos.',
-      properties: ['Bajo en azufre (<10ppm)', 'Alto índice de cetano (>51)', 'Bajas emisiones de partículas']
+      name: 'PETGAS ULTRA',
+      image: '/img/combustibles/petgas-ultra.png',
+      description: 'Combustible premium de alto octanaje, representa el 48% del producto final.',
+      properties: ['48% del rendimiento', 'Alto octanaje', 'Bajas emisiones']
     },
     {
       id: 2,
-      name: 'Gasolina Verde',
-      image: '/combustibles/gasolina.jpg',
-      description: 'Gasolina de alto octanaje con aditivos mejoradores que optimizan el rendimiento del motor.',
-      properties: ['Octanaje 92-95', 'Bajo contenido de benceno', 'Mejor combustión']
+      name: 'PETDIESEL',
+      image: '/img/combustibles/petdiesel.jpg',
+      description: 'Combustible diésel de alto rendimiento, representa el 28% del producto final.',
+      properties: ['28% del rendimiento', 'Alto poder calorífico', 'Bajo en azufre']
     },
     {
       id: 3,
-      name: 'Aceites Pesados',
-      image: '/combustibles/aceite.jpg',
-      description: 'Aceites combustibles para uso industrial con alto poder calorífico y bajas emisiones.',
-      properties: ['Alto poder calorífico', 'Estable a altas temperaturas', 'Bajas emisiones de SOx']
+      name: 'PETSENO',
+      image: '/img/combustibles/avion.png',
+      description: 'Combustible para aviación, representa el 12% del producto final.',
+      properties: ['12% del rendimiento', 'Alto rendimiento', 'Para uso aeronáutico']
+    },
+    {
+      id: 4,
+      name: 'PETFINA',
+      image: '/img/combustibles/petgas-ultra.png',
+      description: 'Producto refinado, representa el 5% del producto final.',
+      properties: ['5% del rendimiento', 'Alta pureza', 'Usos específicos']
+    },
+    {
+      id: 5,
+      name: 'PETSOLEO',
+      image: '/img/combustibles/petdiesel.jpg',
+      description: 'Producto secundario, representa el 5% del producto final.',
+      properties: ['5% del rendimiento', 'Versátil', 'Múltiples usos industriales']
+    },
+    {
+      id: 6,
+      name: 'RESIDUO',
+      image: '/img/combustibles/combustibles.png',
+      description: 'Material residual no convertido, solo el 2% del total procesado.',
+      properties: ['2% del total', 'Minimizado', 'Gestionado responsablemente']
     }
   ];
 
@@ -500,7 +534,25 @@ const CombustiblesPage: React.FC = () => {
                     alt={fuel.name}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = '/placeholder-fuel.jpg';
+                      // Usar una imagen de placeholder genérica si la principal falla
+                      target.src = '/img/placeholder-plastic.jpg';
+                      target.alt = `Imagen no disponible - ${fuel.name}`;
+                      target.title = `Imagen ilustrativa - ${fuel.name}`;
+                      // Aplicar estilos para imágenes de relleno
+                      target.style.objectFit = 'cover';
+                      target.style.opacity = '0.8';
+                    }}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.3s ease-in-out',
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
                     }}
                   />
                 </FuelImage>
