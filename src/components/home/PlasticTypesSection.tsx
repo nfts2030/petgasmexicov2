@@ -1,57 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 const SectionContainer = styled.section`
-  padding: 0 0 80px 0;
+  padding: 80px 20px;
   background-color: #f9f9f9;
   position: relative;
   z-index: 1;
-`;
-
-const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
-`;
-
-const SectionHeader = styled.div`
-  text-align: center;
-  margin-bottom: 50px;
-`;
-
-const SectionSubtitle = styled.span`
-  display: block;
-  color: #11914b;
-  font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 15px;
-`;
-
-const SectionTitle = styled.h2`
-  font-size: 2.5rem;
-  color: #0a4b2a;
-  margin: 0 0 20px 0;
-  font-weight: 700;
-  line-height: 1.3;
-`;
-
-const SectionDivider = styled.div`
-  width: 100px;
-  height: 3px;
-  background: #11914b;
-  margin: 0 auto 25px;
-  border-radius: 2px;
-`;
-
-const Description = styled.p`
-  max-width: 800px;
-  margin: 0 auto 30px;
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #4a6b57;
 `;
 
 const PlasticsGrid = styled.div`
@@ -191,8 +148,6 @@ const PlasticDescription = styled.p`
 `;
 
 const PlasticTypesSection: React.FC = () => {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-
   const plasticTypes = [
     {
       id: 1,
@@ -261,8 +216,6 @@ const PlasticTypesSection: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: plastic.id * 0.1 }}
-            onHoverStart={() => setHoveredCard(plastic.id)}
-            onHoverEnd={() => setHoveredCard(null)}
             whileHover={{ scale: 1.02 }}
           >
             <ImageContainer>

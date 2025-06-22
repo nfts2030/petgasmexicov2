@@ -1,4 +1,5 @@
-import React, { useState, FC } from 'react';
+import React, { useState } from 'react';
+import type { FC } from 'react';
 import styled, { keyframes } from 'styled-components';
 import PageLayout from '../components/layout/PageLayout';
 import { submitContactForm } from '../services/contactService';

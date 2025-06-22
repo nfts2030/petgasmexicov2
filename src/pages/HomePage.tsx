@@ -97,13 +97,6 @@ const Logo3D = styled.div`
   animation: ${float} 6s ease-in-out infinite;
 `;
 
-const StyledSection = styled.section<{ $bgColor?: string; $textColor?: string }>`
-  padding: 80px 0;
-  background-color: ${props => props.$bgColor || '#fff'};
-  color: ${props => props.$textColor || '#333'};
-  position: relative;
-`;
-
 const StyledTitle = styled.h2`
   font-size: 2.2rem;
   color: ${props => props.color || '#0a4b2a'};

@@ -95,25 +95,7 @@ const AboutImage = styled(motion.div)`
   }
 `;
 
-const AboutText = styled.div`
-  h3 {
-    font-size: 1.8rem;
-    color: #0a4b2a;
-    margin-bottom: 1.5rem;
-    line-height: 1.3;
-    
-    span {
-      color: #11914b;
-    }
-  }
-  
-  p {
-    color: #555;
-    margin-bottom: 1.5rem;
-    line-height: 1.8;
-    font-size: 1.05rem;
-  }
-`;
+
 
 const FeaturesGrid = styled.div`
   display: grid;
