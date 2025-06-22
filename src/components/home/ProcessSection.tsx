@@ -198,26 +198,26 @@ const ProcessSection: React.FC = () => {
   // Animaciones
   const container = {
     hidden: { opacity: 0 },
-    visible: {
+    show: {
       opacity: 1,
       transition: {
         staggerChildren: 0.3,
         delayChildren: 0.2,
       },
     },
-  };
+  } as const;
 
   const item = {
     hidden: { y: 30, opacity: 0 },
-    visible: {
+    show: {
       y: 0,
       opacity: 1,
       transition: { 
         duration: 0.6,
-        ease: "easeOut"
+        ease: [0.16, 1, 0.3, 1]
       },
     },
-  };
+  } as const;
 
   return (
     <ProcessContainer id="proceso">
@@ -230,7 +230,7 @@ const ProcessSection: React.FC = () => {
         <motion.div
           variants={container}
           initial="hidden"
-          whileInView="visible"
+          whileInView="show"
           viewport={{ once: true }}
         >
           {processSteps.map((step) => (
@@ -239,6 +239,8 @@ const ProcessSection: React.FC = () => {
               variants={item}
               isEven={step.isEven}
               whileHover={{ scale: 1.03, boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}
+              initial="hidden"
+              animate="show"
             >
               <ProcessIcon>
                 <i className={step.icon}></i>
