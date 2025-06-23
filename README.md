@@ -28,6 +28,7 @@ Crear una versión móvil del sitio web de PETGAS que:
 - **Formularios accesibles** con validación
 - **Iconos de servicios** con efectos de hover y animaciones
 - **Títulos con gradiente animado** para mayor impacto visual
+- **Botón de WhatsApp flotante** con animación y tooltip interactivo
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -116,6 +117,7 @@ src/
 ### UI/UX Mejorada
 - **Título Hero con Gradiente Animado**: Efecto de gradiente que fluye suavemente en el título principal
 - **Iconos de Servicios Interactivos**: Efectos de hover y animaciones en los iconos de servicios
+- **Botón de WhatsApp Flotante**: Acceso rápido a soporte con animación y tooltip informativo
 - **Transiciones Suaves**: Mejoras en las transiciones entre páginas y elementos interactivos
 - **Diseño Responsive Mejorado**: Mejoras en la adaptabilidad a diferentes tamaños de pantalla
 

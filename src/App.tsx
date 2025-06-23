@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import LoadingSpinner from './components/ui/LoadingSpinner';
+import WhatsAppButton from './components/common/WhatsAppButton';
 
 // Importar estilos globales
 import './App.css';
@@ -81,6 +82,7 @@ const App: React.FC = () => {
         </Suspense>
       </MainContent>
       <Footer />
+      <WhatsAppButton />
     </AppContainer>
   );
 }
