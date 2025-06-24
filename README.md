@@ -48,6 +48,7 @@ Cada tipo de plástico incluye su símbolo de identificación estándar superpue
 - **Diseño 100% móvil** con interfaz optimizada para pantallas táctiles
 - **Navegación intuitiva** con menú desplegable y gestos táctiles
 - **Páginas optimizadas** para carga ultrarrápida en redes móviles
+- **Slider de estadísticas** con transiciones suaves y efectos visuales mejorados
 - **Efectos visuales modernos** con gradientes animados y transiciones suaves
 - **Sección de Proceso** rediseñada para mejor legibilidad en móviles
 - **Tarjetas de Beneficios** con diseño adaptativo y efectos táctiles
@@ -59,6 +60,64 @@ Cada tipo de plástico incluye su símbolo de identificación estándar superpue
 - **Iconos de servicios** con efectos de hover y animaciones
 - **Títulos con gradiente animado** para mayor impacto visual
 - **Botón de WhatsApp flotante** con animación y tooltip interactivo
+
+## 🎨 Slider de Estadísticas
+
+El slider de estadísticas en la página de inicio fue implementado con las siguientes características y soluciones técnicas:
+
+### Características del Slider
+
+- **Transición suave** entre diapositivas con animación personalizada
+- **Efecto de gradiente animado** en los títulos
+- **Diseño responsivo** que se adapta a diferentes tamaños de pantalla
+- **Autoplay** con pausa al interactuar
+- **Indicadores de navegación** para mostrar la diapositiva actual
+
+### Problemas Encontrados y Soluciones
+
+1. **Problema de Visualización en Móviles**
+   - **Síntoma**: Las imágenes se veían recortadas o desproporcionadas en dispositivos móviles.
+   - **Solución**: Se implementó `object-fit: contain` y se ajustaron los contenedores para mantener las proporciones de las imágenes.
+
+2. **Transiciones Bruscas**
+   - **Síntoma**: El cambio entre diapositivas era demasiado rápido y brusco.
+   - **Solución**: Se ajustó la duración de la transición a 0.8s con una curva de aceleración personalizada (`cubic-bezier(0.4, 0, 0.2, 1)`).
+
+3. **Texto Ilegible**
+   - **Síntoma**: El texto no era legible sobre fondos claros o con alto contraste.
+   - **Solución**: Se agregó un fondo semitransparente con efecto de desenfoque (`backdrop-filter: blur(4px)`) y sombra de texto para mejorar la legibilidad.
+
+4. **Gradiente Animado en Títulos**
+   - **Requerimiento**: Implementar un efecto de gradiente animado similar al del texto principal.
+   - **Solución**: Se creó un componente `AnimatedTitle` con gradiente lineal que se mueve continuamente:
+     ```typescript
+     const gradientAnimation = keyframes`
+       0% { background-position: 0% 50%; }
+       50% { background-position: 100% 50%; }
+       100% { background-position: 0% 50%; }
+     `;
+     
+     const AnimatedTitle = styled.h2`
+       background: linear-gradient(90deg, #0a4b2a, #ffeb3b, #0a4b2a);
+       background-size: 200% auto;
+       -webkit-background-clip: text;
+       -webkit-text-fill-color: transparent;
+       animation: ${gradientAnimation} 5s ease infinite;
+     `;
+     ```
+
+### Uso del Componente
+
+El slider se encuentra en el componente `StatisticsSection` y se puede personalizar fácilmente:
+
+1. **Propiedades**
+   - `autoPlay`: Habilita/deshabilita el autoplay (por defecto: `true`)
+   - `interval`: Tiempo en milisegundos entre transiciones (por defecto: 5000ms)
+   - `showDots`: Muestra/oculta los indicadores de navegación (por defecto: `true`)
+
+2. **Personalización**
+   - Los colores del gradiente se pueden modificar en el componente `AnimatedTitle`
+   - La duración y curva de la animación se pueden ajustar en las propiedades de transición
 
 ## 🛠️ Tecnologías Utilizadas
 
