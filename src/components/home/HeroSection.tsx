@@ -25,10 +25,6 @@ const shine = keyframes`
   100% { transform: translateX(100%) rotate(30deg); }
 `;
 
-const twinkle = keyframes`
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.9; transform: scale(1.3); }
-`;
 
 const shadowPulse = keyframes`
   0%, 100% { transform: scale(1); opacity: 0.8; }
@@ -85,11 +81,18 @@ const HeroContent = styled.div`
 `;
 
 const Logo3DContainer = styled.div`
-  margin: 0 auto 15px;
-  width: 120px;
-  height: 120px;
+  margin: 0 auto 30px;
+  width: 160px;
+  height: 160px;
   position: relative;
-  perspective: 1000px;
+  perspective: 1200px;
+  z-index: 2;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 const Logo3DInner = styled.div`
@@ -98,6 +101,7 @@ const Logo3DInner = styled.div`
   position: relative;
   transform-style: preserve-3d;
   animation: ${float3d} 6s ease-in-out infinite;
+  will-change: transform;
 `;
 
 const LogoFront = styled.div`
@@ -105,13 +109,30 @@ const LogoFront = styled.div`
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  transform: translateZ(20px);
+  transform: translateZ(30px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
   
   img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 0 5px rgba(17, 145, 75, 0.6));
+    filter: drop-shadow(0 0 15px rgba(17, 200, 100, 0.9));
+    animation: pulseGlow 4s ease-in-out infinite;
+    transform-style: preserve-3d;
+    
+    @keyframes pulseGlow {
+      0%, 100% {
+        filter: drop-shadow(0 0 15px rgba(17, 200, 100, 0.9));
+        transform: scale(1) translateZ(0);
+      }
+      50% {
+        filter: drop-shadow(0 0 30px rgba(17, 200, 100, 1));
+        transform: scale(1.08) translateZ(10px);
+      }
+    }
   }
 `;
 
@@ -129,12 +150,22 @@ const LogoGlow = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 150%;
-  height: 150%;
-  background: radial-gradient(circle, rgba(17, 145, 75, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+  width: 180%;
+  height: 180%;
+  background: radial-gradient(
+    circle at center,
+    rgba(17, 200, 100, 0.3) 0%,
+    rgba(17, 160, 80, 0.15) 50%,
+    rgba(0, 0, 0, 0) 70%
+  );
   border-radius: 50%;
   animation: ${pulse} 4s ease-in-out infinite;
-  z-index: -1;
+  z-index: 1;
+  filter: blur(10px);
+  opacity: 0.8;
+  transition: all 0.5s ease;
+  
+  ${Logo3DContainer}:hover & {
 `;
 
 const LogoBorder = styled.div`
@@ -143,10 +174,13 @@ const LogoBorder = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  border: 2px solid rgba(17, 145, 75, 0.3);
+  border: 2px solid rgba(17, 200, 100, 0.4);
   border-radius: 50%;
-  box-shadow: 0 0 20px rgba(17, 145, 75, 0.5);
-  z-index: -1;
+  box-shadow: 
+    0 0 15px rgba(17, 200, 100, 0.6),
+    0 0 30px rgba(17, 200, 100, 0.3);
+  z-index: 2;
+  transition: all 0.5s ease;
 `;
 
 const LogoShine = styled.div`
@@ -182,48 +216,84 @@ const LogoLight = styled.div<LogoLightProps>`
   left: ${props => props.left};
   width: ${props => props.size};
   height: ${props => props.size};
-  background: white;
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 50%;
-  filter: blur(2px);
-  opacity: 0.7;
-  animation: ${twinkle} 4s ease-in-out infinite;
-  animation-delay: ${props => props.delay};
-  z-index: 1;
+  filter: blur(3px);
+  z-index: 2;
+  opacity: 0.3;
+  animation: twinkle ${props => props.delay || '3s'} ease-in-out infinite;
+  
+  @keyframes twinkle {
+    0%, 100% { 
+      opacity: 0.3;
+      filter: blur(3px);
+    }
+    50% { 
+      opacity: 0.6;
+      filter: blur(1px);
+    }
+  }
+  opacity: 0.8;
+  z-index: 3;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(15px);
+  ${Logo3DContainer}:hover & {
+    opacity: 0.95;
+    filter: blur(3px);
+    transform: translateZ(20px) scale(1.1);
+  }
 `;
 
 const LogoReflection = styled.div`
   position: absolute;
   top: 10%;
   left: 10%;
-  width: 30%;
-  height: 30%;
+  width: 40%;
+  height: 40%;
   background: radial-gradient(
     circle at 30% 30%,
-    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.4) 40%,
     rgba(255, 255, 255, 0) 70%
   );
   border-radius: 50%;
-  z-index: 2;
-  opacity: 0.6;
+  z-index: 4;
+  opacity: 0.7;
+  transform: translateZ(10px);
+  transition: all 0.5s ease;
+  filter: blur(1px);
+  
+  ${Logo3DContainer}:hover & {
+    opacity: 0.9;
+    transform: translateZ(15px) scale(1.1);
+  }
 `;
 
 const LogoShadow = styled.div`
   position: absolute;
   bottom: -15px;
   left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 20px;
+  transform: translateX(-50%) translateZ(-10px);
+  width: 70%;
+  height: 25px;
   background: radial-gradient(
     ellipse at center,
-    rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0) 80%
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.2) 60%,
+    rgba(0, 0, 0, 0) 90%
   );
-  filter: blur(4px);
+  filter: blur(6px);
   animation: ${shadowPulse} 6s ease-in-out infinite;
-  z-index: -1;
-  opacity: 0.8;
+  z-index: 0;
+  opacity: 0.7;
   border-radius: 50%;
+  transition: all 0.5s ease;
+  
+  ${Logo3DContainer}:hover & {
+    opacity: 0.8;
+    transform: translateX(-50%) translateZ(-10px) scale(1.1);
+    filter: blur(8px);
+  }
 `;
 
 // Gradient text component

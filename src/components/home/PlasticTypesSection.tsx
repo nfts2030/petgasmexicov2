@@ -95,6 +95,15 @@ const PlasticTypesSection: React.FC = () => {
     image: '/img/plasticos/ps.png',
     symbol: '/img/ps_symbol.png',
     number: '6'
+  },
+  {
+    id: 7,
+    name: 'Otros Plásticos',
+    type: 'OTROS',
+    description: 'Incluye policarbonatos, nailon, fibra de vidrio, acrílicos y otros plásticos mixtos.',
+    image: '/img/plasticos/otros.png',
+    symbol: '/img/otros_symbol.png',
+    number: '7+'
   }
 ];
 
@@ -103,8 +112,8 @@ const PlasticTypesSection: React.FC = () => {
 
   return (
     <SectionContainer>
-      <Title>Tipos de Plástico</Title>
-      <Subtitle>Conoce los diferentes tipos de plástico que manejamos y sus características principales</Subtitle>
+      <Title>¿Qué tipo de Plástico que Transformamos?</Title>
+      <Subtitle>Conoce los diferentes tipos de plástico que transformamos en energía</Subtitle>
       <div style={{ 
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',

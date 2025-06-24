@@ -14,6 +14,46 @@ const pulse = keyframes`
   100% { transform: scale(1); }
 `;
 
+const float3d = keyframes`
+  0%, 100% { 
+    transform: translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg);
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+  }
+  50% { 
+    transform: translateY(-5px) translateZ(5px) rotateX(3deg) rotateY(3deg);
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4));
+  }
+`;
+
+const shine = keyframes`
+  0% { transform: translateX(-100%) rotate(30deg); }
+  100% { transform: translateX(100%) rotate(30deg); }
+`;
+
+const twinkle = keyframes`
+  0%, 100% { 
+    opacity: 0.4; 
+    transform: scale(0.9); 
+    box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.5);
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.1);
+    box-shadow: 0 0 15px 3px rgba(255, 255, 255, 0.9);
+  }
+`;
+
+const shadowPulse = keyframes`
+  0%, 100% { 
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  50% { 
+    transform: scale(1.1);
+    opacity: 0.4;
+  }
+`;
+
 const FooterContainer = styled.footer`
   position: relative;
   overflow: hidden;
@@ -103,6 +143,147 @@ const FooterGrid = styled.div`
   }
 `;
 
+// Componentes del logo 3D
+const FooterLogo3D = styled.div`
+  position: relative;
+  width: 100px;
+  height: 100px;
+  perspective: 1000px;
+  margin: 0 auto 20px;
+  
+  @media (max-width: 480px) {
+    width: 80px;
+    height: 80px;
+  }
+`;
+
+const FooterLogoInner = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: ${float3d} 6s ease-in-out infinite;
+  will-change: transform;
+`;
+
+const LogoFront = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform: translateZ(15px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 5px rgba(17, 200, 100, 0.6));
+    transform-style: preserve-3d;
+  }
+`;
+
+const LogoEffects = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+`;
+
+const LogoGlow = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110%;
+  height: 110%;
+  background: radial-gradient(
+    circle at center,
+    rgba(17, 200, 100, 0.3) 0%,
+    rgba(17, 160, 80, 0.15) 60%,
+    rgba(0, 0, 0, 0) 80%
+  );
+  border-radius: 50%;
+  z-index: 1;
+  filter: blur(4px);
+  opacity: 0.6;
+  animation: ${pulse} 3s ease-in-out infinite;
+`;
+
+const LogoBorder = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(17, 200, 100, 0.4);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 15px rgba(17, 200, 100, 0.6),
+    0 0 30px rgba(17, 200, 100, 0.3);
+  z-index: 2;
+  opacity: 0.7;
+`;
+
+const LogoShine = styled.div`
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  animation: ${shine} 8s linear infinite;
+  z-index: 2;
+  opacity: 0.6;
+`;
+
+interface LogoLightProps {
+  top: string;
+  left: string;
+  size: string;
+  delay: string;
+}
+
+const LogoLight = styled.div<LogoLightProps>`
+  position: absolute;
+  top: ${props => props.top};
+  left: ${props => props.left};
+  width: ${props => props.size};
+  height: ${props => props.size};
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  filter: blur(3px);
+  animation: ${twinkle} ${props => props.delay} infinite alternate;
+  z-index: 3;
+  opacity: 0.7;
+`;
+
+const LogoShadow = styled.div`
+  position: absolute;
+  bottom: -8px;
+  left: 20%;
+  right: 20%;
+  height: 10px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 80%);
+  filter: blur(2px);
+  border-radius: 50%;
+  animation: ${shadowPulse} 4s ease-in-out infinite;
+  z-index: -1;
+`;
+
 const FooterLogo = styled.div`
   display: flex;
   flex-direction: column;
@@ -131,21 +312,7 @@ const FooterLogo = styled.div`
   }
 `;
 
-const LogoImage = styled.img`
-  max-width: 100px;
-  height: auto;
-  display: block;
-  margin: 0 auto 10px;
-  transition: all 0.3s ease;
-  
-  @media (max-width: 480px) {
-    max-width: 80px;
-  }
-  
-  @media (max-width: 992px) {
-    margin: 0 auto 20px auto;
-  }
-`;
+
 
 const FooterSection = styled.div`
   margin-bottom: 20px;
@@ -491,7 +658,29 @@ const Footer: React.FC = () => {
         <FooterGrid>
           <FooterLogo>
             <Link to="/" className="logo-container">
-              <LogoImage src="/img/logoGlow.png" alt="PETGAS Logo" className="footer-main-logo" />
+              <FooterLogo3D>
+                <FooterLogoInner>
+                  <LogoFront>
+                    <img 
+                      src="/img/logoGlow.png" 
+                      alt="PETGAS Logo"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = '/img/logo-header.png';
+                      }}
+                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                    />
+                  </LogoFront>
+                  <LogoEffects>
+                    <LogoGlow />
+                    <LogoBorder />
+                    <LogoShine />
+                    <LogoLight top="20%" left="20%" size="8px" delay="4s" />
+                    <LogoLight top="70%" left="70%" size="5px" delay="5s" />
+                  </LogoEffects>
+                </FooterLogoInner>
+                <LogoShadow />
+              </FooterLogo3D>
             </Link>
             <p>Transformando residuos en energía limpia y sostenible para un futuro mejor.</p>
             

@@ -282,7 +282,7 @@ const CombustiblesPage: React.FC = () => {
         labels: [
           'PETGAS ULTRA (48%)',
           'PETDIESEL (28%)',
-          'PETSENO (12%)',
+          'Heavy PetDiesel (12%)',
           'PETFINA (5%)',
           'PETSOLEO (5%)',
           'RESIDUO (2%)'
@@ -292,7 +292,7 @@ const CombustiblesPage: React.FC = () => {
           backgroundColor: [
             'rgba(17, 145, 75, 0.8)',   // Verde PETGAS
             'rgba(124, 218, 36, 0.8)',   // Verde claro PETDIESEL
-            'rgba(76, 175, 80, 0.8)',    // Verde PETSENO
+            'rgba(76, 175, 80, 0.8)',    // Verde Heavy PetDiesel
             'rgba(139, 195, 74, 0.8)',   // Verde claro PETFINA
             'rgba(205, 220, 57, 0.8)',   // Amarillo PETSOLEO
             'rgba(158, 158, 158, 0.8)'   // Gris RESIDUO
@@ -317,12 +317,7 @@ const CombustiblesPage: React.FC = () => {
             display: false
           },
           title: {
-            display: true,
-            text: 'Distribución de Productos',
-            font: {
-              size: 16,
-              weight: 'bold'
-            }
+            display: false
           }
         },
         scales: {
@@ -380,18 +375,18 @@ const CombustiblesPage: React.FC = () => {
       name: 'PETGAS ULTRA',
       image: '/img/combustibles/petgas-ultra.png',
       description: 'Combustible premium de alto octanaje, representa el 48% del producto final.',
-      properties: ['48% del rendimiento', 'Alto octanaje', 'Bajas emisiones']
+      properties: ['48% del rendimiento', 'Alto octanaje']
     },
     {
       id: 2,
       name: 'PETDIESEL',
-      image: '/img/combustibles/petdiesel.jpg',
+      video: '/img/diesel.mp4',
       description: 'Combustible diésel de alto rendimiento, representa el 28% del producto final.',
       properties: ['28% del rendimiento', 'Alto poder calorífico', 'Bajo en azufre']
     },
     {
       id: 3,
-      name: 'PETSENO',
+      name: 'Heavy PetDiesel',
       image: '/img/combustibles/avion.png',
       description: 'Combustible para aviación, representa el 12% del producto final.',
       properties: ['12% del rendimiento', 'Alto rendimiento', 'Para uso aeronáutico']
@@ -412,35 +407,13 @@ const CombustiblesPage: React.FC = () => {
     },
     {
       id: 6,
-      name: 'RESIDUO',
-      image: '/img/combustibles/combustibles.png',
+      name: 'COQUE',
+      image: '/img/coque.jpeg',
       description: 'Material residual no convertido, solo el 2% del total procesado.',
       properties: ['2% del total', 'Minimizado', 'Gestionado responsablemente']
     }
   ];
 
-  const benefits = [
-    {
-      id: 1,
-      title: 'Sostenibilidad',
-      description: 'Reducción de residuos plásticos en vertederos y océanos.'
-    },
-    {
-      id: 2,
-      title: 'Eficiencia',
-      description: 'Alto rendimiento energético en comparación con combustibles fósiles tradicionales.'
-    },
-    {
-      id: 3,
-      title: 'Calidad',
-      description: 'Cumplimiento de estándares internacionales de calidad.'
-    },
-    {
-      id: 4,
-      title: 'Innovación',
-      description: 'Tecnología de punta en el proceso de transformación.'
-    }
-  ];
 
   return (
     <div className="combustibles-page">
@@ -481,30 +454,8 @@ const CombustiblesPage: React.FC = () => {
             ))}
           </ProcessCards>
 
-          <Row className="mt-5 pt-5">
-            <Col md={6} className="mb-4 mb-md-0">
-              <h3 className="h4 mb-4">Distribución de Productos</h3>
-              <div style={{ height: '300px' }}>
-                <canvas ref={chartRef}></canvas>
-              </div>
-            </Col>
-            <Col md={6}>
-              <h3 className="h4 mb-4">Ventajas Competitivas</h3>
-              <div className="benefits-grid">
-                {benefits.map((benefit) => (
-                  <div key={benefit.id} className="benefit-card">
-                    <div className="benefit-icon">
-                      <i className="fas fa-check-circle"></i>
-                    </div>
-                    <div className="benefit-content">
-                      <h4>{benefit.title}</h4>
-                      <p>{benefit.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Col>
-          </Row>
+
+          {/* Sección de Ventajas Competitivas eliminada */}
         </Container>
       </ProcessSection>
 
@@ -528,6 +479,31 @@ const CombustiblesPage: React.FC = () => {
                 className="fuel-card"
               >
                 <FuelImage>
+                {fuel.video ? (
+                  <video 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.3s ease-in-out',
+                    }}
+                    onMouseOver={(e) => {
+                      const target = e.target as HTMLVideoElement;
+                      target.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseOut={(e) => {
+                      const target = e.target as HTMLVideoElement;
+                      target.style.transform = 'scale(1)';
+                    }}
+                  >
+                    <source src={fuel.video} type="video/mp4" />
+                    Tu navegador no soporta el elemento de video.
+                  </video>
+                ) : (
                   <img 
                     src={fuel.image} 
                     alt={fuel.name}
@@ -554,7 +530,8 @@ const CombustiblesPage: React.FC = () => {
                       e.currentTarget.style.transform = 'scale(1)';
                     }}
                   />
-                </FuelImage>
+                )}
+              </FuelImage>
                 <div className="fuel-content">
                   <h3>{fuel.name}</h3>
                   <p>{fuel.description}</p>

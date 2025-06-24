@@ -272,8 +272,24 @@ const SocialLinks = styled.div`
   }
 `;
 
+// Interfaz para los miembros del equipo
+interface TeamMember {
+  id: number;
+  name: string;
+  role: string;
+  image: string;
+  bio: string;
+  email: string;
+  division: string;
+  social: {
+    email: string;
+    linkedin?: string;
+    twitter?: string;
+  };
+}
+
 // Datos del equipo
-const teamMembers = [
+const teamMembers: TeamMember[] = [
   {
     id: 1,
     name: 'Daniel Rodríguez Gutiérrez',
@@ -455,15 +471,19 @@ const EquipoPage: React.FC = () => {
                 <p className="bio">{member.bio}</p>
                 <p className="division">{member.division}</p>
                 <SocialLinks className="social-links">
-                  <a href={`mailto:${member.email}`} aria-label={`Enviar correo a ${member.name}`} title="Enviar correo">
+                  <a href={`mailto:${member.email}`} aria-label={`Enviar correo a ${member.name}`} title={`Enviar correo a ${member.email}`}>
                     <i className="fas fa-envelope"></i>
                   </a>
-                  <a href={`tel:+522295484549`} aria-label="Llamar" title="Llamar">
-                    <i className="fas fa-phone"></i>
-                  </a>
-                  <a href="#" aria-label="LinkedIn" title="Perfil de LinkedIn">
-                    <i className="fab fa-linkedin-in"></i>
-                  </a>
+                  {member.social.linkedin && (
+                    <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="Perfil de LinkedIn">
+                      <i className="fab fa-linkedin-in"></i>
+                    </a>
+                  )}
+                  {member.social.twitter && (
+                    <a href={member.social.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter" title="Perfil de Twitter">
+                      <i className="fab fa-twitter"></i>
+                    </a>
+                  )}
                 </SocialLinks>
               </MemberInfo>
             </TeamMember>

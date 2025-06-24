@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Container, Row, Col } from 'react-bootstrap';
-import { FaRecycle, FaHandHoldingUsd, FaFingerprint, FaWineBottle, FaPumpSoap, FaInfoCircle } from 'react-icons/fa';
+import { FaRecycle, FaHandHoldingUsd, FaFingerprint } from 'react-icons/fa';
 import { SiBlockchaindotcom } from 'react-icons/si';
-import { GiRecycle } from 'react-icons/gi';
 
 // Animation for background gradient
 const gradientBG = keyframes`
@@ -179,73 +178,6 @@ const StepNumber = styled.div`
   margin: 0 auto 20px;
 `;
 
-const PlasticCard = styled.div`
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease;
-  height: 100%;
-  
-  &:hover {
-    transform: translateY(-5px);
-  }
-`;
-
-const PlasticHeader = styled.div<{ $bgColor: string }>`
-  background: ${props => props.$bgColor};
-  padding: 20px;
-  text-align: center;
-  color: white;
-`;
-
-const PlasticIcon = styled.div`
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-`;
-
-const PlasticBadge = styled.span`
-  background: rgba(255, 255, 255, 0.2);
-  padding: 5px 10px;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: bold;
-`;
-
-const PlasticContent = styled.div`
-  padding: 20px;
-`;
-
-const PlasticStats = styled.div`
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-  padding-top: 15px;
-  border-top: 1px solid #eee;
-`;
-
-const Stat = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.9rem;
-  color: #666;
-`;
-
-const PartnerLogo = styled.img`
-  max-width: 200px;
-  height: auto;
-  transition: all 0.3s ease;
-  filter: grayscale(100%);
-  opacity: 0.7;
-  
-  &:hover {
-    filter: none;
-    opacity: 1;
-    transform: scale(1.05);
-  }
-`;
-
 const CreditosPage: React.FC = () => {
   useEffect(() => {
     // Scroll to top on mount
@@ -263,15 +195,6 @@ const CreditosPage: React.FC = () => {
           </HeroSubtitle>
         </Container>
       </HeroSection>
-
-      {/* Green Logo Section */}
-      <Container className="text-center my-5">
-        <img 
-          src="/img/creditos/green-horizontal-logo-eco.png" 
-          alt="PETGAS Créditos Verdes" 
-          style={{ maxWidth: '100%', height: 'auto', maxHeight: '80px' }}
-        />
-      </Container>
 
       {/* Soluciones Impactantes Section */}
       <Section $bgColor="#f8f9fa">
@@ -392,130 +315,22 @@ const CreditosPage: React.FC = () => {
         </Container>
       </Section>
 
-      {/* Plastic Types Section */}
-      <Section $bgColor="#f8f9fa">
-        <Container>
-          <SectionHeader>
-            <SectionTitle>¿Qué tipo de plástico recogemos?</SectionTitle>
-            <SectionSubtitle>
-              Aceptamos todo tipo de plástico que de otro modo se vertiría en el medio ambiente o acabaría en vertederos.
-            </SectionSubtitle>
-          </SectionHeader>
-
-          <Row className="g-4">
-            <Col md={4}>
-              <PlasticCard>
-                <PlasticHeader $bgColor="#2ecc71">
-                  <PlasticIcon>
-                    <FaWineBottle />
-                  </PlasticIcon>
-                  <PlasticBadge>PET #1</PlasticBadge>
-                </PlasticHeader>
-                <PlasticContent>
-                  <h3 style={{ color: '#1a5f2f', marginTop: 0 }}>Botellas PET</h3>
-                  <p style={{ lineHeight: '1.7', color: '#555' }}>
-                    Botellas de bebidas, envases de alimentos y productos de consumo diario. El plástico #1 es 100% reciclable.
-                  </p>
-                  <PlasticStats>
-                    <Stat>
-                      <GiRecycle /> <span>100% Reciclable</span>
-                    </Stat>
-                    <Stat>
-                      <span style={{ color: 'green' }}>↑</span> <span>Alto Valor</span>
-                    </Stat>
-                  </PlasticStats>
-                </PlasticContent>
-              </PlasticCard>
-            </Col>
-
-            <Col md={4}>
-              <PlasticCard>
-                <PlasticHeader $bgColor="#3498db">
-                  <PlasticIcon>
-                    <FaPumpSoap />
-                  </PlasticIcon>
-                  <PlasticBadge>HDPE #2</PlasticBadge>
-                </PlasticHeader>
-                <PlasticContent>
-                  <h3 style={{ color: '#1a5f2f', marginTop: 0 }}>Envases HDPE</h3>
-                  <p style={{ lineHeight: '1.7', color: '#555' }}>
-                    Envases de productos de limpieza, botellas de leche y jugos. El plástico #2 es altamente valorado en el mercado de reciclaje.
-                  </p>
-                  <PlasticStats>
-                    <Stat>
-                      <GiRecycle /> <span>100% Reciclable</span>
-                    </Stat>
-                    <Stat>
-                      <span style={{ color: 'green' }}>↑</span> <span>Alta Demanda</span>
-                    </Stat>
-                  </PlasticStats>
-                </PlasticContent>
-              </PlasticCard>
-            </Col>
-
-            <Col md={4}>
-              <PlasticCard>
-                <PlasticHeader $bgColor="#9b59b6">
-                  <PlasticIcon>
-                    <GiRecycle />
-                  </PlasticIcon>
-                  <PlasticBadge>Varios</PlasticBadge>
-                </PlasticHeader>
-                <PlasticContent>
-                  <h3 style={{ color: '#1a5f2f', marginTop: 0 }}>Otros Plásticos</h3>
-                  <p style={{ lineHeight: '1.7', color: '#555' }}>
-                    Aceptamos varios tipos de plásticos reciclables (PP, PS, etc.). Cada material se procesa adecuadamente para su reutilización en nuevos productos.
-                  </p>
-                  <PlasticStats>
-                    <Stat>
-                      <GiRecycle /> <span>Reciclable</span>
-                    </Stat>
-                    <Stat>
-                      <FaInfoCircle /> <span>Consultar</span>
-                    </Stat>
-                  </PlasticStats>
-                </PlasticContent>
-              </PlasticCard>
-            </Col>
-          </Row>
-
-          <div style={{ 
-            background: '#e8f5e9', 
-            padding: '15px 20px', 
-            borderRadius: '8px', 
-            marginTop: '40px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '10px'
-          }}>
-            <FaInfoCircle style={{ color: '#1a5f2f', fontSize: '1.5rem', flexShrink: 0 }} />
-            <p style={{ margin: 0, color: '#1a5f2f' }}>
-              Todos los plásticos son procesados siguiendo estrictos estándares ambientales para garantizar un reciclaje responsable y sostenible.
-            </p>
-          </div>
-        </Container>
-      </Section>
-
       {/* Partners Section */}
       <Section $bgColor="#f8f9fa">
         <Container>
-          <h3 style={{ color: '#1a5f2f', fontSize: '1.8rem', marginBottom: '30px', textAlign: 'center' }}>Nuestros Socios</h3>
           <div style={{ 
             display: 'flex', 
             justifyContent: 'center', 
             alignItems: 'center', 
-            flexWrap: 'wrap', 
-            gap: '30px',
             padding: '20px 0'
           }}>
-            <a href="https://www.empower.eco/" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block' }}>
-              <PartnerLogo 
-                src="/partners/empower-eco.png" 
+            <a href="https://www.empower.eco/" target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center' }}>
+              <img 
+                src="/img/creditos/green-horizontal-logo-eco.png" 
                 alt="Empower Eco" 
+                style={{ maxWidth: '300px', height: 'auto' }}
               />
             </a>
-            {/* Add more partner logos as needed */}
           </div>
         </Container>
       </Section>
