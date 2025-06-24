@@ -1,40 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import styled from 'styled-components';
 
-// Animación de gradiente para el texto
-// Definir la animación de gradiente
-const gradientAnimation = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-`;
+// Animación de gradiente para el texto (definida en línea)
 
-// Crear un componente de texto con gradiente animado
-const AnimatedGradientText = styled.h2`
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  line-height: 1.3;
-  font-weight: 800;
-  background: linear-gradient(90deg, #0a4b2a, #ffeb3b, #0a4b2a);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: ${gradientAnimation} 5s ease infinite;
-  display: inline-block;
-  padding: 0 10px 5px;
-  text-shadow: none;
-  margin-top: 20px;
-  
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
-    margin-bottom: 0.8rem;
-  }
-  
-  @media (max-width: 480px) {
-    font-size: 1.3rem;
-    margin-bottom: 0.6rem;
-  }
-`;
+// Componente de texto con gradiente animado (definido en línea)
 
 // Types
 interface Statistic {
@@ -45,12 +14,7 @@ interface Statistic {
   alt: string;
 }
 
-// Animations
-const subtlePulse = keyframes`
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
-`;
+
 
 // Estilos simplificados para el slider
 const SlideTrack = styled.div`
@@ -74,7 +38,8 @@ const SlideTrack = styled.div`
 `;
 
 // Usamos $ para indicar que son props transitorias (no se pasan al DOM)
-const StatisticSlide = styled.div<{ $isActive: boolean; $isLastTwo: boolean }>`
+// Estilo para las diapositivas del slider
+const Slide = styled.div<{ $isActive: boolean }>`
   flex: 0 0 100%;
   height: 100%;
   width: 100%;
@@ -85,7 +50,7 @@ const StatisticSlide = styled.div<{ $isActive: boolean; $isLastTwo: boolean }>`
   transform: ${({ $isActive }) => ($isActive ? 'scale(1)' : 'scale(0.95)')};
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
   will-change: opacity, transform;
-  background-color: ${({ $isLastTwo }) => ($isLastTwo ? '#f5f5f5' : 'rgba(0,0,0,0.3)')};
+  background-color: rgba(0,0,0,0.3);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,52 +58,39 @@ const StatisticSlide = styled.div<{ $isActive: boolean; $isLastTwo: boolean }>`
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   
-  ${({ $isLastTwo }) => $isLastTwo ? `
-    padding: 20px;
-    flex-direction: column;
-    text-align: center;
-    
-    img {
-      max-width: 80%;
-      max-height: 70%;
-      object-fit: contain;
-      margin-bottom: 20px;
-    }
-    
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-      color: #333;
-    }
-    
-    p {
-      font-size: 1rem;
-      color: #666;
-      max-width: 90%;
-    }
-  ` : `
-    h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      line-height: 1.3;
-      font-weight: 800;
-      color: #f0f0f0;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
-      display: inline-block;
-      padding: 0 10px 5px;
-      margin-top: 20px;
-    }
-    
-    p {
-      font-size: 1.1rem;
-      line-height: 1.5;
-      margin-bottom: 1rem;
-      color: #f0f0f0;
-      font-weight: 500;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
-      padding: 0 10px 10px;
-    }
-  `}
+  /* Estilos para todas las diapositivas */
+  padding: 20px;
+  flex-direction: column;
+  text-align: center;
+  
+  img {
+    max-width: 80%;
+    max-height: 70%;
+    object-fit: contain;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    font-weight: 800;
+    color: #f0f0f0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+    display: inline-block;
+    padding: 0 10px 5px;
+    margin-top: 20px;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    color: #f0f0f0;
+    font-weight: 500;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+    padding: 0 10px 10px;
+  }
   
   @media (max-width: 768px) {
     h2 {
@@ -259,9 +211,10 @@ const StatisticsSection: React.FC = () => {
     }
   ], [sliderImages]);
   
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPlaying] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+  // Note: isLastTwoSlides was removed as it was not being used
   const timeoutRef = useRef<number | null>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   
@@ -362,24 +315,7 @@ const StatisticsSection: React.FC = () => {
     }
   }, [isPlaying, nextSlide]);
   
-  // Pausar/reanudar el slider
-  const togglePlayPause = useCallback(() => {
-    if (isPlaying) {
-      // Pausar
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-    } else {
-      // Reanudar
-      if (!timeoutRef.current) {
-        timeoutRef.current = window.setTimeout(() => {
-          nextSlide();
-        }, 5000);
-      }
-    }
-    setIsPlaying(prev => !prev);
-  }, [isPlaying, nextSlide]);
+
   
   // Intersection Observer for entrance animation
   useEffect(() => {
@@ -407,10 +343,12 @@ const StatisticsSection: React.FC = () => {
   // Se mantiene como referencia para una implementación futura con interacción del usuario
   
   // Definir la animación de gradiente
-  const gradientAnimation = keyframes`
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  const gradientAnimation = `
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
   `;
 
   // Estilo para el título con gradiente animado
@@ -423,7 +361,7 @@ const StatisticsSection: React.FC = () => {
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: ${gradientAnimation} 5s ease infinite;
+    animation: gradient 5s ease infinite;
     display: inline-block;
     padding: 0 10px 5px;
     text-shadow: none;
@@ -451,9 +389,7 @@ const StatisticsSection: React.FC = () => {
             transform: `translateX(-${currentSlide * 100}%)`,
             width: `${statisticsData.length * 100}%`
           }}>
-            {statisticsData.map((stat, index) => {
-              const isLastTwoSlides = index >= statisticsData.length - 2;
-              
+            {statisticsData.map((stat) => {
               return (
                 <div 
                   key={stat.id} 
