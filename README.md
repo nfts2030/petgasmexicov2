@@ -4,6 +4,7 @@
 [![React](https://img.shields.io/badge/React-18.2.0-61DAFB?logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 [![Styled Components](https://img.shields.io/badge/styled--components-DB7093?logo=styled-components&logoColor=white)](https://styled-components.com/)
+[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?logo=vercel)](https://vercel.com)
 [![Última Actualización](https://img.shields.io/badge/Última_Actualización-24_Jun_2025-brightgreen)]()
 
 Versión móvil optimizada del sitio web oficial de [PETGAS México](https://petgas.com.mx/). Este proyecto es una adaptación fiel del sitio web original, diseñada específicamente para ofrecer la mejor experiencia en dispositivos móviles, con mejoras en la interfaz de usuario y rendimiento.
@@ -16,6 +17,7 @@ Crear una versión móvil del sitio web de PETGAS que:
 - Mantenga la misma estructura de navegación y contenido que la versión de escritorio
 - Sea rápida, accesible y fácil de usar en cualquier dispositivo móvil
 - Incluya efectos visuales modernos como gradientes animados y transiciones suaves
+- Esté optimizada para despliegue en Vercel con rendimiento máximo
 
 ## ♻️ Tipos de Plástico Soportados
 
@@ -48,6 +50,115 @@ Cada tipo de plástico incluye su símbolo de identificación estándar superpue
 - **Diseño 100% móvil** con interfaz optimizada para pantallas táctiles
 - **Navegación intuitiva** con menú desplegable y gestos táctiles
 - **Páginas optimizadas** para carga ultrarrápida en redes móviles
+- **Slider de imágenes** con transiciones suaves y controles táctiles
+- **Sección de servicios** con efectos de gradiente animados
+- **Diseño responsivo** que se adapta a cualquier dispositivo móvil
+- **Optimización de imágenes** para máxima velocidad de carga
+
+## 🚀 Despliegue en Vercel
+
+Este proyecto está optimizado para desplegarse en Vercel. Sigue estos pasos para configurar el despliegue:
+
+### Requisitos Previos
+
+- Tener una cuenta en [Vercel](https://vercel.com)
+- Tener instalado [Git](https://git-scm.com/)
+- Tener una cuenta de GitHub, GitLab o Bitbucket
+
+### Pasos para el Despliegue
+
+1. **Importa el repositorio en Vercel**
+   - Inicia sesión en tu cuenta de Vercel
+   - Haz clic en "Add New..." → "Project"
+   - Importa el repositorio de GitHub `ricardoduhalt2/petgasmobile`
+
+2. **Configuración del Proyecto**
+   - **Framework Preset**: Vite
+   - **Build Command**: `npm run build` o `yarn build`
+   - **Output Directory**: `dist`
+   - **Install Command**: `npm install` o `yarn`
+
+3. **Variables de Entorno**
+   - Asegúrate de configurar las variables de entorno necesarias en la configuración del proyecto en Vercel:
+     ```
+     NODE_ENV=production
+     VITE_API_URL=tu_url_de_api
+     ```
+
+4. **Configuraciones Avanzadas**
+   - **Environment Variables**: Añade las variables necesarias para producción
+   - **Build & Development Settings**: Asegúrate de que el Node.js Version sea compatible (recomendado: 18.x)
+   - **Build Command Override**: `vite build`
+
+5. **Despliegue**
+   - Haz clic en "Deploy"
+   - Vercel desplegará automáticamente tu aplicación y te proporcionará una URL
+
+### Configuración Recomendada para Óptimo Rendimiento
+
+1. **Optimización de Imágenes**
+   - Usa el formato WebP para imágenes
+   - Aprovecha el lazy loading con `loading="lazy"`
+   - Especifica dimensiones para evitar cambios de diseño (CLS)
+
+2. **Configuración de Caché**
+   ```
+   Cache-Control: public, max-age=31536000, immutable
+   ```
+   Para archivos estáticos en la carpeta `public`
+
+3. **Configuración de Headers**
+   - Habilita la compresión Brotli o Gzip
+   - Configura cabeceras de seguridad (CSP, HSTS, etc.)
+
+4. **Funciones de Borde (Edge Functions)**
+   - Considera usar Edge Functions para rutas dinámicas
+   - Implementa ISR (Incremental Static Regeneration) para contenido dinámico
+
+### Solución de Problemas Comunes
+
+1. **Error de Módulo No Encontrado**
+   - Asegúrate de que todas las dependencias estén en `dependencies` y no en `devDependencies`
+   - Ejecuta `yarn install --production=false` o `npm install --production=false`
+
+2. **Problemas de Rutas**
+   - Verifica que `vite.config.ts` tenga la configuración base correcta
+   - Asegúrate de que las rutas sean relativas
+
+3. **Optimización de Build**
+   - Usa `vite-plugin-compression` para comprimir recursos
+   - Habilita `build.minify` en `vite.config.ts`
+
+### Monitoreo y Análisis
+
+- Configura integraciones con:
+  - Vercel Analytics
+  - Web Vitals
+  - Sentry para monitoreo de errores
+
+## 📦 Últimos Cambios
+
+### [24/06/2025] - Mejoras en la Interfaz de Usuario
+
+- **Nueva Sección de Servicios**
+  - Diseño moderno con gradientes animados
+  - Tarjeta de Transformación de Plásticos con imagen destacada
+  - Efectos de hover y transiciones suaves
+
+- **Optimización del Slider Principal**
+  - Aumento en la altura para mejor visualización de imágenes
+  - Mejora en la posición del texto y contraste
+  - Transiciones más suaves entre diapositivas
+
+- **Correcciones de Errores**
+  - Eliminación de referencias a componentes obsoletos
+  - Limpieza de código y optimización de importaciones
+  - Corrección de advertencias de TypeScript
+
+- **Optimizaciones de Rendimiento**
+  - Mejora en la carga de imágenes
+  - Reducción del tamaño del bundle
+  - Optimización de animaciones para móviles
 - **Slider de estadísticas** con transiciones suaves y efectos visuales mejorados
 - **Efectos visuales modernos** con gradientes animados y transiciones suaves
 - **Sección de Proceso** rediseñada para mejor legibilidad en móviles
@@ -327,18 +438,28 @@ Las contribuciones son bienvenidas. Por favor, sigue estos pasos:
 
 ## 📄 Licencia
 
-Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
 
-## 📞 Contacto
+## 👨‍💻 Desarrollador
 
 - Ricardo Duhalt - [@ricardoduhalt](https://twitter.com/ricardoduhalt)
 - Proyecto: [https://github.com/ricardoduhalt2/petgasmobile](https://github.com/ricardoduhalt2/petgasmobile)
+- Despliegue: [Ver en Vercel](https://petgasmobile.vercel.app)
+
+## 🤝 Contribuciones
+
+Las contribuciones son bienvenidas. Por favor, lee las [pautas de contribución](CONTRIBUTING.md) antes de enviar un pull request.
+
+## 📊 Estadísticas del Proyecto
+
+![Último commit](https://img.shields.io/github/last-commit/ricardoduhalt2/petgasmobile?style=flat-square)
+![Tamaño del repositorio](https://img.shields.io/github/repo-size/ricardoduhalt2/petgasmobile?style=flat-square)
+![Lenguajes principales](https://img.shields.io/github/languages/top/ricardoduhalt2/petgasmobile?style=flat-square)
 
 ## 🙏 Agradecimientos
 
 - A todo el equipo de PETGAS México por su apoyo.
 - A los colaboradores que han ayudado a mejorar este proyecto.
-├── package.json
 ├── tsconfig.json
 └── vite.config.ts
 ```
