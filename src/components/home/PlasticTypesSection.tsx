@@ -89,14 +89,6 @@ const Subtitle = styled.p`
   padding: 0 20px;
 `;
 
-const PlasticsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 20px;
-`;
 
 const PlasticTypesSection: React.FC = () => {
   // Agregar efecto para depuración
