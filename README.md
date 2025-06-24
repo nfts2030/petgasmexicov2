@@ -28,7 +28,19 @@ La aplicación muestra información detallada sobre diferentes tipos de plástic
 | PP | Polipropileno | Envases de yogur, tapas de botellas, pajitas, envases de medicamentos |
 | PS | Poliestireno | Vasos desechables, bandejas de carne, envases de comida rápida |
 
-Cada tipo de plástico incluye una tarjeta informativa con su símbolo, descripción detallada y ejemplos de usos comunes.
+### Características de las Tarjetas de Plástico
+
+Cada tipo de plástico se muestra en una tarjeta interactiva con las siguientes características:
+
+- **Símbolo de identificación** superpuesto sobre la imagen del plástico
+- **Efectos visuales** como sombras y resplandor para mejorar la visibilidad
+- **Animaciones suaves** al cargar las imágenes y al interactuar con las tarjetas
+- **Diseño responsivo** que se adapta a diferentes tamaños de pantalla
+- **Manejo de errores** para mostrar contenido alternativo si falla la carga de imágenes
+
+### Símbolos de Identificación
+
+Cada tipo de plástico incluye su símbolo de identificación estándar superpuesto sobre la imagen correspondiente. Los símbolos están diseñados para ser claramente visibles y reconocibles, con efectos de sombra y brillo para mejorar la legibilidad sobre diferentes fondos.
 
 ## 🚀 Características Principales
 

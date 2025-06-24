@@ -38,7 +38,9 @@ const shadowPulse = keyframes`
 // Styled Components
 const HeroContainer = styled.section`
   position: relative;
-  min-height: 100vh;
+  min-height: 100vh; /* Fallback */
+  min-height: -webkit-fill-available; /* Para navegadores móviles */
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,21 +49,39 @@ const HeroContainer = styled.section`
   overflow: hidden;
   text-align: center;
   
+  /* Ajustes específicos para iOS */
+  @supports (-webkit-touch-callout: none) {
+    min-height: -webkit-fill-available;
+    height: -webkit-fill-available;
+  }
+  
   @media (max-width: 768px) {
-    min-height: 80vh;
-    padding: 6rem 1.5rem 4rem;
+    min-height: 90vh;
+    min-height: -webkit-fill-available;
+    padding: 4rem 1.5rem 3rem;
+    
+    @supports (-webkit-touch-callout: none) {
+      min-height: -webkit-fill-available;
+      height: -webkit-fill-available;
+    }
   }
 `;
 
 const HeroContent = styled.div`
   max-width: 800px;
-  margin: 8rem auto 0;
+  margin: 0 auto;
+  padding: 1rem 0;
   width: 100%;
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
+  
+  @media (max-width: 768px) {
+    justify-content: center;
+    padding: 2rem 0;
+  }
 `;
 
 const Logo3DContainer = styled.div`
@@ -276,15 +296,13 @@ const GradientTextWrapper = styled.span`
 `;
 
 const HeroTitle = styled.h1`
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 800;
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin: 1rem 0;
   line-height: 1.2;
   letter-spacing: -0.02em;
   max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
   padding: 0 1rem;
   
   /* Reset any inherited background */
@@ -292,53 +310,82 @@ const HeroTitle = styled.h1`
   animation: ${gradientKeyframes} 8s ease infinite;
   text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
   
+  /* Ajustes específicos para iOS */
+  @supports (-webkit-touch-callout: none) {
+    margin: 0.5rem 0;
+  }
+  
   /* Fallback for older browsers */
   @supports not (background-clip: text) {
     background: none;
     color: #00ff9d; /* Fallback color */
   }
 
+  @media (min-width: 375px) {
+    font-size: 2.2rem;
+  }
+
+  @media (min-width: 414px) {
+    font-size: 2.4rem;
+  }
+
   @media (min-width: 768px) {
-    font-size: 3.5rem;
-    margin-bottom: 2rem;
+    font-size: 3rem;
+    margin: 1.5rem 0;
   }
 
   @media (min-width: 1024px) {
-    font-size: 4rem;
-    margin-bottom: 2.5rem;
+    font-size: 3.5rem;
+    margin: 2rem 0;
   }
 `;
 
 const HeroSubtitle = styled.p`
-  font-size: 1.25rem;
-  margin-bottom: 2rem;
+  font-size: 1rem;
+  margin: 0.5rem 0 1.5rem;
   color: #4a6b57;
-  line-height: 1.6;
+  line-height: 1.5;
   max-width: 800px;
   opacity: 0.9;
+  padding: 0 1rem;
   
-  @media (max-width: 768px) {
+  @media (min-width: 375px) {
     font-size: 1.1rem;
-    margin-bottom: 1.5rem;
+  }
+  
+  @media (min-width: 414px) {
+    font-size: 1.15rem;
+    margin: 0.75rem 0 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    font-size: 1.25rem;
+    margin: 1rem 0 2.5rem;
   }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin: 1rem 0;
   flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
+  padding: 0 1rem;
   
   @media (max-width: 480px) {
     flex-direction: column;
-    width: 100%;
+    align-items: center;
+    max-width: 300px;
+    margin: 1rem auto;
   }
 `;
 
 const CtaButton = styled(Link)`
-  display: inline-block;
-  padding: 1rem 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.5rem;
   background-color: #11914b;
   color: white;
   border: none;
@@ -349,6 +396,11 @@ const CtaButton = styled(Link)`
   text-align: center;
   min-width: 180px;
   box-shadow: 0 4px 15px rgba(17, 145, 75, 0.3);
+  -webkit-tap-highlight-color: transparent;
+  
+  &:active {
+    transform: scale(0.98);
+  }
   
   &:hover {
     background-color: #0d7a3f;
@@ -358,6 +410,12 @@ const CtaButton = styled(Link)`
   
   @media (max-width: 480px) {
     width: 100%;
+    padding: 1rem 1.5rem;
+  }
+  
+  /* Mejorar la apariencia en iOS */
+  @supports (-webkit-touch-callout: none) {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 `;
 

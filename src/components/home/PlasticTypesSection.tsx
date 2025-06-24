@@ -1,53 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
-// Componente temporal para depuración
-const DebugCard = ({ imageUrl, name, number }: { imageUrl: string; name: string; number: string }) => {
-  return (
-    <div style={{
-      border: '2px solid red',
-      borderRadius: '12px',
-      padding: '20px',
-      margin: '10px',
-      width: '300px',
-      backgroundColor: '#f0f0f0',
-      textAlign: 'center'
-    }}>
-      <h3>{name} - #{number}</h3>
-      <div style={{ 
-        height: '200px', 
-        border: '2px solid blue',
-        margin: '10px 0',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#fff'
-      }}>
-        <img 
-          src={imageUrl} 
-          alt={name}
-          style={{ 
-            maxWidth: '100%',
-            maxHeight: '100%',
-            objectFit: 'contain'
-          }}
-          onLoad={() => console.log(`Imagen cargada: ${name}`)}
-          onError={(e) => console.error(`Error cargando ${name}:`, e)}
-        />
-      </div>
-      <div style={{ 
-        marginTop: '10px',
-        padding: '5px',
-        backgroundColor: '#fff',
-        borderRadius: '4px',
-        fontSize: '12px',
-        wordBreak: 'break-all'
-      }}>
-        {imageUrl}
-      </div>
-    </div>
-  );
-};
+import PlasticCard from '../PlasticCard';
 
 const SectionContainer = styled.section`
   padding: 80px 20px;
@@ -104,7 +57,7 @@ const PlasticTypesSection: React.FC = () => {
     type: 'PET',
     description: 'Botellas de agua, refrescos, envases de alimentos, bandejas, alfombras, ropa, fibra textil, muebles, envases de productos de limpieza, envases de cosméticos.',
     image: '/img/plasticos/pet.png',
-    symbol: '/img/PET_symbol.png',
+    symbol: '/img/pet_symbol.png',
     number: '1'
   },
   {
@@ -113,7 +66,7 @@ const PlasticTypesSection: React.FC = () => {
     type: 'HDPE',
     description: 'Botes de Gel, Botellas de lácteos, botellas de shampoo, baldes, botellas de detergente, juguetes, envases de comida, decoración, envases de jugos, tuberías para agua.',
     image: '/img/plasticos/hdpe.png',
-    symbol: '/img/HDPE_symbol.png',
+    symbol: '/img/hdpe_symbol.png',
     number: '2'
   },
   {
@@ -121,8 +74,8 @@ const PlasticTypesSection: React.FC = () => {
     name: 'Polietileno de Baja Densidad',
     type: 'LDPE',
     description: 'Bolsas de plástico, envolturas, botellas exprimibles, tapas flexibles.',
-    image: '/img/ldpe-bags.png',
-    symbol: '/img/LDPE_symbol.png',
+    image: '/img/plasticos/ldpe.png',
+    symbol: '/img/ldpe_symbol.png',
     number: '4'
   },
   {
@@ -131,7 +84,7 @@ const PlasticTypesSection: React.FC = () => {
     type: 'PP',
     description: 'Envases de yogur, tapas de botellas, pajitas, envases de medicamentos, envases de ketchup, envases de mantequilla, envases de helado, envases de salsas, envases de aderezos, envases de mermelada.',
     image: '/img/plasticos/pp.png',
-    symbol: '/img/PP_symbol.png',
+    symbol: '/img/pp_symbol.png',
     number: '5'
   },
   {
@@ -140,7 +93,7 @@ const PlasticTypesSection: React.FC = () => {
     type: 'PS',
     description: 'Vasos desechables, bandejas de carne, envases de comida rápida, cajas de CD, envases de huevos, envases de postres, envases de lácteos, envases de helado, envases de mantequilla, envases de queso crema.',
     image: '/img/plasticos/ps.png',
-    symbol: '/img/PS_symbol.png',
+    symbol: '/img/ps_symbol.png',
     number: '6'
   }
 ];
@@ -153,20 +106,27 @@ const PlasticTypesSection: React.FC = () => {
       <Title>Tipos de Plástico</Title>
       <Subtitle>Conoce los diferentes tipos de plástico que manejamos y sus características principales</Subtitle>
       <div style={{ 
-        display: 'flex', 
-        flexWrap: 'wrap', 
-        justifyContent: 'center',
-        gap: '20px',
-        padding: '20px 0'
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+        gap: '30px',
+        padding: '20px',
+        maxWidth: '1400px',
+        margin: '0 auto',
+        width: '100%'
       }}>
-        {plasticTypes.map((plastic) => (
-          <DebugCard
-            key={plastic.id}
-            imageUrl={plastic.image}
-            name={plastic.type}
-            number={plastic.number}
-          />
-        ))}
+        {plasticTypes.map((plastic) => {
+          console.log('Mapeando plástico:', plastic.type, plastic);
+          return (
+            <PlasticCard
+              key={plastic.id}
+              imageUrl={plastic.image}
+              symbolUrl={plastic.symbol}
+              name={plastic.name}
+              description={plastic.description}
+              number={plastic.number}
+            />
+          );
+        })}
       </div>
     </SectionContainer>
   );

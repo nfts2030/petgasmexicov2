@@ -4,6 +4,7 @@ import styled, { keyframes } from 'styled-components';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 import ServicesSection from '../components/home/ServicesSection';
 import ProcessSection from '../components/home/ProcessSection';
+import PlasticTypesSection from '../components/home/PlasticTypesSection';
 
 // Animations
 const float = keyframes`
@@ -406,12 +407,13 @@ const HomePage: React.FC = () => {
 
       {/* Resto del contenido de la página */}
       <ServicesSection />
+      <PlasticTypesSection />
       <ProcessSection />
       
       {/* Sección de Tipos de Plástico */}
       <section style={{ padding: '80px 0', backgroundColor: '#f5f9f7' }}>
         <Container>
-          <StyledTitle>Tipos de Plástico que Reciclamos</StyledTitle>
+          <StyledTitle>Tipos de Plástico que Transformamos</StyledTitle>
           <StyledSubtitle>Conoce los diferentes tipos de plástico que podemos transformar en energía</StyledSubtitle>
           
           <Row className="g-4">
