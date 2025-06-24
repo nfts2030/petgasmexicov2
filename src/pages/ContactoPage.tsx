@@ -293,15 +293,6 @@ const ContactoPage: FC = () => {
             </div>
           </InfoItem>
           
-          <InfoItem>
-            <div className="icon">⏰</div>
-            <div className="details">
-              <h4>Horario de Atención</h4>
-              <p>Lunes a Viernes: 9:00 AM - 6:00 PM</p>
-              <p>Sábados: 9:00 AM - 2:00 PM</p>
-            </div>
-          </InfoItem>
-
           <div className="social-links">
             <h4>Síguenos en Redes Sociales</h4>
             <div className="social-icons" style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>

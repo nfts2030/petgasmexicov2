@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
@@ -310,7 +311,7 @@ const ServicesSection: React.FC = () => {
             <ServiceContent>
               <h3>{service.title}</h3>
               <p>{service.description}</p>
-              <ServiceLink href="#">
+              <ServiceLink href="/contacto" as={Link} to="/contacto">
                 Saber más <i className="fas fa-arrow-right"></i>
               </ServiceLink>
             </ServiceContent>

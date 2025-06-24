@@ -188,21 +188,19 @@ const HomePage: React.FC = () => {
             Juntos podemos implementar un plan para descarbonizar tu empresa o a ti mismo
           </p>
           <Button 
-            variant="light" 
+            variant="success" 
             size="lg" 
-            style={{
-              background: 'white',
-              color: '#0a4b2a',
-              border: 'none',
-              padding: '12px 35px',
-              borderRadius: '50px',
+            style={{ 
+              padding: '12px 30px',
               fontSize: '1.1rem',
+              borderRadius: '50px',
               fontWeight: '600',
               textTransform: 'uppercase',
               letterSpacing: '1px',
               boxShadow: '0 4px 15px rgba(0,0,0,0.15)',
               transition: 'all 0.3s ease'
             }}
+            onClick={() => window.location.href = '/contacto'}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = 'translateY(-3px)';
               e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.2)';
