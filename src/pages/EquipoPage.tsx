@@ -11,16 +11,27 @@ const gradientAnimation = keyframes`
   100% { background-position: 0% 50%; }
 `;
 
+const AnimatedGradient = styled.span`
+  background: linear-gradient(90deg, #0a4b2a, #7cda24, #0a4b2a);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ${gradientAnimation} 5s ease infinite;
+`;
+
 // Styled components
 const HeroSection = styled.section`
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/img/04/fdoverdeiconos.jpg');
+  background: linear-gradient(135deg, rgba(10, 75, 42, 0.9) 0%, rgba(5, 45, 25, 0.95) 100%), 
+              url('/img/04/fdoverdeiconos.jpg');
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
   color: white;
-  padding: 120px 20px 80px;
+  padding: 100px 20px;
   text-align: center;
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
+  overflow: hidden;
   
   &::before {
     content: '';
@@ -29,9 +40,22 @@ const HeroSection = styled.section`
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgNjAwIDYwMCI+PHBhdGggZmlsbD0iI2ZmYzEwNyIgZmlsbC1vcGFjaXR5PSIwLjA1IiBkPSJNNDQwIDMwMEM0NDAgMTc5LjQgMzQ4LjYgOTAgMjM1IDkwUzMwIDE3OS40IDMwIDMwMHM5MS40IDIxMCAyMDUgMjEwIDIwNS05MS40IDIwNS0yMTB6Ii8+PC9zdmc+') center/cover no-repeat;
-    opacity: 0.1;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(124, 218, 36, 0.1) 0%, transparent 25%),
+      radial-gradient(circle at 80% 70%, rgba(10, 75, 42, 0.2) 0%, transparent 25%);
     z-index: 1;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, #f8f9fa);
+    z-index: 1;
+    clip-path: polygon(0 70%, 100% 40%, 100% 100%, 0% 100%);
   }
 `;
 
@@ -40,23 +64,37 @@ const HeroContent = styled.div`
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
+  
+  @media (max-width: 768px) {
+    min-height: 50vh;
+    padding: 1rem;
+  }
 `;
 
 const HeroTitle = styled.h1`
-  margin-bottom: 20px;
-  font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 1.2;
-  padding: 0 15px;
-  background: linear-gradient(90deg, #0a4b2a, #ffeb3b, #0a4b2a);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: ${gradientAnimation} 5s ease infinite;
-  display: inline-block;
+  margin: 0;
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  padding: 0;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
   
   @media (max-width: 768px) {
-    font-size: 1.8rem;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 2rem;
   }
 `;
 
@@ -242,32 +280,72 @@ const SocialLinks = styled.div`
   justify-content: center;
   gap: 15px;
   margin-top: 20px;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.4s ease;
+  opacity: 1; /* Hacer visible por defecto */
+  transform: none; /* Eliminar la animación inicial */
   
   a {
-    color: #fff;
-    background: #0a4b2a;
-    width: 36px;
-    height: 36px;
+    color: #0a4b2a;
+    background: #f0f9f0;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 1.1rem;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(10, 75, 42, 0.15);
+    border: 1px solid #e0f0e0;
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0a4b2a, #7cda24);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 0;
+    }
+    
+    i {
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
     
     &:hover {
-      background: #7cda24;
-      color: #0a4b2a;
       transform: translateY(-3px) scale(1.1);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      
+      &::before {
+        opacity: 1;
+      }
+      
+      i {
+        color: white;
+        transform: scale(1.1);
+      }
     }
     
     &:active {
       transform: translateY(-1px) scale(0.98);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Estilo específico para el ícono de correo */
+    &[aria-label*="correo"] {
+      i {
+        color: #d44638; /* Rojo de Gmail */
+      }
+      
+      &:hover i {
+        color: white;
+      }
     }
   }
 `;
@@ -290,6 +368,7 @@ interface TeamMember {
 
 // Datos del equipo
 const teamMembers: TeamMember[] = [
+  // Equipo Directivo
   {
     id: 1,
     name: 'Daniel Rodríguez Gutiérrez',
@@ -299,7 +378,8 @@ const teamMembers: TeamMember[] = [
     email: 'drg@petgas.com.mx',
     division: 'Dirección General',
     social: {
-      email: 'drg@petgas.com.mx'
+      email: 'drg@petgas.com.mx',
+      linkedin: '#'
     }
   },
   {
@@ -311,7 +391,8 @@ const teamMembers: TeamMember[] = [
     email: 'jer@petgas.com.mx',
     division: 'Área Comercial',
     social: {
-      email: 'jer@petgas.com.mx'
+      email: 'jer@petgas.com.mx',
+      linkedin: '#'
     }
   },
   {
@@ -323,7 +404,8 @@ const teamMembers: TeamMember[] = [
     email: 'jef@petgas.com.mx',
     division: 'Vinculación Global',
     social: {
-      email: 'jef@petgas.com.mx'
+      email: 'jef@petgas.com.mx',
+      linkedin: '#'
     }
   },
   {
@@ -335,7 +417,8 @@ const teamMembers: TeamMember[] = [
     email: 'legal@petgas.com.mx',
     division: 'Área Legal',
     social: {
-      email: 'legal@petgas.com.mx'
+      email: 'legal@petgas.com.mx',
+      linkedin: '#'
     }
   },
   {
@@ -344,10 +427,11 @@ const teamMembers: TeamMember[] = [
     role: 'Subdirector de Vinculación Global',
     image: '/equipo/PERSONAL.jpg',
     bio: 'Apoya en la gestión de alianzas estratégicas y relaciones internacionales para el crecimiento global de PETGAS.',
-    email: 'info@petgas.com.mx',
+    email: 'dey@petgas.com.mx',
     division: 'Vinculación Global',
     social: {
-      email: 'info@petgas.com.mx'
+      email: 'dey@petgas.com.mx',
+      linkedin: '#'
     }
   },
   {
@@ -356,10 +440,11 @@ const teamMembers: TeamMember[] = [
     role: 'Director Desarrollo Tecnológico',
     image: '/equipo/tecnologia.jpg',
     bio: 'Líder en la implementación de tecnologías innovadoras para la optimización de procesos de transformación de residuos.',
-    email: 'tecnologia@petgas.com.mx',
+    email: 'fbp@petgas.com.mx',
     division: 'Tecnología',
     social: {
-      email: 'tecnologia@petgas.com.mx'
+      email: 'fbp@petgas.com.mx',
+      linkedin: '#'
     }
   },
   {
@@ -369,9 +454,10 @@ const teamMembers: TeamMember[] = [
     image: '/equipo/quimica.jpg',
     bio: 'Experta en procesos químicos y control de calidad, asegurando los más altos estándares en la producción de combustibles sostenibles.',
     email: 'quimica@petgas.com.mx',
-    division: 'Laboratorio',
+    division: 'Investigación',
     social: {
-      email: 'quimica@petgas.com.mx'
+      email: 'quimica@petgas.com.mx',
+      linkedin: '#'
     }
   },
   {
@@ -380,46 +466,52 @@ const teamMembers: TeamMember[] = [
     role: 'Miembro del consejo',
     image: '/equipo/consejo.jpg',
     bio: 'Miembro activo del consejo directivo, aportando experiencia y visión estratégica para el crecimiento sostenible de PETGAS.',
-    email: 'consejo@petgas.com.mx',
+    email: 'christopher.trapp@petgas.com.mx',
     division: 'Consejo Directivo',
     social: {
-      email: 'consejo@petgas.com.mx'
+      email: 'christopher.trapp@petgas.com.mx',
+      linkedin: '#'
     }
   },
+  
+  // Divisiones
   {
     id: 9,
-    name: 'Petgas Oceans',
-    role: 'División',
+    name: 'Roberto Cerda',
+    role: 'Líder de Petgas Oceans',
     image: '/equipo/oceans.jpg',
-    bio: 'Líder: Roberto Cerda',
+    bio: 'Encargado de la división especializada en soluciones oceánicas sostenibles y gestión de residuos marinos.',
     email: 'oceans@petgas.com.mx',
-    division: 'División Especializada',
+    division: 'Petgas Oceans',
     social: {
-      email: 'oceans@petgas.com.mx'
+      email: 'oceans@petgas.com.mx',
+      linkedin: '#'
     }
   },
   {
     id: 10,
-    name: 'Executiva International Partnerships',
-    role: 'División',
+    name: 'Sandra M. Ponce de Leon',
+    role: 'Líder de Alianzas Internacionales',
     image: '/equipo/partnerships.jpg',
-    bio: 'Líder: Sandra M. Ponce de Leon',
-    email: 'partnerships@petgas.com.mx',
-    division: 'Alianzas Internacionales',
+    bio: 'Responsable de establecer y mantener alianzas estratégicas a nivel internacional para el crecimiento global de PETGAS.',
+    email: 'spd@petgas.com.mx',
+    division: 'Executiva International Partnerships',
     social: {
-      email: 'partnerships@petgas.com.mx'
+      email: 'spd@petgas.com.mx',
+      linkedin: '#'
     }
   },
   {
     id: 11,
-    name: 'Web3',
-    role: 'División',
+    name: 'Estefania Ferrera Salgado',
+    role: 'Líder de Desarrollo Web3',
     image: '/equipo/web3.jpg',
-    bio: 'Líder: Estefania Ferrera Salgado',
-    email: 'web3@petgas.com.mx',
-    division: 'Tecnología Blockchain',
+    bio: 'Especialista en tecnologías blockchain y Web3, liderando la estrategia de transformación digital de PETGAS.',
+    email: 'efs@petgas.com.mx',
+    division: 'Web3',
     social: {
-      email: 'web3@petgas.com.mx'
+      email: 'efs@petgas.com.mx',
+      linkedin: '#'
     }
   }
 ];
@@ -444,14 +536,84 @@ const EquipoPage: React.FC = () => {
     <PageLayout>
       <HeroSection>
         <HeroContent>
-          <HeroTitle>Nuestro Equipo</HeroTitle>
-          <HeroSubtitle>
-            Conoce al equipo de expertos que está transformando la industria de los residuos plásticos en México
-          </HeroSubtitle>
+          <div style={{
+            background: 'linear-gradient(145deg, rgba(10, 75, 42, 0.9), rgba(15, 105, 62, 0.8))',
+            padding: '2.5rem 2rem',
+            borderRadius: '20px',
+            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.2)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            transform: 'perspective(1000px) rotateX(0.5deg)',
+            transformStyle: 'preserve-3d',
+            transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+          }}>
+            <HeroTitle style={{
+              fontSize: '2.8rem',
+              marginBottom: '1rem',
+              textShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
+              letterSpacing: '-0.5px',
+              position: 'relative',
+              display: 'inline-block',
+              padding: '0 1rem',
+              transform: 'translateZ(20px)'
+            }}>
+              <AnimatedGradient>
+                Nuestro Equipo
+              </AnimatedGradient>
+            </HeroTitle>
+            <HeroSubtitle style={{
+              fontSize: '1.2rem',
+              maxWidth: '800px',
+              lineHeight: '1.6',
+              color: 'rgba(255, 255, 255, 0.95)',
+              fontWeight: 400,
+              textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+              padding: '0 1rem',
+              position: 'relative',
+              zIndex: 1
+            }}>
+              Conoce al equipo de expertos que está transformando la industria de los residuos plásticos en México
+            </HeroSubtitle>
+            <div style={{
+              position: 'absolute',
+              top: '20px',
+              right: '20px',
+              width: '60px',
+              height: '60px',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%)',
+              zIndex: 0
+            }}></div>
+            <div style={{
+              position: 'absolute',
+              bottom: '10px',
+              left: '10px',
+              width: '80px',
+              height: '80px',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(124, 218, 36, 0.2) 0%, rgba(124, 218, 36, 0) 70%)',
+              zIndex: 0
+            }}></div>
+          </div>
         </HeroContent>
       </HeroSection>
       
       <TeamContainer>
+        <h2 style={{
+          textAlign: 'center',
+          color: '#0a4b2a',
+          marginBottom: '2rem',
+          fontSize: '1.8rem',
+          fontWeight: 700,
+          position: 'relative',
+          display: 'inline-block',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          padding: '0 1rem 0.5rem',
+          borderBottom: '3px solid #7cda24'
+        }}>
+          Equipo Directivo
+        </h2>
         <TeamGrid>
           {teamMembers.map((member, index) => (
             <TeamMember 
@@ -471,17 +633,93 @@ const EquipoPage: React.FC = () => {
                 <p className="bio">{member.bio}</p>
                 <p className="division">{member.division}</p>
                 <SocialLinks className="social-links">
-                  <a href={`mailto:${member.email}`} aria-label={`Enviar correo a ${member.name}`} title={`Enviar correo a ${member.email}`}>
+                  <a 
+                    href={`mailto:${member.social.email}`} 
+                    aria-label={`Enviar correo a ${member.name}`} 
+                    title={`Enviar correo a ${member.social.email}`}
+                    className="email-link"
+                  >
                     <i className="fas fa-envelope"></i>
                   </a>
                   {member.social.linkedin && (
-                    <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="Perfil de LinkedIn">
+                    <a 
+                      href={member.social.linkedin} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      aria-label={`Perfil de LinkedIn de ${member.name.split(' ')[0]}`} 
+                      title={`Ver perfil de LinkedIn`}
+                    >
                       <i className="fab fa-linkedin-in"></i>
                     </a>
                   )}
                   {member.social.twitter && (
-                    <a href={member.social.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter" title="Perfil de Twitter">
+                    <a 
+                      href={member.social.twitter} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      aria-label={`Perfil de Twitter de ${member.name.split(' ')[0]}`} 
+                      title={`Ver perfil de Twitter`}
+                    >
                       <i className="fab fa-twitter"></i>
+                    </a>
+                  )}
+                </SocialLinks>
+              </MemberInfo>
+            </TeamMember>
+          ))}
+        </TeamGrid>
+        
+        <h2 style={{
+          textAlign: 'center',
+          color: '#0a4b2a',
+          margin: '4rem 0 2rem',
+          fontSize: '1.8rem',
+          fontWeight: 700,
+          position: 'relative',
+          display: 'inline-block',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          padding: '0 1rem 0.5rem',
+          borderBottom: '3px solid #7cda24'
+        }}>
+          Divisiones y Líderes
+        </h2>
+        <TeamGrid>
+          {teamMembers.slice(8).map((member, index) => (
+            <TeamMember 
+              key={member.id}
+              $isVisible={isVisible}
+              $delay={(index + teamMembers.length - 8) * 0.1}
+              className="team-member"
+            >
+              <MemberImage className="member-image">
+                <div className="logo-spinner-container">
+                  <LogoSpinner text={member.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()} />
+                </div>
+              </MemberImage>
+              <MemberInfo>
+                <h3>{member.name}</h3>
+                <p className="role">{member.role}</p>
+                <p className="bio">{member.bio}</p>
+                <p className="division">{member.division}</p>
+                <SocialLinks className="social-links">
+                  <a 
+                    href={`mailto:${member.social.email}`} 
+                    aria-label={`Enviar correo a ${member.name}`} 
+                    title={`Enviar correo a ${member.social.email}`}
+                    className="email-link"
+                  >
+                    <i className="fas fa-envelope"></i>
+                  </a>
+                  {member.social.linkedin && (
+                    <a 
+                      href={member.social.linkedin} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      aria-label={`Perfil de LinkedIn de ${member.name.split(' ')[0]}`} 
+                      title={`Ver perfil de LinkedIn`}
+                    >
+                      <i className="fab fa-linkedin-in"></i>
                     </a>
                   )}
                 </SocialLinks>
