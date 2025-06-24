@@ -38,84 +38,7 @@ const SlideTrack = styled.div`
 `;
 
 // Usamos $ para indicar que son props transitorias (no se pasan al DOM)
-// Estilo para las diapositivas del slider
-const Slide = styled.div<{ $isActive: boolean }>`
-  flex: 0 0 100%;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: ${({ $isActive }) => ($isActive ? 1 : 0)};
-  transform: ${({ $isActive }) => ($isActive ? 'scale(1)' : 'scale(0.95)')};
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-  will-change: opacity, transform;
-  background-color: rgba(0,0,0,0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  
-  /* Estilos para todas las diapositivas */
-  padding: 20px;
-  flex-direction: column;
-  text-align: center;
-  
-  img {
-    max-width: 80%;
-    max-height: 70%;
-    object-fit: contain;
-    margin-bottom: 20px;
-  }
-  
-  h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    line-height: 1.3;
-    font-weight: 800;
-    color: #f0f0f0;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
-    display: inline-block;
-    padding: 0 10px 5px;
-    margin-top: 20px;
-  }
-  
-  p {
-    font-size: 1.1rem;
-    line-height: 1.5;
-    margin-bottom: 1rem;
-    color: #f0f0f0;
-    font-weight: 500;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
-    padding: 0 10px 10px;
-  }
-  
-  @media (max-width: 768px) {
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 0.8rem;
-    }
-    
-    p {
-      font-size: 1rem;
-      margin-bottom: 1rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    h2 {
-      font-size: 1.3rem;
-      margin-bottom: 0.6rem;
-    }
-    
-    p {
-      font-size: 0.9rem;
-      margin-bottom: 0.8rem;
-    }
-  }
-`;
+// El componente Slide fue eliminado ya que no se estaba utilizando
 
 // Styled components
 // Estilos para el contenedor principal del slider
@@ -342,17 +265,16 @@ const StatisticsSection: React.FC = () => {
   // Función para reproducir sonido (actualmente deshabilitada por restricciones del navegador)
   // Se mantiene como referencia para una implementación futura con interacción del usuario
   
-  // Definir la animación de gradiente
-  const gradientAnimation = `
+  // La animación de gradiente se ha movido directamente al estilo del componente AnimatedTitle
+
+  // Estilo para el título con gradiente animado
+  const AnimatedTitle = styled.h2`
     @keyframes gradient {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-  `;
-
-  // Estilo para el título con gradiente animado
-  const AnimatedTitle = styled.h2`
+    
     font-size: 2.2rem;
     margin-bottom: 1rem;
     font-weight: bold;
