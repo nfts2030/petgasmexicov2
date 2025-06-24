@@ -70,10 +70,12 @@ const CardsContainer = styled.div`
 
 
 const PlasticTypesSection: React.FC = () => {
-  // Agregar efecto para depuración
+  // Efecto de montaje/desmontaje
   React.useEffect(() => {
-    console.log('PlasticTypesSection montado');
-    return () => console.log('PlasticTypesSection desmontado');
+    // Lógica de inicialización aquí si es necesario
+    return () => {
+      // Lógica de limpieza aquí si es necesario
+    };
   }, []);
 
   const plasticTypes = [
@@ -133,8 +135,7 @@ const PlasticTypesSection: React.FC = () => {
   }
 ];
 
-  // Verificar datos antes de renderizar
-  console.log('Renderizando PlasticTypesSection con plásticos:', plasticTypes);
+  // Datos de los plásticos a renderizar
 
   return (
     <SectionContainer>

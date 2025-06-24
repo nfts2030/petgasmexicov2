@@ -1,11 +1,39 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
 // Animación de gradiente para el texto
+// Definir la animación de gradiente
 const gradientAnimation = keyframes`
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+`;
+
+// Crear un componente de texto con gradiente animado
+const AnimatedGradientText = styled.h2`
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+  font-weight: 800;
+  background: linear-gradient(90deg, #0a4b2a, #ffeb3b, #0a4b2a);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ${gradientAnimation} 5s ease infinite;
+  display: inline-block;
+  padding: 0 10px 5px;
+  text-shadow: none;
+  margin-top: 20px;
+  
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+  }
 `;
 
 // Types
@@ -14,6 +42,7 @@ interface Statistic {
   title: string;
   description: string;
   image: string;
+  alt: string;
 }
 
 // Animations
@@ -23,265 +52,334 @@ const subtlePulse = keyframes`
   100% { transform: scale(1); }
 `;
 
-// Styled components
+// Estilos simplificados para el slider
 const SlideTrack = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); /* Transición más suave */
+  will-change: transform; /* Mejora el rendimiento */
+  
+  & > div {
+    flex: 0 0 100%;
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+// Usamos $ para indicar que son props transitorias (no se pasan al DOM)
+const StatisticSlide = styled.div<{ $isActive: boolean; $isLastTwo: boolean }>`
+  flex: 0 0 100%;
+  height: 100%;
+  width: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  opacity: ${({ $isActive }) => ($isActive ? 1 : 0)};
+  transform: ${({ $isActive }) => ($isActive ? 'scale(1)' : 'scale(0.95)')};
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  will-change: opacity, transform;
+  background-color: ${({ $isLastTwo }) => ($isLastTwo ? '#f5f5f5' : 'rgba(0,0,0,0.3)')};
   display: flex;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
-  touch-action: pan-y;
-`;
-
-const StatisticSlide = styled.div<{ isActive: boolean }>`
-  min-width: 100%;
-  height: 100%;
-  position: relative;
-  flex-shrink: 0;
-  opacity: ${props => props.isActive ? 1 : 0};
-  transform: ${props => props.isActive ? 'scale(1)' : 'scale(0.98)'};
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, opacity;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   
-  /* Asegurar que la imagen ocupe todo el espacio disponible */
-  & > div {
-    width: 100%;
-    height: 100%;
-    display: flex;
+  ${({ $isLastTwo }) => $isLastTwo ? `
+    padding: 20px;
     flex-direction: column;
-    justify-content: flex-end; /* Alinea el contenido al final (abajo) */
-    align-items: center;
     text-align: center;
-    padding: 20px 20px 40px; /* Más espacio en la parte inferior */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-  }
-  
-  /* Fondo oscuro solo para el texto, posicionado más abajo */
-  & > div::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(
-      to top, 
-      rgba(0, 0, 0, 0.9) 0%, 
-      rgba(0, 0, 0, 0.7) 40%, 
-      rgba(0, 0, 0, 0.4) 70%, 
-      transparent 100%
-    );
-    z-index: 1;
-  }
-  
-  h2, p {
-    position: relative;
-    z-index: 2;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9);
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    padding: 0 15px;
-  }
-  
-  h2 {
-    font-size: 1.8rem;
-    margin-bottom: 0.8rem;
-    line-height: 1.3;
-    font-weight: 800;
-    background: linear-gradient(90deg, #0a4b2a, #ffeb3b, #0a4b2a);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: ${gradientAnimation} 5s ease infinite;
-    display: inline-block;
-    padding: 0 10px 5px;
-    text-shadow: none;
-    margin-top: 20px; /* Espacio superior para separar del borde */
     
-    @media (max-width: 768px) {
+    img {
+      max-width: 80%;
+      max-height: 70%;
+      object-fit: contain;
+      margin-bottom: 20px;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    p {
+      font-size: 1rem;
+      color: #666;
+      max-width: 90%;
+    }
+  ` : `
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+      font-weight: 800;
+      color: #f0f0f0;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+      display: inline-block;
+      padding: 0 10px 5px;
+      margin-top: 20px;
+    }
+    
+    p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      color: #f0f0f0;
+      font-weight: 500;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+      padding: 0 10px 10px;
+    }
+  `}
+  
+  @media (max-width: 768px) {
+    h2 {
       font-size: 1.5rem;
       margin-bottom: 0.8rem;
     }
     
-    @media (max-width: 480px) {
-      font-size: 1.3rem;
-      margin-bottom: 0.6rem;
-    }
-  }
-  
-  p {
-    font-size: 1.1rem;
-    line-height: 1.5;
-    margin-bottom: 1rem;
-    color: #f0f0f0;
-    font-weight: 500;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
-    padding: 0 10px 10px;
-    
-    @media (max-width: 768px) {
+    p {
       font-size: 1rem;
       margin-bottom: 1rem;
     }
+  }
+  
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
+    }
     
-    @media (max-width: 480px) {
+    p {
       font-size: 0.9rem;
       margin-bottom: 0.8rem;
     }
   }
 `;
 
-
-
 // Styled components
+// Estilos para el contenedor principal del slider
 const SliderContainer = styled.div`
-  width: 100%;
-  height: 60vh;
-  min-height: 400px; /* Aumentado para mejor visualización en móviles */
-  max-height: 600px;
   position: relative;
+  width: 100%;
+  height: 350px; /* Aumentar altura para acomodar textos */
   overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  margin: 30px auto;
-  touch-action: pan-y;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
-  will-change: transform, opacity;
-  max-width: 1200px; /* Añadido para limitar el ancho máximo */
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   
-  /* Estilos específicos para iPhone */
-  @supports (-webkit-touch-callout: none) {
-    height: 60vh;
-    min-height: 420px;
-    border-radius: 0;
-    margin: 20px 0;
-    box-shadow: none;
-  }
-  
-  &.animate-slide-in {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  &:hover {
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-    animation: ${subtlePulse} 3s ease-in-out infinite;
-  }
-  
+  /* Ajustes para móviles */
   @media (max-width: 768px) {
-    height: 55vh;
-    min-height: 450px;
-    margin: 20px 0;
-    border-radius: 0;
-    box-shadow: none;
+    height: 250px;
   }
   
+  /* Ajustes para móviles pequeños */
   @media (max-width: 480px) {
-    height: 50vh;
-    min-height: 400px;
+    height: 200px;
   }
 `;
 
 const StatisticsSection: React.FC = () => {
-  // Image paths - Usando las imágenes correctas sin repeticiones
+  // Image paths - Rutas de imágenes actualizadas
   const sliderImages = [
     '/img/11/fdobotellasslider.jpg',
     '/img/03/tortugaplastico1.jpg',
     '/img/04/fdoplastijuguetes.jpg',
     '/img/03/microplastics1.jpg',
-    '/img/04/fdoverdeiconos.jpg',
+    '/img/2050.png',
     '/img/Planta4k-2r.jpeg'
   ];
+  
+  // Verificar rutas de imágenes
+  console.log('Rutas de imágenes del slider:', sliderImages);
+
+  // Verificar existencia de imágenes (solo en desarrollo)
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      sliderImages.forEach(img => {
+        const imgElement = new Image();
+        imgElement.src = img;
+        imgElement.onload = () => console.log(`Imagen cargada: ${img}`);
+        imgElement.onerror = () => console.error(`Error al cargar imagen: ${img}`);
+      });
+    }
+  }, []);
 
   const statisticsData: Statistic[] = useMemo(() => [
     {
       id: 1,
       title: "MENOS DEL 10% DEL PLÁSTICO",
       description: "SE RECICLA A NIVEL GLOBAL SEGÚN LA OCDE",
-      image: sliderImages[0] // fdobotellasslider.jpg
+      image: sliderImages[0],
+      alt: "Botellas de plástico apiladas"
     },
     {
       id: 2,
       title: "MÁS DE 11 MILLONES DE TONELADAS",
       description: "DE PLÁSTICO TERMINAN EN LOS OCÉANOS CADA AÑO",
-      image: sliderImages[1] // tortugaplastico1.jpg
+      image: sliderImages[1],
+      alt: "Tortuga marina afectada por plásticos"
     },
     {
       id: 3,
       title: "MÁS DE 400 AÑOS",
       description: "PUEDE TARDAR UNA BOTELLA DE PLÁSTICO EN DEGRADARSE",
-      image: sliderImages[2] // fdoplastijuguetes.jpg
+      image: sliderImages[2],
+      alt: "Juguetes de plástico"
     },
     {
       id: 4,
       title: "EL 80% DE LA BASURA MARINA",
       description: "PROVIENE DE FUENTES TERRESTRES, PRINCIPALMENTE PLÁSTICOS",
-      image: sliderImages[3] // microplastics1.jpg
+      image: sliderImages[3],
+      alt: "Microplásticos en el océano"
     },
     {
       id: 5,
       title: "PARA 2050 HABRÁ MÁS PLÁSTICO",
       description: "QUE PECES EN EL MAR (EN PESO) SEGÚN LA ONU",
-      image: sliderImages[4] // fdoverdeiconos.jpg
+      image: sliderImages[4],
+      alt: "Predicción de plásticos en el océano para 2050"
     },
     {
       id: 6,
       title: "ENERGÍA LIMPIA DE RESIDUOS",
       description: "TRANSFORMAMOS PLÁSTICOS EN COMBUSTIBLES SOSTENIBLES",
-      image: sliderImages[5] // Planta4k-2r.jpeg
+      image: sliderImages[5],
+      alt: "Planta de transformación de plásticos"
     }
   ], [sliderImages]);
   
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  const sliderInterval = useRef<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const timeoutRef = useRef<number | null>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   
   // Function to go to the next slide
   const nextSlide = useCallback(() => {
     setCurrentSlide(prev => (prev + 1) % statisticsData.length);
-  }, [statisticsData.length]);
+    
+    // Programar la siguiente transición
+    if (isPlaying && !isHovered) {
+      timeoutRef.current = window.setTimeout(() => {
+        nextSlide();
+      }, 5000); // 5 segundos por slide
+    }
+  }, [statisticsData.length, isPlaying, isHovered]);
   
   // Function to go to a specific slide
   const goToSlide = useCallback((index: number) => {
-    if (sliderInterval.current) {
-      clearInterval(sliderInterval.current);
+    // Limpiar timeout existente
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
     }
-    setCurrentSlide(index);
-    // Restart autoplay after manual change
-    sliderInterval.current = window.setInterval(() => {
-      nextSlide();
-    }, 5000);
-  }, [nextSlide]);
-  
-  // Setup autoplay
-  useEffect(() => {
-    sliderInterval.current = window.setInterval(() => {
-      if (!isHovered) {
-        nextSlide();
-      }
-    }, 5000);
     
-    // Cleanup interval on unmount
+    // Asegurar que el índice esté dentro de los límites
+    if (index < 0) {
+      index = statisticsData.length - 1;
+    } else if (index >= statisticsData.length) {
+      index = 0;
+    }
+    
+    // Actualizar la diapositiva actual
+    setCurrentSlide(index);
+    
+    // Iniciar el autoplay si está habilitado y no hay hover
+    if (isPlaying && !isHovered) {
+      timeoutRef.current = window.setTimeout(() => {
+        nextSlide();
+      }, 5000);
+    }
+  }, [statisticsData.length, isPlaying, isHovered, nextSlide]);
+  
+  // Iniciar autoplay al montar y cuando cambia el estado de hover
+  useEffect(() => {
+    if (isPlaying && !isHovered) {
+      // Limpiar timeout existente
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      
+      // Iniciar el ciclo de transiciones
+      timeoutRef.current = window.setTimeout(() => {
+        nextSlide();
+      }, 5000);
+    }
+    
+    // Limpieza al desmontar o cuando cambian las dependencias
     return () => {
-      if (sliderInterval.current) {
-        clearInterval(sliderInterval.current);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
       }
     };
-  }, [nextSlide, isHovered]);
+  }, [isPlaying, isHovered, nextSlide]);
+  
+  // Limpieza al desmontar
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+  }, []);
+  
+  // Debug current slide and hover state
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Estado actual - Diapositiva:', currentSlide + 1, 'de', statisticsData.length, '- Hover:', isHovered);
+      console.log('Intervalo activo:', timeoutRef.current !== null);
+    }
+  }, [currentSlide, isHovered, statisticsData.length]);
+  
+  // Manejar el estado de hover
+  const handleMouseEnter = useCallback(() => {
+    setIsHovered(true);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  }, []);
+  
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false);
+    if (isPlaying && !timeoutRef.current) {
+      timeoutRef.current = window.setTimeout(() => {
+        nextSlide();
+      }, 5000);
+    }
+  }, [isPlaying, nextSlide]);
+  
+  // Pausar/reanudar el slider
+  const togglePlayPause = useCallback(() => {
+    if (isPlaying) {
+      // Pausar
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    } else {
+      // Reanudar
+      if (!timeoutRef.current) {
+        timeoutRef.current = window.setTimeout(() => {
+          nextSlide();
+        }, 5000);
+      }
+    }
+    setIsPlaying(prev => !prev);
+  }, [isPlaying, nextSlide]);
   
   // Intersection Observer for entrance animation
   useEffect(() => {
@@ -305,112 +403,155 @@ const StatisticsSection: React.FC = () => {
     return undefined;
   }, []);
   
-  // Handle hover to pause autoplay
-  const handleMouseEnter = useCallback(() => {
-    setIsHovered(true);
-    if (sliderInterval.current) {
-      clearInterval(sliderInterval.current);
+  // Función para reproducir sonido (actualmente deshabilitada por restricciones del navegador)
+  // Se mantiene como referencia para una implementación futura con interacción del usuario
+  
+  // Definir la animación de gradiente
+  const gradientAnimation = keyframes`
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  `;
+
+  // Estilo para el título con gradiente animado
+  const AnimatedTitle = styled.h2`
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.2;
+    background: linear-gradient(90deg, #0a4b2a, #ffeb3b, #0a4b2a);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: ${gradientAnimation} 5s ease infinite;
+    display: inline-block;
+    padding: 0 10px 5px;
+    text-shadow: none;
+    margin-top: 0;
+    
+    @media (max-width: 768px) {
+      font-size: 1.8rem;
     }
-  }, []);
-  
-  const handleMouseLeave = useCallback(() => {
-    setIsHovered(false);
-    sliderInterval.current = window.setInterval(() => {
-      nextSlide();
-    }, 5000);
-  }, [nextSlide]);
-  
-  // Handle touch events for mobile
-  const handleTouchStart = useCallback(() => {
-    if (sliderInterval.current) {
-      clearInterval(sliderInterval.current);
+    
+    @media (max-width: 480px) {
+      font-size: 1.5rem;
     }
-  }, []);
-  
-  // Resume autoplay on touch end
-  const handleTouchEnd = useCallback(() => {
-    sliderInterval.current = window.setInterval(() => {
-      nextSlide();
-    }, 5000);
-  }, [nextSlide]);
-  
-  // Play slide change sound effect (optional)
-  const playSlideSound = useCallback(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const audio = new Audio('/sounds/slide-change.mp3');
-        audio.volume = 0.3;
-        audio.play().catch((error) => {
-          console.warn('Error playing slide sound:', error);
-        });
-      } catch (error) {
-        console.warn('Error initializing audio:', error);
-      }
-    }
-  }, []);
-  
-  // Play sound on slide change
-  useEffect(() => {
-    playSlideSound();
-  }, [currentSlide, playSlideSound]);
-  
+  `;
+
   return (
-    <SliderContainer 
-      ref={sliderRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-    >
-      <SlideTrack style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-        {statisticsData.map((stat, index) => (
-          <StatisticSlide key={stat.id} isActive={index === currentSlide}>
-            <div 
-              style={{
-                backgroundImage: `url(${stat.image})`,
-              }}
-            >
-              <h2>{stat.title}</h2>
-              <p>{stat.description}</p>
-            </div>
-          </StatisticSlide>
-        ))}
-      </SlideTrack>
+    <div style={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
+      <div ref={sliderRef}>
+        <SliderContainer 
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={() => setIsHovered(true)}
+          onTouchEnd={() => setIsHovered(false)}
+        >
+          <SlideTrack style={{ 
+            transform: `translateX(-${currentSlide * 100}%)`,
+            width: `${statisticsData.length * 100}%`
+          }}>
+            {statisticsData.map((stat, index) => {
+              const isLastTwoSlides = index >= statisticsData.length - 2;
+              
+              return (
+                <div 
+                  key={stat.id} 
+                  style={{
+                    flex: '0 0 100%',
+                    width: '100%',
+                    height: '100%',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    backgroundColor: '#f0f0f0',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    backgroundImage: `url(${stat.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    filter: 'brightness(0.7)'
+                  }} />
+                  <div style={{
+                    position: 'relative',
+                    zIndex: 2,
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                    padding: '40px 20px',
+                    textAlign: 'center',
+                    color: 'white',
+                    textShadow: '0 2px 4px rgba(0,0,0,0.8)'
+                  }}>
+                    <div style={{
+                      maxWidth: '1000px',
+                      width: '100%',
+                      padding: '20px',
+                      borderRadius: '8px',
+                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                      backdropFilter: 'blur(4px)'
+                    }}>
+                      <AnimatedTitle>{stat.title}</AnimatedTitle>
+                      <p style={{
+                        fontSize: '1.3rem',
+                        lineHeight: '1.6',
+                        margin: '0 auto',
+                        maxWidth: '800px'
+                      }}>{stat.description}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </SlideTrack>
+        </SliderContainer>
+      </div>
 
       <div style={{
         position: 'absolute',
-        bottom: '15px',
+        bottom: '20px',
         left: '50%',
         transform: 'translateX(-50%)',
         display: 'flex',
-        gap: '8px',
+        gap: '12px',
         zIndex: 10,
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        padding: '0 10px',
-        maxWidth: '100%'
+        padding: '8px 12px',
+        borderRadius: '20px',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        backdropFilter: 'blur(4px)'
       }}>
         {statisticsData.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
             style={{
-              width: '10px',
-              height: '10px',
-              borderRadius: '50%',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              backgroundColor: index === currentSlide ? '#11914b' : 'rgba(255, 255, 255, 0.3)',
+              width: index === currentSlide ? '24px' : '12px',
+              height: '12px',
+              borderRadius: '6px',
+              border: 'none',
+              backgroundColor: index === currentSlide ? '#0a4b2a' : 'rgba(255, 255, 255, 0.5)',
               cursor: 'pointer',
               padding: 0,
               transition: 'all 0.3s ease',
-              flexShrink: 0,
-              transform: index === currentSlide ? 'scale(1.2)' : 'scale(1)',
+              outline: 'none'
             }}
             aria-label={`Ir a la diapositiva ${index + 1}`}
+            aria-current={index === currentSlide ? 'step' : undefined}
           />
         ))}
       </div>
-    </SliderContainer>
+    </div>
   );
 };
 

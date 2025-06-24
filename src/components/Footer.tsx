@@ -166,18 +166,20 @@ const LogoShine = styled.div`
   }
 `;
 
-const LogoLight = styled.div<{ top: string; left: string; size: string; delay: string }>`
+const LogoLight = styled.div<{ $top: string; $left: string; $size: string; $delay: string }>`
   position: absolute;
-  top: ${props => props.top};
-  left: ${props => props.left};
-  width: ${props => props.size};
-  height: ${props => props.size};
+  width: ${props => props.$size};
+  height: ${props => props.$size};
   background: rgba(255, 255, 255, 0.8);
   border-radius: 50%;
-  filter: blur(1.5px);
-  animation: twinkle 4s infinite alternate;
-  animation-delay: ${props => props.delay};
-  z-index: 3;
+  top: ${props => props.$top};
+  left: ${props => props.$left};
+  filter: blur(1px);
+  opacity: 0.7;
+  animation: pulse 4s ease-in-out infinite;
+  animation-delay: ${props => props.$delay};
+  transform: translate(-50%, -50%);
+  z-index: 1;
   box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.4);
 `;
 
@@ -388,8 +390,8 @@ const Footer: React.FC = () => {
                   <LogoGlow />
                   <LogoBorder />
                   <LogoShine />
-                  <LogoLight top="20%" left="20%" size="6px" delay="4s" />
-                  <LogoLight top="70%" left="70%" size="4px" delay="3s" />
+                  <LogoLight $top="20%" $left="20%" $size="6px" $delay="4s" />
+                  <LogoLight $top="70%" $left="70%" $size="4px" $delay="3s" />
                   <LogoReflection />
                 </LogoEffects>
               </Logo3DInner>

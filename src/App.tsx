@@ -51,12 +51,9 @@ const MainContent = styled.main`
 
 // Memoize the main App component
 const App: React.FC = () => {
-  // Only log in development
+  // Efecto de montaje
   useEffect(() => {
-    // This will only log once when the component mounts in development
-    if (import.meta.env.DEV) {
-      console.log('App se está renderizando');
-    }
+    // Aquí puedes agregar lógica de inicialización si es necesario
   }, []);
   
   // Memoize routes to prevent unnecessary re-renders
