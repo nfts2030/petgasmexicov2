@@ -1,0 +1,243 @@
+/* Estilos para móviles - Proceso y Beneficios */
+.process-benefits-mobile {
+  padding: 30px 0;
+  background-color: #f9f9f9;
+  -webkit-overflow-scrolling: touch;
+}
+
+.process-section, .benefits-section {
+  margin-bottom: 40px;
+  padding: 0 15px;
+}
+
+.section-title {
+  color: #0a4b2a;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #1abc9c;
+  text-align: center;
+  font-weight: 600;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Estilos para los pasos del proceso */
+.process-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 0 5px;
+}
+
+.process-step {
+  background: white;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+  border-left: 4px solid #0a4b2a;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.process-step:active {
+  transform: scale(0.98);
+}
+
+.step-number {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: #0a4b2a;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(10, 75, 42, 0.2);
+}
+
+.step-content h4 {
+  color: #0a4b2a;
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.step-content p {
+  color: #555;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Estilos para los beneficios */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  padding: 0 5px;
+}
+
+.benefit-card {
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  position: relative;
+  overflow: hidden;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+}
+
+.benefit-card:active {
+  transform: scale(0.98);
+}
+
+.benefit-card.green-gradient {
+  background: linear-gradient(135deg, #0a4b2a, #1abc9c);
+  color: white;
+}
+
+.benefit-card.dark-green-gradient {
+  background: linear-gradient(135deg, #1abc9c, #0a4b2a);
+  color: white;
+}
+
+.benefit-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.benefit-card.green-gradient .benefit-icon {
+  color: #ffc107;
+}
+
+.benefit-card.dark-green-gradient .benefit-icon {
+  color: #ffc107;
+}
+
+.benefit-card h4 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.benefit-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.95;
+}
+
+/* Llamado a la acción */
+.cta-container {
+  text-align: center;
+  margin-top: 40px;
+  padding: 30px 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  margin: 40px 15px 0;
+}
+
+.cta-container h3 {
+  color: #0a4b2a;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.cta-container p {
+  color: #666;
+  font-size: 1rem;
+  margin: 0 auto 20px;
+  max-width: 500px;
+  line-height: 1.5;
+}
+
+.cta-button {
+  display: inline-block;
+  background: #0a4b2a;
+  color: white;
+  text-decoration: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.cta-button:active {
+  transform: scale(0.96);
+  background: #0c5e35;
+}
+
+/* Media Queries para tablets y pantallas más grandes */
+@media (min-width: 768px) {
+  .process-benefits-mobile {
+    padding: 50px 0;
+  }
+  
+  .process-section, .benefits-section {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+/* Media Queries para escritorio */
+@media (min-width: 992px) {
+  .process-benefits-mobile {
+    padding: 70px 0;
+  }
+  
+  .process-steps {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .cta-container {
+    max-width: 800px;
+    margin: 60px auto 0;
+    padding: 40px;
+  }
+  
+  .cta-container h3 {
+    font-size: 1.6rem;
+  }
+}

@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap';
 import { FaTachometerAlt, FaClock, FaGasPump, FaFire, FaUsers, FaIndustry, FaRecycle, FaLeaf, FaChartLine, FaShieldAlt } from 'react-icons/fa';
 import { Helmet } from 'react-helmet';
 import '../../src/styles/equipmentSection.css';
+import '../../src/styles/processBenefits.css';
 
 const MaquinasPage: React.FC = () => {
   useEffect(() => {
@@ -172,118 +173,112 @@ const MaquinasPage: React.FC = () => {
         </Container>
       </section>
       
-      {/* Sección Integrada: Proceso y Beneficios */}
-      <section style={{ padding: '80px 0', backgroundColor: '#f9f9f9' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '40px', marginBottom: '60px' }}>
-            {/* Columna de Proceso */}
-            <div>
-              <h3 style={{ color: '#0a4b2a', fontSize: '2rem', marginBottom: '30px', paddingBottom: '15px', borderBottom: '3px solid #1abc9c', display: 'inline-block' }}>
-                Nuestro Proceso
-              </h3>
+      {/* Sección Integrada: Proceso y Beneficios - Versión Móvil */}
+      <section className="process-benefits-mobile">
+        <Container>
+          {/* Sección de Proceso */}
+          <div className="process-section">
+            <h2 className="section-title">Nuestro Proceso</h2>
+            
+            <div className="process-steps">
+              {/* Paso 1 */}
+              <div className="process-step">
+                <div className="step-number">1</div>
+                <div className="step-content">
+                  <h4>Recolección</h4>
+                  <p>Recolectamos residuos plásticos no reciclables de diversas fuentes para darles una segunda vida.</p>
+                </div>
+              </div>
               
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-                {/* Paso 1 */}
-                <div style={{ display: 'flex', gap: '20px', background: 'white', padding: '25px', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.05)', alignItems: 'flex-start' }}>
-                  <div style={{ flexShrink: 0, width: '50px', height: '50px', background: '#0a4b2a', color: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>1</div>
-                  <div>
-                    <h4 style={{ color: '#0a4b2a', margin: '0 0 10px 0', fontSize: '1.3rem' }}>Recolección</h4>
-                    <p style={{ color: '#666', margin: 0 }}>Recolectamos residuos plásticos no reciclables de diversas fuentes para darles una segunda vida.</p>
-                  </div>
+              {/* Paso 2 */}
+              <div className="process-step">
+                <div className="step-number">2</div>
+                <div className="step-content">
+                  <h4>Procesamiento</h4>
+                  <p>Los residuos se procesan en nuestras plantas de pirólisis a altas temperaturas controladas.</p>
                 </div>
-                
-                {/* Paso 2 */}
-                <div style={{ display: 'flex', gap: '20px', background: 'white', padding: '25px', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.05)', alignItems: 'flex-start', marginLeft: '30px' }}>
-                  <div style={{ flexShrink: 0, width: '50px', height: '50px', background: '#0a4b2a', color: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>2</div>
-                  <div>
-                    <h4 style={{ color: '#0a4b2a', margin: '0 0 10px 0', fontSize: '1.3rem' }}>Procesamiento</h4>
-                    <p style={{ color: '#666', margin: 0 }}>Los residuos se procesan en nuestras plantas de pirólisis a altas temperaturas controladas.</p>
-                  </div>
+              </div>
+              
+              {/* Paso 3 */}
+              <div className="process-step">
+                <div className="step-number">3</div>
+                <div className="step-content">
+                  <h4>Conversión</h4>
+                  <p>El plástico se convierte en gases que luego se condensan en combustibles limpios.</p>
                 </div>
-                
-                {/* Paso 3 */}
-                <div style={{ display: 'flex', gap: '20px', background: 'white', padding: '25px', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.05)', alignItems: 'flex-start' }}>
-                  <div style={{ flexShrink: 0, width: '50px', height: '50px', background: '#0a4b2a', color: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>3</div>
-                  <div>
-                    <h4 style={{ color: '#0a4b2a', margin: '0 0 10px 0', fontSize: '1.3rem' }}>Conversión</h4>
-                    <p style={{ color: '#666', margin: 0 }}>El plástico se convierte en gases que luego se condensan en combustibles limpios.</p>
-                  </div>
-                </div>
-                
-                {/* Paso 4 */}
-                <div style={{ display: 'flex', gap: '20px', background: 'white', padding: '25px', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.05)', alignItems: 'flex-start', marginLeft: '30px' }}>
-                  <div style={{ flexShrink: 0, width: '50px', height: '50px', background: '#0a4b2a', color: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>4</div>
-                  <div>
-                    <h4 style={{ color: '#0a4b2a', margin: '0 0 10px 0', fontSize: '1.3rem' }}>Distribución</h4>
-                    <p style={{ color: '#666', margin: 0 }}>Los combustibles resultantes se distribuyen para su uso en diversas aplicaciones industriales y comerciales.</p>
-                  </div>
+              </div>
+              
+              {/* Paso 4 */}
+              <div className="process-step">
+                <div className="step-number">4</div>
+                <div className="step-content">
+                  <h4>Distribución</h4>
+                  <p>Los combustibles resultantes se distribuyen para su uso en diversas aplicaciones industriales y comerciales.</p>
                 </div>
               </div>
             </div>
+          </div>
+          
+          {/* Sección de Beneficios */}
+          <div className="benefits-section">
+            <h2 className="section-title">Beneficios Clave</h2>
             
-            {/* Columna de Beneficios */}
-            <div>
-              <h3 style={{ color: '#0a4b2a', fontSize: '2rem', marginBottom: '30px', paddingBottom: '15px', borderBottom: '3px solid #1abc9c', display: 'inline-block' }}>
-                Beneficios Clave
-              </h3>
+            <div className="benefits-grid">
+              {/* Beneficio 1 */}
+              <div className="benefit-card green-gradient">
+                <div>
+                  <div className="benefit-icon">
+                    <FaRecycle />
+                  </div>
+                  <h4>Reducción de Residuos</h4>
+                  <p>Eliminamos plásticos no reciclables que de otra manera terminarían en vertederos o en el océano, contribuyendo a un planeta más limpio.</p>
+                </div>
+              </div>
               
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-                {/* Beneficio 1 */}
-                <div style={{ background: 'linear-gradient(135deg, #0a4b2a, #1abc9c)', color: 'white', padding: '30px', borderRadius: '10px', boxShadow: '0 10px 30px rgba(10, 75, 42, 0.15)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '15px' }}>
-                    <div style={{ fontSize: '2rem', color: '#ffc107' }}>
-                      <FaRecycle />
-                    </div>
-                    <h4 style={{ margin: 0, fontSize: '1.5rem', color: 'white' }}>Reducción de Residuos</h4>
+              {/* Beneficio 2 */}
+              <div className="benefit-card dark-green-gradient">
+                <div>
+                  <div className="benefit-icon">
+                    <FaLeaf />
                   </div>
-                  <p style={{ margin: 0, opacity: '0.95', lineHeight: '1.6' }}>Eliminamos plásticos no reciclables que de otra manera terminarían en vertederos o en el océano, contribuyendo a un planeta más limpio.</p>
+                  <h4>Energía Limpia</h4>
+                  <p>Producción de combustibles con hasta un 80% menos de emisiones de CO₂ en comparación con los combustibles fósiles tradicionales.</p>
                 </div>
-                
-                {/* Beneficio 2 */}
-                <div style={{ background: 'white', padding: '30px', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.05)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '15px' }}>
-                    <div style={{ fontSize: '2rem', color: '#0a4b2a' }}>
-                      <FaLeaf />
-                    </div>
-                    <h4 style={{ margin: 0, fontSize: '1.5rem', color: '#0a4b2a' }}>Energía Limpia</h4>
+              </div>
+              
+              {/* Beneficio 3 */}
+              <div className="benefit-card green-gradient">
+                <div>
+                  <div className="benefit-icon">
+                    <FaChartLine />
                   </div>
-                  <p style={{ margin: 0, color: '#666', lineHeight: '1.6' }}>Producción de combustibles con hasta un 80% menos de emisiones de CO₂ en comparación con los combustibles fósiles tradicionales.</p>
+                  <h4>Finanzas Regenerativas</h4>
+                  <p>Transformamos un problema de gestión de residuos plásticos en oportunidades económicas sostenibles.</p>
                 </div>
-                
-                {/* Beneficio 3 */}
-                <div style={{ background: 'white', padding: '30px', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.05)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '15px' }}>
-                    <div style={{ fontSize: '2rem', color: '#0a4b2a' }}>
-                      <FaChartLine />
-                    </div>
-                    <h4 style={{ margin: 0, fontSize: '1.5rem', color: '#0a4b2a' }}>Finanzas Regenerativas</h4>
+              </div>
+              
+              {/* Beneficio 4 */}
+              <div className="benefit-card dark-green-gradient">
+                <div>
+                  <div className="benefit-icon">
+                    <FaShieldAlt />
                   </div>
-                  <p style={{ margin: 0, color: '#666', lineHeight: '1.6' }}>Transformamos un problema de gestión de residuos plásticos en oportunidades.</p>
-                </div>
-                
-                {/* Beneficio 4 */}
-                <div style={{ background: 'linear-gradient(135deg, #1abc9c, #0a4b2a)', color: 'white', padding: '30px', borderRadius: '10px', boxShadow: '0 10px 30px rgba(10, 75, 42, 0.15)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '15px' }}>
-                    <div style={{ fontSize: '2rem', color: '#ffc107' }}>
-                      <FaShieldAlt />
-                    </div>
-                    <h4 style={{ margin: 0, fontSize: '1.5rem', color: 'white' }}>Cumplimiento Normativo</h4>
-                  </div>
-                  <p style={{ margin: 0, opacity: '0.95', lineHeight: '1.6' }}>Ayudamos a las empresas a cumplir con las regulaciones ambientales y a alcanzar sus objetivos de sostenibilidad corporativa.</p>
+                  <h4>Cumplimiento Normativo</h4>
+                  <p>Ayudamos a las empresas a cumplir con las regulaciones ambientales y a alcanzar sus objetivos de sostenibilidad corporativa.</p>
                 </div>
               </div>
             </div>
           </div>
           
           {/* Llamado a la acción */}
-          <div style={{ textAlign: 'center', marginTop: '50px', padding: '40px', background: 'white', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.05)' }}>
-            <h3 style={{ color: '#0a4b2a', fontSize: '1.8rem', marginBottom: '15px' }}>¿Quisieras saber más de cómo implementar PETGAS en tu cadena de valor comercial?</h3>
-            <p style={{ color: '#666', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto 25px' }}>Juntos podemos implementar un plan para descarbonizar tu empresa o a ti mismo</p>
-            <a href="/contacto" style={{ display: 'inline-block', background: '#0a4b2a', color: 'white', textDecoration: 'none', padding: '12px 30px', borderRadius: '30px', fontWeight: '600', fontSize: '1.1rem', transition: 'all 0.3s ease' }}>
+          <div className="cta-container">
+            <h3>¿Quisieras saber más de cómo implementar PETGAS en tu cadena de valor comercial?</h3>
+            <p>Juntos podemos implementar un plan para descarbonizar tu empresa o a ti mismo</p>
+            <a href="/contacto" className="cta-button">
               Contáctanos Ahora
             </a>
           </div>
-        </div>
+        </Container>
       </section>
       
       {/* Footer placeholder */}

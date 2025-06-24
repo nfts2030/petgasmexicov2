@@ -289,7 +289,7 @@ const ContactoPage: FC = () => {
             <div className="icon">✉️</div>
             <div className="details">
               <h4>Correo Electrónico</h4>
-              <p><a href="mailto:enlace@petgas.com.mx" style={{ color: '#2c3e50', textDecoration: 'none' }}>enlace@petgas.com.mx</a></p>
+              <p><a href="mailto:contacto@petgas.com.mx" style={{ color: '#2c3e50', textDecoration: 'none' }}>contacto@petgas.com.mx</a></p>
             </div>
           </InfoItem>
           

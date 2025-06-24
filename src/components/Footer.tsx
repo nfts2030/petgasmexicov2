@@ -716,7 +716,7 @@ const Footer: React.FC = () => {
               </p>
               <p>
                 <i className="fas fa-envelope"></i>
-                <a href="mailto:enlace@petgas.com.mx">enlace@petgas.com.mx</a>
+                <a href="mailto:contacto@petgas.com.mx">contacto@petgas.com.mx</a>
               </p>
               <p>
                 <i className="fas fa-clock"></i>

@@ -4,6 +4,7 @@
 [![React](https://img.shields.io/badge/React-18.2.0-61DAFB?logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 [![Styled Components](https://img.shields.io/badge/styled--components-DB7093?logo=styled-components&logoColor=white)](https://styled-components.com/)
+[![Última Actualización](https://img.shields.io/badge/Última_Actualización-24_Jun_2025-brightgreen)]()
 
 Versión móvil optimizada del sitio web oficial de [PETGAS México](https://petgas.com.mx/). Este proyecto es una adaptación fiel del sitio web original, diseñada específicamente para ofrecer la mejor experiencia en dispositivos móviles, con mejoras en la interfaz de usuario y rendimiento.
 
@@ -44,10 +45,13 @@ Cada tipo de plástico incluye su símbolo de identificación estándar superpue
 
 ## 🚀 Características Principales
 
-- **Diseño responsive** que se adapta a cualquier dispositivo móvil
-- **Navegación intuitiva** con menú desplegable
-- **Páginas optimizadas** para carga rápida
+- **Diseño 100% móvil** con interfaz optimizada para pantallas táctiles
+- **Navegación intuitiva** con menú desplegable y gestos táctiles
+- **Páginas optimizadas** para carga ultrarrápida en redes móviles
 - **Efectos visuales modernos** con gradientes animados y transiciones suaves
+- **Sección de Proceso** rediseñada para mejor legibilidad en móviles
+- **Tarjetas de Beneficios** con diseño adaptativo y efectos táctiles
+- **Contacto actualizado** con el nuevo correo: contacto@petgas.com.mx
 - **Animaciones optimizadas** con Framer Motion y CSS puro
 - **Accesibilidad** siguiendo las mejores prácticas WCAG
 - **Tipografía e iconografía** optimizadas para móviles
@@ -106,6 +110,15 @@ src/
 - **Contacto** (`/contacto`) - Formulario de contacto
 - **Intranet** (`/intranet`) - Acceso al sistema interno
 
+## 📱 Páginas del Sitio
+
+- **Inicio**: Vista general de PETGAS con secciones destacadas
+- **Máquinas**: Catálogo de maquinaria para reciclaje con diseño optimizado para móviles
+- **Contacto**: Formulario de contacto y datos de la empresa (correo actualizado)
+- **Nosotros**: Información sobre la empresa y su misión
+- **Proceso**: Explicación detallada del proceso de reciclaje con diseño paso a paso
+- **Beneficios**: Tarjetas interactivas que destacan las ventajas de PETGAS
+
 ## 🏃‍♂️ Empezando
 
 ### Prerrequisitos
@@ -126,17 +139,20 @@ src/
    ```bash
    npm install
    # o
-   yarn
+   yarn install
    ```
 
 3. Inicia el servidor de desarrollo:
    ```bash
-   npm run dev
+   npm start
    # o
-   yarn dev
+   yarn start
    ```
 
-4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador
+4. Escanea el código QR con tu dispositivo móvil o abre en el navegador:
+   ```
+   http://localhost:3000
+   ```
 
 ## ✨ Últimas Mejoras
 
