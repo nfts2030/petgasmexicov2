@@ -287,7 +287,7 @@ const ServiceLink = styled.a`
   }
 `;
 
-import GasBottleIcon from '../ui/GasBottleIcon';
+
 
 const services: Service[] = [
   {
@@ -295,7 +295,7 @@ const services: Service[] = [
     title: 'Transformación de Plásticos',
     description: 'Aprovechamos las cadenas de carbono que contiene el plástico para gasificarlas y condensarlas en combustibles limpios.',
     icon: '',
-    customIcon: GasBottleIcon,
+    customIcon: null,
     image: '/services/transformacion.jpg'
   }
 ];
