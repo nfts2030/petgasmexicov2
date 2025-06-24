@@ -159,37 +159,23 @@ const ProcessDescription = styled.p`
 const processSteps = [
   {
     id: 1,
-    title: 'Recolección Selectiva',
-    description: 'Recolectamos residuos plásticos de empresas, industrias y centros de acopio, asegurando una cadena de suministro sostenible.',
-    icon: 'fas fa-truck',
+    title: 'Vinculación con Centros de Acopio',
+    description: 'A través de alianzas estratégicas logramos valorizar residuos plásticos no reciclables que anteriormente eran considerados "basura".',
+    icon: 'fas fa-handshake',
     isEven: false
   },
   {
     id: 2,
-    title: 'Clasificación y Preparación',
-    description: 'Los plásticos se clasifican por tipo y se preparan para el proceso de transformación, eliminando impurezas y materiales no deseados.',
-    icon: 'fas fa-tasks',
+    title: 'Gestión de Residuos',
+    description: 'Nuestro enfoque sostenible garantiza que los residuos plásticos sean transformados de manera responsable y eficiente.',
+    icon: 'fas fa-recycle',
     isEven: true
   },
   {
     id: 3,
-    title: 'Pirólisis NO Catalítica',
-    description: 'Mediante un proceso térmico controlado en ausencia de oxígeno, los plásticos se descomponen en moléculas más pequeñas, generando gases que luego se condensan en combustibles líquidos.',
-    icon: 'fas fa-fire',
-    isEven: false
-  },
-  {
-    id: 4,
-    title: 'Refinación y Purificación',
-    description: 'Los combustibles obtenidos se someten a procesos de refinación para cumplir con los estándares de calidad requeridos para su uso en motores y maquinaria.',
-    icon: 'fas fa-filter',
-    isEven: true
-  },
-  {
-    id: 5,
-    title: 'Distribución',
-    description: 'Los combustibles limpios y sostenibles se distribuyen a nuestros clientes, cerrando así el ciclo de la economía circular.',
-    icon: 'fas fa-truck-loading',
+    title: 'Autosuficiencia Energética',
+    description: 'Los combustibles de los vehículos de recolección son Petgas, logrando hacer nuestro movimiento totalmente autosuficiente y alineado con los acuerdos de París.',
+    icon: 'fas fa-leaf',
     isEven: false
   }
 ];
@@ -223,7 +209,7 @@ const ProcessSection: React.FC = () => {
     <ProcessContainer id="proceso">
       <SectionTitle>Nuestro Proceso</SectionTitle>
       <SectionSubtitle>
-        Transformación innovadora de residuos plásticos en energía limpia y sostenible
+        Pasos para avanzar en la difícil tarea de la descarbonización mundial.
       </SectionSubtitle>
       
       <ProcessTimeline>

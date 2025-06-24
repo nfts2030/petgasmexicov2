@@ -163,6 +163,76 @@ src/
 - `npm run format` - Formatea el código
 - `npm test` - Ejecuta las pruebas (si están configuradas)
 
+## 🎨 Efecto 3D del Logo
+
+El logo en el footer utiliza un efecto 3D avanzado que combina múltiples capas y animaciones CSS. A continuación se detalla su implementación:
+
+### Estructura del Componente
+
+```jsx
+<Logo3DContainer>
+  <Logo3DInner>
+    <LogoFront>
+      <img src="/img/logoGlow.png" alt="PETGAS Logo" />
+    </LogoFront>
+    <LogoEffects>
+      <LogoGlow />
+      <LogoBorder />
+      <LogoShine />
+      <LogoLight top="20%" left="20%" size="6px" delay="4s" />
+      <LogoLight top="70%" left="70%" size="4px" delay="3s" />
+      <LogoReflection />
+    </LogoEffects>
+  </Logo3DInner>
+  <LogoShadow />
+</Logo3DContainer>
+```
+
+### Animaciones Principales
+
+1. **Flotación 3D** (`float3d`):
+   - Movimiento suave de flotación en 3D
+   - Rotación sutil en los ejes X e Y
+   - Cambio en la sombra para dar profundidad
+
+2. **Brillo** (`shine`):
+   - Efecto de luz que se desliza sobre el logo
+   - Se mueve en diagonal a través del contenedor
+
+3. **Destellos** (`twinkle`):
+   - Puntos de luz que parpadean suavemente
+   - Tamaño y opacidad variables
+
+4. **Sombra Pulsante** (`shadowPulse`):
+   - Sombra que cambia de tamaño y opacidad
+   - Crea efecto de profundidad y realismo
+
+5. **Pulso** (`pulse`):
+   - Efecto de resplandor que late suavemente
+   - Aumenta y disminuye de tamaño y opacidad
+
+### Componentes del Efecto
+
+- **Logo3DContainer**: Contenedor principal con perspectiva 3D
+- **Logo3DInner**: Elemento interno que contiene las capas del logo
+- **LogoFront**: Capa frontal con la imagen del logo
+- **LogoEffects**: Contenedor para efectos visuales
+- **LogoGlow**: Resplandor base alrededor del logo
+- **LogoBorder**: Borde con sombra sutil
+- **LogoShine**: Efecto de brillo deslizante
+- **LogoLight**: Puntos de luz parpadeantes
+- **LogoShadow**: Sombra proyectada debajo del logo
+- **LogoReflection**: Reflejo de luz en la parte superior
+
+### Personalización
+
+Puedes ajustar los siguientes parámetros:
+
+- Tamaño del logo: Modifica `width` y `height` en `Logo3DContainer`
+- Intensidad del efecto: Ajusta `opacity` y `filter` en los componentes de efectos
+- Velocidad de animación: Modifica las duraciones en las definiciones de `keyframes`
+- Colores: Actualiza los gradientes en `LogoGlow` y otros componentes
+
 ## 🌐 Despliegue
 
 El proyecto está configurado para desplegarse fácilmente en Vercel o Netlify. Simplemente haz push a la rama `main` para desplegar automáticamente.

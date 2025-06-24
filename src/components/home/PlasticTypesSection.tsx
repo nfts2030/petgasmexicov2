@@ -112,7 +112,7 @@ const PlasticTypesSection: React.FC = () => {
 
   return (
     <SectionContainer>
-      <Title>¿Qué tipo de Plástico que Transformamos?</Title>
+      <Title>Tipos de plásticos Pirolizables</Title>
       <Subtitle>Conoce los diferentes tipos de plástico que transformamos en energía</Subtitle>
       <div style={{ 
         display: 'grid',

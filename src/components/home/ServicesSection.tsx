@@ -266,24 +266,10 @@ const ServiceLink = styled.a`
 const services = [
   {
     id: 1,
-    title: 'Recolección de Residuos',
-    description: 'Servicio profesional de recolección de residuos plásticos de empresas e industrias, asegurando un manejo responsable y trazabilidad del material.',
-    icon: 'fas fa-truck-loading',
-    image: '/services/recoleccion.jpg'
-  },
-  {
-    id: 2,
     title: 'Transformación de Plásticos',
-    description: 'Tecnología avanzada de pirólisis catalítica para convertir residuos plásticos en combustibles limpios y otros productos de valor agregado.',
+    description: 'Aprovechamos las cadenas de carbono que contiene el plástico para gasificarlas y condensarlas en combustibles limpios.',
     icon: 'fas fa-recycle',
     image: '/services/transformacion.jpg'
-  },
-  {
-    id: 3,
-    title: 'Asesoría Ambiental',
-    description: 'Soluciones personalizadas para la gestión integral de residuos, cumplimiento normativo y estrategias de economía circular para tu organización.',
-    icon: 'fas fa-clipboard-check',
-    image: '/services/asesoria.jpg'
   }
 ];
 
