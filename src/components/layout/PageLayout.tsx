@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 interface PageLayoutProps {
   children: React.ReactNode;
-  title: string;
+  title?: string;
   className?: string;
 }
 
@@ -50,17 +50,18 @@ const Content = styled.div`
 `;
 
 const PageLayout: React.FC<PageLayoutProps> = ({ children, title, className }) => {
-  // Scroll al inicio al cargar la página
   useEffect(() => {
-    scroll.scrollToTop();
+    // Scroll suave al principio de la página
+    scroll.scrollToTop({
+      duration: 300,
+      smooth: true,
+    });
   }, []);
 
   return (
     <PageContainer className={className}>
-      <Title>{title}</Title>
-      <Content>
-        {children}
-      </Content>
+      {title && <Title>{title}</Title>}
+      <Content>{children}</Content>
     </PageContainer>
   );
 };

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import PageLayout from '../components/layout/PageLayout';
 import LogoSpinner from '../components/ui/LogoSpinner';
 
-// Animaciones
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+// Animaciones para el gradiente
+const gradientAnimation = keyframes`
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 `;
 
 // Styled components
@@ -42,23 +43,32 @@ const HeroContent = styled.div`
 `;
 
 const HeroTitle = styled.h1`
-  font-size: 2.8rem;
   margin-bottom: 20px;
+  font-size: 2.5rem;
   font-weight: 700;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  animation: ${fadeIn} 1s ease-out forwards;
+  line-height: 1.2;
+  padding: 0 15px;
+  background: linear-gradient(90deg, #0a4b2a, #ffeb3b, #0a4b2a);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ${gradientAnimation} 5s ease infinite;
+  display: inline-block;
   
   @media (max-width: 768px) {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
   }
 `;
 
 const HeroSubtitle = styled.p`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   max-width: 800px;
   margin: 0 auto;
-  opacity: 0;
-  animation: ${fadeIn} 1s ease-out 0.3s forwards;
+  line-height: 1.6;
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: none;
+  padding: 0 10px;
   
   @media (max-width: 768px) {
     font-size: 1rem;
@@ -87,33 +97,23 @@ const TeamGrid = styled.div`
 // Animaciones para las tarjetas
 
 const TeamMember = styled.div<{ $isVisible: boolean; $delay: number }>`
-  background: #fff;
-  border-radius: 16px;
+  background: white;
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-  transform: translateY(0) scale(1);
-  position: relative;
-  z-index: 1;
-  opacity: 0;
-  animation: ${({ $isVisible, $delay }) => 
-    $isVisible ? css`${fadeIn} 0.6s ease-out ${$delay}s forwards` : 'none'
-  };
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: ${({ $isVisible }) => $isVisible ? 1 : 0};
+  transform: ${({ $isVisible }) => $isVisible ? 'translateY(0)' : 'translateY(30px)'};
+  transition: all 0.6s ease-out ${({ $delay }) => $delay}s;
   
   &:hover {
-    transform: translateY(-10px) scale(1.02);
+    transform: translateY(-10px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-    
-    .member-image {
-      transform: scale(1.05);
-      filter: brightness(1);
-    }
-    
-    .social-links {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  }
+  
+  @media (max-width: 768px) {
+    max-width: 350px;
+    margin: 0 auto 30px;
   }
 `;
 
@@ -441,7 +441,7 @@ const EquipoPage: React.FC = () => {
   }, [location]);
 
   return (
-    <PageLayout title="Nuestro Equipo">
+    <PageLayout>
       <HeroSection>
         <HeroContent>
           <HeroTitle>Nuestro Equipo</HeroTitle>

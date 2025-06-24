@@ -2,8 +2,36 @@ import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { FaTachometerAlt, FaClock, FaGasPump, FaFire, FaUsers, FaIndustry, FaRecycle, FaLeaf, FaChartLine, FaShieldAlt } from 'react-icons/fa';
 import { Helmet } from 'react-helmet';
+import { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import '../../src/styles/equipmentSection.css';
 import '../../src/styles/processBenefits.css';
+
+// Animación de gradiente
+const gradientAnimation = keyframes`
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+`;
+
+const AnimatedGradientText = styled.h1`
+  margin-bottom: 20px;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 0 15px;
+  margin-top: 0;
+  background: linear-gradient(90deg, #0a4b2a, #ffeb3b, #0a4b2a);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ${gradientAnimation} 5s ease infinite;
+  display: inline-block;
+  
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
+  }
+`;
 
 const MaquinasPage: React.FC = () => {
   useEffect(() => {
@@ -42,10 +70,30 @@ const MaquinasPage: React.FC = () => {
       <div id="header-placeholder"></div>
       
       {/* Hero Section */}
-      <section className="equipment-hero" style={{ paddingTop: '100px', paddingBottom: '60px' }}>
-        <div className="container">
-          <h1 style={{ marginBottom: '20px' }}>Nuestras Plantas de Pirólisis NO Catalítica</h1>
-          <p style={{ marginBottom: '0' }}>Soluciones industriales para la transformación de residuos plásticos en combustibles limpios</p>
+      <section className="equipment-hero" style={{ 
+        paddingTop: '100px', 
+        paddingBottom: '60px',
+        position: 'relative',
+        zIndex: 1
+      }}>
+        <div className="container" style={{ 
+          textAlign: 'center', 
+          maxWidth: '800px', 
+          margin: '0 auto',
+          position: 'relative',
+          zIndex: 2
+        }}>
+          <AnimatedGradientText>Nuestras Plantas de Pirólisis NO Catalítica</AnimatedGradientText>
+          <p style={{ 
+            marginBottom: '0', 
+            fontSize: '1.1rem', 
+            lineHeight: '1.6',
+            color: '#ffffff',
+            display: 'inline-block',
+            padding: '0 10px',
+            fontWeight: '700',
+            textShadow: 'none'
+          }}>Soluciones industriales para la transformación de residuos plásticos en combustibles limpios</p>
         </div>
       </section>
       
