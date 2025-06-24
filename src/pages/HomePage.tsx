@@ -1,10 +1,10 @@
 import React from 'react';
 import { Container, Button } from 'react-bootstrap';
 import styled, { keyframes } from 'styled-components';
-import ServicesSection from '../components/home/ServicesSection';
 import ProcessSection from '../components/home/ProcessSection';
 import PlasticTypesSection from '../components/home/PlasticTypesSection';
 import StatisticsSection from '../components/home/StatisticsSection';
+import ServicesSectionNew from '../components/home/ServicesSectionNew';
 
 // Animations
 const float = keyframes`
@@ -159,8 +159,10 @@ const HomePage: React.FC = () => {
       {/* Sección de Estadísticas */}
       <StatisticsSection />
 
-      {/* Secciones de la página */}
-      <ServicesSection />
+      {/* Nuestros Servicios */}
+      <ServicesSectionNew />
+
+      {/* Tipos de plásticos */}
       <PlasticTypesSection />
       <ProcessSection />
       

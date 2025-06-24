@@ -97,25 +97,48 @@ const ServiceCard = styled(motion.div).attrs({
   }
 `;
 
+interface Service {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
+  customIcon?: any; // Para manejar tanto string (URL) como componente React
+  image: string;
+}
+
 interface ServiceImageProps {
   $image?: string;
 }
 
-const ServiceIcon = styled.div`
+interface ServiceIconProps {
+  $hasCustomIcon?: boolean;
+}
+
+const ServiceIcon = styled.div<ServiceIconProps>`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1);
-  width: 100px;
-  height: 100px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  overflow: visible;
+  pointer-events: none;
+  
+  & > * {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+  }
   
   i {
     font-size: 3rem;
@@ -264,12 +287,15 @@ const ServiceLink = styled.a`
   }
 `;
 
-const services = [
+import GasBottleIcon from '../ui/GasBottleIcon';
+
+const services: Service[] = [
   {
     id: 1,
     title: 'Transformación de Plásticos',
     description: 'Aprovechamos las cadenas de carbono que contiene el plástico para gasificarlas y condensarlas en combustibles limpios.',
-    icon: 'fas fa-recycle',
+    icon: '',
+    customIcon: GasBottleIcon,
     image: '/services/transformacion.jpg'
   }
 ];
@@ -301,8 +327,18 @@ const ServicesSection: React.FC = () => {
                   }}
                 />
               )}
-              <ServiceIcon>
-                <i className={service.icon}></i>
+              <ServiceIcon $hasCustomIcon={!!service.customIcon}>
+                {service.icon ? (
+                  <i className={service.icon} />
+                ) : service.customIcon ? (
+                  typeof service.customIcon === 'string' ? (
+                    <img src={service.customIcon} alt={service.title} />
+                  ) : (
+                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <service.customIcon />
+                  </div>
+                  )
+                ) : null}
               </ServiceIcon>
               <div className="service-title">
                 {service.title}
