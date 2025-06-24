@@ -45,21 +45,40 @@ const SlideTrack = styled.div`
 const SliderContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 350px; /* Aumentar altura para acomodar textos */
+  height: 650px; /* Aumentada aún más para mostrar imágenes más grandes */
   overflow: hidden;
   margin: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Alinear al inicio para que el contenido baje */
+  padding-top: 100px; /* Bajar el contenido */
+  
+  /* Ajustes para pantallas grandes */
+  @media (max-width: 1440px) {
+    height: 600px;
+  }
+  
+  /* Ajustes para laptops */
+  @media (max-width: 1200px) {
+    height: 550px;
+  }
+  
+  /* Ajustes para tablets */
+  @media (max-width: 992px) {
+    height: 500px;
+    padding-top: 80px;
+  }
   
   /* Ajustes para móviles */
   @media (max-width: 768px) {
-    height: 250px;
+    height: 450px;
+    padding-top: 60px;
   }
   
   /* Ajustes para móviles pequeños */
   @media (max-width: 480px) {
-    height: 200px;
+    height: 380px;
+    padding-top: 50px;
   }
 `;
 
@@ -329,14 +348,17 @@ const StatisticsSection: React.FC = () => {
                 >
                   <div style={{
                     position: 'absolute',
-                    top: 0,
-                    left: 0,
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
                     width: '100%',
                     height: '100%',
                     backgroundImage: `url(${stat.image})`,
-                    backgroundSize: 'cover',
+                    backgroundSize: 'contain',
                     backgroundPosition: 'center',
-                    filter: 'brightness(0.7)'
+                    backgroundRepeat: 'no-repeat',
+                    backgroundColor: '#000',
+                    filter: 'brightness(0.9)'
                   }} />
                   <div style={{
                     position: 'relative',
@@ -355,10 +377,12 @@ const StatisticsSection: React.FC = () => {
                     <div style={{
                       maxWidth: '1000px',
                       width: '100%',
-                      padding: '20px',
-                      borderRadius: '8px',
-                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                      backdropFilter: 'blur(4px)'
+                      padding: '25px',
+                      borderRadius: '10px',
+                      backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                      backdropFilter: 'blur(6px)',
+                      marginBottom: '30px',
+                      transform: 'translateY(50px)' /* Bajar más el texto */
                     }}>
                       <AnimatedTitle>{stat.title}</AnimatedTitle>
                       <p style={{
