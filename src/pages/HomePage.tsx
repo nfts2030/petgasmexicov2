@@ -177,7 +177,7 @@ const HomePage: React.FC = () => {
             marginBottom: '20px',
             fontWeight: '700'
           }}>
-            ¿Listo para ser parte del cambio?
+            ¿Quisieras saber más de cómo implementar PETGAS en tu cadena de valor comercial?
           </h2>
           <p style={{
             fontSize: '1.2rem',
@@ -185,7 +185,7 @@ const HomePage: React.FC = () => {
             margin: '0 auto 30px',
             lineHeight: '1.8'
           }}>
-            Únete a nuestra misión de transformar residuos plásticos en energía limpia y sostenible para un futuro mejor.
+            Juntos podemos implementar un plan para descarbonizar tu empresa o a ti mismo
           </p>
           <Button 
             variant="light" 

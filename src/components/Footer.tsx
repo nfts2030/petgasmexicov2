@@ -691,13 +691,13 @@ const Footer: React.FC = () => {
           </FooterLogo>
           
           <FooterSection>
-            <h3>Enlaces rápidos</h3>
+            <h3>Enlaces</h3>
             <FooterMenu>
               <li><Link to="/">INICIO</Link></li>
               <li><Link to="/equipo">EQUIPO</Link></li>
               <li><Link to="/maquinas">MÁQUINAS</Link></li>
               <li><Link to="/combustibles">COMBUSTIBLES</Link></li>
-              <li><Link to="/creditos">CRÉDITOS</Link></li>
+              <li><Link to="/creditos">CRÉDITOS PLÁSTICOS</Link></li>
               <li><Link to="/contacto">CONTACTO</Link></li>
               <li><Link to="/intranet" className="highlight">INTRANET</Link></li>
             </FooterMenu>

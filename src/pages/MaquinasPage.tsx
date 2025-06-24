@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { FaTachometerAlt, FaClock, FaGasPump, FaFire, FaUsers, FaIndustry, FaRecycle, FaLeaf, FaChartLine, FaShieldAlt } from 'react-icons/fa';
 import { Helmet } from 'react-helmet';
+import '../../src/styles/equipmentSection.css';
 
 const MaquinasPage: React.FC = () => {
   useEffect(() => {
@@ -40,15 +41,16 @@ const MaquinasPage: React.FC = () => {
       <div id="header-placeholder"></div>
       
       {/* Hero Section */}
-      <section className="equipment-hero">
+      <section className="equipment-hero" style={{ paddingTop: '100px', paddingBottom: '60px' }}>
         <div className="container">
-          <h1>Nuestras Plantas de Pirólisis NO Catalítica</h1>
-          <p>Soluciones industriales para la transformación de residuos plásticos en combustibles limpios</p>
+          <h1 style={{ marginBottom: '20px' }}>Nuestras Plantas de Pirólisis NO Catalítica</h1>
+          <p style={{ marginBottom: '0' }}>Soluciones industriales para la transformación de residuos plásticos en combustibles limpios</p>
         </div>
       </section>
       
       {/* Sección de Equipos */}
-      <Container style={{ padding: '80px 20px' }}>
+      <section className="equipment-section">
+        <Container>
         <div className="equipment-grid">
           {/* Equipo P-90 */}
           <div className="equipment-card">
@@ -167,7 +169,8 @@ const MaquinasPage: React.FC = () => {
             </div>
           </div>
         </div>
-      </Container>
+        </Container>
+      </section>
       
       {/* Sección Integrada: Proceso y Beneficios */}
       <section style={{ padding: '80px 0', backgroundColor: '#f9f9f9' }}>
@@ -274,8 +277,8 @@ const MaquinasPage: React.FC = () => {
           
           {/* Llamado a la acción */}
           <div style={{ textAlign: 'center', marginTop: '50px', padding: '40px', background: 'white', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.05)' }}>
-            <h3 style={{ color: '#0a4b2a', fontSize: '1.8rem', marginBottom: '15px' }}>¿Listo para transformar tus residuos en recursos?</h3>
-            <p style={{ color: '#666', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto 25px' }}>Contáctanos para conocer cómo podemos ayudarte a implementar una solución sostenible para la gestión de residuos plásticos en tu empresa.</p>
+            <h3 style={{ color: '#0a4b2a', fontSize: '1.8rem', marginBottom: '15px' }}>¿Quisieras saber más de cómo implementar PETGAS en tu cadena de valor comercial?</h3>
+            <p style={{ color: '#666', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto 25px' }}>Juntos podemos implementar un plan para descarbonizar tu empresa o a ti mismo</p>
             <a href="/contacto" style={{ display: 'inline-block', background: '#0a4b2a', color: 'white', textDecoration: 'none', padding: '12px 30px', borderRadius: '30px', fontWeight: '600', fontSize: '1.1rem', transition: 'all 0.3s ease' }}>
               Contáctanos Ahora
             </a>

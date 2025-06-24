@@ -394,7 +394,7 @@ const CombustiblesPage: React.FC = () => {
     {
       id: 4,
       name: 'PETFINA',
-      image: '/img/combustibles/petgas-ultra.png',
+      video: '/img/parafina.mp4',
       description: 'Producto refinado, representa el 5% del producto final.',
       properties: ['5% del rendimiento', 'Alta pureza', 'Usos específicos']
     },
