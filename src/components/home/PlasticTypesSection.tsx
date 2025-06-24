@@ -42,6 +42,32 @@ const Subtitle = styled.p`
   padding: 0 20px;
 `;
 
+const CardsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+
+  @media (max-width: 1400px) {
+    & > *:nth-last-child(2) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      max-width: 300px;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    & > *:nth-last-child(-n+2) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      max-width: 300px;
+    }
+  }
+`;
+
 
 const PlasticTypesSection: React.FC = () => {
   // Agregar efecto para depuración
@@ -114,29 +140,18 @@ const PlasticTypesSection: React.FC = () => {
     <SectionContainer>
       <Title>Tipos de plásticos Pirolizables</Title>
       <Subtitle>Conoce los diferentes tipos de plástico que transformamos en energía</Subtitle>
-      <div style={{ 
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-        gap: '30px',
-        padding: '20px',
-        maxWidth: '1400px',
-        margin: '0 auto',
-        width: '100%'
-      }}>
-        {plasticTypes.map((plastic) => {
-          console.log('Mapeando plástico:', plastic.type, plastic);
-          return (
-            <PlasticCard
-              key={plastic.id}
-              imageUrl={plastic.image}
-              symbolUrl={plastic.symbol}
-              name={plastic.name}
-              description={plastic.description}
-              number={plastic.number}
-            />
-          );
-        })}
-      </div>
+      <CardsContainer>
+        {plasticTypes.map((plastic) => (
+          <PlasticCard
+            key={plastic.id}
+            imageUrl={plastic.image}
+            symbolUrl={plastic.symbol}
+            name={plastic.name}
+            description={plastic.description}
+            number={plastic.number}
+          />
+        ))}
+      </CardsContainer>
     </SectionContainer>
   );
 };

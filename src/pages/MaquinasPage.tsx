@@ -203,7 +203,7 @@ const MaquinasPage: React.FC = () => {
                   <div style={{ flexShrink: 0, width: '50px', height: '50px', background: '#0a4b2a', color: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>3</div>
                   <div>
                     <h4 style={{ color: '#0a4b2a', margin: '0 0 10px 0', fontSize: '1.3rem' }}>Conversión</h4>
-                    <p style={{ color: '#666', margin: 0 }}>El plástico se convierte en gases que luego se condensan en combustibles limpios y reutilizables.</p>
+                    <p style={{ color: '#666', margin: 0 }}>El plástico se convierte en gases que luego se condensan en combustibles limpios.</p>
                   </div>
                 </div>
                 
@@ -253,9 +253,9 @@ const MaquinasPage: React.FC = () => {
                     <div style={{ fontSize: '2rem', color: '#0a4b2a' }}>
                       <FaChartLine />
                     </div>
-                    <h4 style={{ margin: 0, fontSize: '1.5rem', color: '#0a4b2a' }}>Rentabilidad</h4>
+                    <h4 style={{ margin: 0, fontSize: '1.5rem', color: '#0a4b2a' }}>Finanzas Regenerativas</h4>
                   </div>
-                  <p style={{ margin: 0, color: '#666', lineHeight: '1.6' }}>Solución económicamente viable que convierte un problema de gestión de residuos en una oportunidad de negocio sostenible.</p>
+                  <p style={{ margin: 0, color: '#666', lineHeight: '1.6' }}>Transformamos un problema de gestión de residuos plásticos en oportunidades.</p>
                 </div>
                 
                 {/* Beneficio 4 */}
