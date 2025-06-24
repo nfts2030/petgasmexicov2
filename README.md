@@ -16,6 +16,20 @@ Crear una versión móvil del sitio web de PETGAS que:
 - Sea rápida, accesible y fácil de usar en cualquier dispositivo móvil
 - Incluya efectos visuales modernos como gradientes animados y transiciones suaves
 
+## ♻️ Tipos de Plástico Soportados
+
+La aplicación muestra información detallada sobre diferentes tipos de plásticos reciclables, incluyendo:
+
+| Tipo | Nombre | Descripción |
+|------|--------|-------------|
+| PET | Tereftalato de Polietileno | Botellas de agua, refrescos, envases de alimentos, bandejas, alfombras |
+| HDPE | Polietileno de Alta Densidad | Botes de Gel, botellas de lácteos, botellas de shampoo, baldes |
+| LDPE | Polietileno de Baja Densidad | Bolsas de plástico, envolturas, botellas exprimibles, tapas flexibles |
+| PP | Polipropileno | Envases de yogur, tapas de botellas, pajitas, envases de medicamentos |
+| PS | Poliestireno | Vasos desechables, bandejas de carne, envases de comida rápida |
+
+Cada tipo de plástico incluye una tarjeta informativa con su símbolo, descripción detallada y ejemplos de usos comunes.
+
 ## 🚀 Características Principales
 
 - **Diseño responsive** que se adapta a cualquier dispositivo móvil

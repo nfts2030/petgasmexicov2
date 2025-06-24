@@ -169,6 +169,7 @@ const PlasticCard = styled.div`
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   display: flex;
   flex-direction: column;
+  min-height: 550px; /* Añadí una altura mínima para mantener consistencia */
   height: 100%;
   position: relative;
   z-index: 1;
@@ -181,10 +182,13 @@ const PlasticCard = styled.div`
   }
 `;
 
+// Estilo base para las imágenes de plástico
 const PlasticCardImage = styled.div<{ $bgImage: string }>`
-  height: 220px;
-  background: url(${props => props.$bgImage}) center/cover no-repeat;
+  height: 280px;
+  background: url(${props => props.$bgImage}) center/70% auto no-repeat;
+  background-color: #f9f9f9;
   position: relative;
+  padding: 20px 0;
   
   &::before {
     content: '';
@@ -193,7 +197,7 @@ const PlasticCardImage = styled.div<{ $bgImage: string }>`
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to bottom, rgba(10, 75, 42, 0.1) 0%, rgba(10, 75, 42, 0.4) 100%);
+    background: linear-gradient(to bottom, rgba(10, 75, 42, 0.1) 0%, rgba(10, 75, 42, 0.2) 100%);
   }
 `;
 
@@ -249,15 +253,15 @@ const HomePage: React.FC = () => {
       type: 'LDPE',
       name: 'Polietileno de Baja Densidad',
       description: 'Bolsas de plástico, envolturas, botellas exprimibles, tapas flexibles.',
-      image: '/img/plasticos/ldpe.png',
+      image: '/img/ldpe-bags.png',
       recycling: 'Reciclable pero menos común, se usa para hacer bolsas de basura, paneles y baldosas.'
     },
     {
       id: 4,
       type: 'PP',
       name: 'Polipropileno',
-      description: 'Tapas de botellas, envases para alimentos, pajitas, envases de yogurt.',
-      image: '/img/plasticos/pp.png',
+      description: 'Tapas de botellas, envases para alimentos, popotes, envases de yogurt.',
+      image: '/img/Polipropileno.png',
       recycling: 'Cada vez más reciclado, se usa para hacer cajas de baterías, escobas y bandejas.'
     },
     {
@@ -408,7 +412,7 @@ const HomePage: React.FC = () => {
       <section style={{ padding: '80px 0', backgroundColor: '#f5f9f7' }}>
         <Container>
           <StyledTitle>Tipos de Plástico que Reciclamos</StyledTitle>
-          <StyledSubtitle>Conoce los diferentes tipos de plástico que podemos transformar en energía limpia y renovable</StyledSubtitle>
+          <StyledSubtitle>Conoce los diferentes tipos de plástico que podemos transformar en energía</StyledSubtitle>
           
           <Row className="g-4">
             {plasticTypes.map((plastic) => (
