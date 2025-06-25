@@ -398,7 +398,7 @@ const Footer: React.FC = () => {
               <LogoShadow />
             </Logo3DContainer>
           </Link>
-          <p>Transformando residuos en energía limpia y sostenible para un futuro mejor.</p>
+          <p>Transformando residuos plásticos no reciclables en energía para tener un futuro sostenible.</p>
           <SocialIcons>
             <a href="https://twitter.com/petgasmx" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-twitter"></i>
@@ -415,8 +415,6 @@ const Footer: React.FC = () => {
           <p>© {currentYear} PETGAS MÉXICO. Todos los derechos reservados.</p>
           <FooterLinks>
             <a href="mailto:contacto@petgas.com.mx">contacto@petgas.com.mx</a>
-            <span>•</span>
-            <a href="tel:+528111234567">+52 81 1234 5678</a>
           </FooterLinks>
         </FooterBottom>
       </FooterContent>

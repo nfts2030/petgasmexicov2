@@ -149,7 +149,7 @@ const ServicesSectionNew: React.FC = () => {
           alt="Transformación de Plásticos" 
         />
         <ServiceTitle>
-          <AnimatedGradientText>Transformación de Plásticos</AnimatedGradientText>
+          <AnimatedGradientText>Pirolisis No Catalitica</AnimatedGradientText>
         </ServiceTitle>
         <ServiceDescription>
           Aprovechamos las cadenas de carbono que contiene el plástico para gasificarlas y condensarlas en combustibles limpios.

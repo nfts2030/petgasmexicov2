@@ -30,11 +30,22 @@ const HeroSection = styled.section`
   background-position: center;
   background-attachment: fixed;
   color: white;
-  padding: 100px 20px;
+  padding: 120px 20px 80px; /* Ajuste de padding superior para iPhone */
   text-align: center;
   position: relative;
-  margin-bottom: 60px;
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
+  
+  /* Asegurar que el contenido no se corte en dispositivos móviles */
+  @supports (-webkit-touch-callout: none) {
+    /* iOS specific styles */
+    min-height: -webkit-fill-available;
+  }
   
   &::before {
     content: '';
@@ -66,16 +77,19 @@ const HeroContent = styled.div`
   position: relative;
   z-index: 2;
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 2rem 1.5rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 40vh;
+  min-height: 60vh;
   
   @media (max-width: 768px) {
-    min-height: 50vh;
-    padding: 1rem;
+    padding: 1.5rem 1rem;
+    min-height: 70vh;
+    box-sizing: border-box;
   }
 `;
 
@@ -85,34 +99,55 @@ const HeroTitle = styled.h1`
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -1px;
-  padding: 0;
+  padding: 0 1rem;
   position: relative;
   z-index: 2;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   margin-bottom: 1.5rem;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  
+  @media (max-width: 992px) {
+    font-size: 3rem;
+  }
   
   @media (max-width: 768px) {
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    padding: 0 0.5rem;
   }
   
   @media (max-width: 480px) {
-    font-size: 2rem;
+    font-size: 2.25rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
   }
 `;
 
 const HeroSubtitle = styled.p`
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   max-width: 800px;
   margin: 0 auto;
+  padding: 0 1rem;
   line-height: 1.6;
-  color: #ffffff;
-  font-weight: 700;
-  text-shadow: none;
-  padding: 0 10px;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  width: 100%;
+  font-weight: 600;
   
   @media (max-width: 768px) {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    padding: 0 0.5rem;
+  }
+  
+  @media (max-width: 480px) {
     font-size: 1rem;
+    line-height: 1.4;
   }
 `;
 

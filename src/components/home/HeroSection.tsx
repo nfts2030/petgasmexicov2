@@ -34,31 +34,36 @@ const shadowPulse = keyframes`
 // Styled Components
 const HeroContainer = styled.section`
   position: relative;
-  min-height: 100vh; /* Fallback */
-  min-height: -webkit-fill-available; /* Para navegadores móviles */
-  height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh; /* Usa la altura dinámica de la ventana */
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #f9f9f9;
-  padding: 2rem;
+  padding: 0 2rem 2rem;
   overflow: hidden;
   text-align: center;
+  box-sizing: border-box;
   
   /* Ajustes específicos para iOS */
   @supports (-webkit-touch-callout: none) {
     min-height: -webkit-fill-available;
-    height: -webkit-fill-available;
+    height: 100%;
+    padding-top: constant(safe-area-inset-top); /* iOS 11.0 */
+    padding-top: env(safe-area-inset-top); /* iOS 11.2+ */
   }
   
   @media (max-width: 768px) {
-    min-height: 90vh;
-    min-height: -webkit-fill-available;
-    padding: 4rem 1.5rem 3rem;
+    padding: 0 1.5rem 2rem;
+    min-height: 100vh;
+    min-height: 100dvh;
     
     @supports (-webkit-touch-callout: none) {
       min-height: -webkit-fill-available;
-      height: -webkit-fill-available;
+      height: 100%;
+      padding-top: max(1.5rem, constant(safe-area-inset-top));
+      padding-top: max(1.5rem, env(safe-area-inset-top));
     }
   }
 `;
@@ -73,10 +78,17 @@ const HeroContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  flex: 1;
   
   @media (max-width: 768px) {
-    justify-content: center;
-    padding: 2rem 0;
+    padding: 1rem 0;
+    justify-content: flex-start;
+    margin-top: 1rem;
+    
+    @supports (-webkit-touch-callout: none) {
+      padding-top: max(1rem, env(safe-area-inset-top));
+    }
   }
 `;
 
@@ -366,26 +378,45 @@ const GradientTextWrapper = styled.span`
 `;
 
 const HeroTitle = styled.h1`
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 800;
   text-align: center;
-  margin: 1rem 0;
+  margin: 0.5rem 0 1.5rem;
   line-height: 1.2;
   letter-spacing: -0.02em;
   max-width: 800px;
-  padding: 0 1rem;
+  width: 100%;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
   
   /* Reset any inherited background */
   background: none;
   animation: ${gradientKeyframes} 8s ease infinite;
   text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
   
-  /* Ajustes específicos para iOS */
-  @supports (-webkit-touch-callout: none) {
-    margin: 0.5rem 0;
+  @media (max-width: 992px) {
+    font-size: 2.25rem;
   }
   
-  /* Fallback for older browsers */
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    padding: 0 1rem;
+    margin: 0.5rem 0 1.25rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.75rem;
+    line-height: 1.2;
+    margin: 0.5rem 0 1rem;
+  }
+  
+  /* Ajustes específicos para iOS */
+  @supports (-webkit-touch-callout: none) {
+    margin: 0.5rem 0 1rem;
+    @media (max-width: 480px) {
+      margin: 0.25rem 0 0.75rem;
+    }
+  }
   @supports not (background-clip: text) {
     background: none;
     color: #00ff9d; /* Fallback color */
@@ -405,27 +436,44 @@ const HeroTitle = styled.h1`
   }
 
   @media (min-width: 1024px) {
-    font-size: 3.5rem;
-    margin: 2rem 0;
   }
 `;
 
 const HeroSubtitle = styled.p`
-  font-size: 1rem;
-  margin: 0.5rem 0 1.5rem;
+  font-size: 1.15rem;
+  margin: 0 0 2.5rem;
   color: #4a6b57;
-  line-height: 1.5;
+  line-height: 1.6;
   max-width: 800px;
-  opacity: 0.9;
-  padding: 0 1rem;
+  width: 100%;
+  text-align: center;
+  padding: 0 2rem;
+  box-sizing: border-box;
   
-  @media (min-width: 375px) {
+  @media (max-width: 992px) {
     font-size: 1.1rem;
+    padding: 0 1.5rem;
   }
   
-  @media (min-width: 414px) {
-    font-size: 1.15rem;
-    margin: 0.75rem 0 2rem;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0 1.25rem;
+    margin-bottom: 2rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    padding: 0 1rem;
+    margin-bottom: 1.75rem;
+  }
+  
+  /* Ajustes específicos para iOS */
+  @supports (-webkit-touch-callout: none) {
+    @media (max-width: 480px) {
+      margin-bottom: 1.5rem;
+    }
   }
   
   @media (min-width: 768px) {

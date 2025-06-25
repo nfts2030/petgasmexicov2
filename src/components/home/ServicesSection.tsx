@@ -292,7 +292,7 @@ const ServiceLink = styled.a`
 const services: Service[] = [
   {
     id: 1,
-    title: 'Transformación de Plásticos',
+    title: 'Transformación de Plásticos por Pirolisis No Catalitica',
     description: 'Aprovechamos las cadenas de carbono que contiene el plástico para gasificarlas y condensarlas en combustibles limpios.',
     icon: '',
     customIcon: null,

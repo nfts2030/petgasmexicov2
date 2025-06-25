@@ -6,6 +6,7 @@
 [![Styled Components](https://img.shields.io/badge/styled--components-DB7093?logo=styled-components&logoColor=white)](https://styled-components.com/)
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?logo=vercel)](https://vercel.com)
 [![Última Actualización](https://img.shields.io/badge/Última_Actualización-24_Jun_2025-brightgreen)]()
+[![Versión 2.3.0](https://img.shields.io/badge/Versión-2.3.0-blue)]()
 
 Versión móvil optimizada del sitio web oficial de [PETGAS México](https://petgas.com.mx/). Este proyecto es una adaptación fiel del sitio web original, diseñada específicamente para ofrecer la mejor experiencia en dispositivos móviles, con mejoras en la interfaz de usuario y rendimiento.
 
@@ -18,6 +19,7 @@ Crear una versión móvil del sitio web de PETGAS que:
 - Sea rápida, accesible y fácil de usar en cualquier dispositivo móvil
 - Incluya efectos visuales modernos como gradientes animados y transiciones suaves
 - Esté optimizada para despliegue en Vercel con rendimiento máximo
+- Muestre información clara sobre la transformación de residuos plásticos no reciclables en energía sostenible
 
 ## ♻️ Tipos de Plástico Soportados
 
@@ -138,7 +140,25 @@ Este proyecto está optimizado para desplegarse en Vercel. Sigue estos pasos par
 
 ## 📦 Últimos Cambios
 
-### [24/06/2025] - Mejoras en la Interfaz de Usuario
+### [24/06/2025] - Versión 2.3.0 - Actualización de Contenido y Diseño
+
+- **Actualización de Contenido**
+  - Cambio de "Transformación de Plásticos" a "Pirolisis No Catalitica" en la sección de servicios
+  - Actualización del mensaje en el footer para reflejar con mayor precisión el proceso de transformación
+  - Mejora en la descripción de los servicios ofrecidos
+
+- **Mejoras en la Interfaz de Usuario**
+  - Optimización del diseño responsive para dispositivos móviles
+  - Ajustes en el espaciado y la tipografía para mejor legibilidad
+  - Actualización de los textos de llamada a la acción
+
+- **Correcciones y Optimizaciones**
+  - Eliminación del número de teléfono del footer
+  - Mejoras en la accesibilidad del sitio
+  - Optimización del rendimiento en dispositivos móviles
+  - Actualización de las dependencias a sus versiones más recientes
+
+### [23/06/2025] - Mejoras en la Interfaz de Usuario
 
 - **Nueva Sección de Servicios**
   - Diseño moderno con gradientes animados
@@ -149,21 +169,11 @@ Este proyecto está optimizado para desplegarse en Vercel. Sigue estos pasos par
   - Aumento en la altura para mejor visualización de imágenes
   - Mejora en la posición del texto y contraste
   - Transiciones más suaves entre diapositivas
-
-- **Correcciones de Errores**
-  - Eliminación de referencias a componentes obsoletos
-  - Limpieza de código y optimización de importaciones
-  - Corrección de advertencias de TypeScript
-
-- **Optimizaciones de Rendimiento**
-  - Mejora en la carga de imágenes
-  - Reducción del tamaño del bundle
-  - Optimización de animaciones para móviles
 - **Slider de estadísticas** con transiciones suaves y efectos visuales mejorados
 - **Efectos visuales modernos** con gradientes animados y transiciones suaves
 - **Sección de Proceso** rediseñada para mejor legibilidad en móviles
 - **Tarjetas de Beneficios** con diseño adaptativo y efectos táctiles
-- **Contacto actualizado** con el nuevo correo: contacto@petgas.com.mx
+- **Contacto actualizado** con el correo: contacto@petgas.com.mx
 - **Animaciones optimizadas** con Framer Motion y CSS puro
 - **Accesibilidad** siguiendo las mejores prácticas WCAG
 - **Tipografía e iconografía** optimizadas para móviles
