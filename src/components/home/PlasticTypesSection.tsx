@@ -102,7 +102,7 @@ const PlasticTypesSection: React.FC = () => {
     name: 'Polietileno de Baja Densidad',
     type: 'LDPE',
     description: 'Bolsas de plástico, envolturas, botellas exprimibles, tapas flexibles.',
-    image: '/img/plasticos/ldpe.png',
+    image: '/img/plastic_bags_LDPE.png',
     symbol: '/img/ldpe_symbol.png',
     number: '4'
   },
@@ -110,8 +110,8 @@ const PlasticTypesSection: React.FC = () => {
     id: 5,
     name: 'Polipropileno',
     type: 'PP',
-    description: 'Envases de yogur, tapas de botellas, pajitas, envases de medicamentos, envases de ketchup, envases de mantequilla, envases de helado, envases de salsas, envases de aderezos, envases de mermelada.',
-    image: '/img/plasticos/pp.png',
+    description: 'Envases de yogur, tapas de botellas, popotes, envases de medicamentos, envases de ketchup, envases de mantequilla, envases de helado, envases de salsas, envases de aderezos, envases de mermelada.',
+    image: '/img/Polipropileno.png',
     symbol: '/img/pp_symbol.png',
     number: '5'
   },

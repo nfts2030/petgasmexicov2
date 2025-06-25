@@ -159,15 +159,19 @@ const SymbolOverlay = styled.div<{ $loaded: boolean }>`
   pointer-events: none;
   
   img {
-    width: 80px;
-    height: 80px;
+    width: 120px; /* Aumentado de 80px */
+    height: 120px; /* Aumentado de 80px */
     object-fit: contain;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.9));
+    filter: 
+      drop-shadow(0 0 15px rgba(255, 255, 255, 0.9))
+      drop-shadow(0 0 25px rgba(100, 255, 255, 0.7))
+      brightness(1.3)
+      contrast(1.2);
     transition: all 0.3s ease;
     animation: ${glow} 3s ease-in-out infinite;
     will-change: filter, transform;
     backface-visibility: hidden;
-    transform: translateZ(0);
+    transform: translateZ(0) scale(1.1);
   }
 `;
 
