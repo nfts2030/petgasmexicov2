@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 200 150">
+  <!-- Fondo transparente -->
+  <rect width="100%" height="100%" fill="transparent"/>
+  
+  <!-- Bomba de combustible -->
+  <g transform="scale(0.2) translate(10, 20)">
+    <!-- Mango de la bomba -->
+    <rect x="0" y="0" width="80" height="80" rx="10" fill="#4CAF50"/>
+    <rect x="15" y="25" width="50" height="30" rx="5" fill="#2E7D32"/>
+    <rect x="25" y="35" width="30" height="10" fill="black"/>
+    <rect x="25" y="50" width="30" height="10" fill="black"/>
+    
+    <!-- Boquilla de la bomba -->
+    <path d="M80 40 Q90 30 100 40 L120 60 C130 70 140 50 160 60 L180 80" 
+          fill="none" stroke="#8BC34A" stroke-width="10"/>
+    
+    <!-- Tubo flexible -->
+    <path d="M80 60 C90 70 110 50 130 60 S150 80 170 70" 
+          fill="none" stroke="#CDDC39" stroke-width="8"/>
+    
+    <!-- Gotita de combustible -->
+    <circle cx="175" cy="85" r="8" fill="#AED581">
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>

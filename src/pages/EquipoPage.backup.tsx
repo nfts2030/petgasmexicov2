@@ -4,7 +4,6 @@ import styled, { keyframes } from 'styled-components';
 import PageLayout from '../components/layout/PageLayout';
 import LogoSpinner from '../components/ui/LogoSpinner';
 import DepartmentBadge from '../components/ui/DepartmentBadge';
-import DepartmentTitle from '../components/ui/DepartmentTitle';
 import { getDepartmentColor } from '../utils/departmentColors';
 
 // Animaciones para el gradiente
@@ -586,9 +585,21 @@ const EquipoPage: React.FC = () => {
       </HeroSection>
       
       <TeamContainer>
-        <DepartmentTitle department="Dirección General">
+        <h2 style={{
+          textAlign: 'center',
+          color: '#0a4b2a',
+          marginBottom: '2rem',
+          fontSize: '1.8rem',
+          fontWeight: 700,
+          position: 'relative',
+          display: 'inline-block',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          padding: '0 1rem 0.5rem',
+          borderBottom: '3px solid #7cda24'
+        }}>
           Equipo Directivo
-        </DepartmentTitle>
+        </h2>
         <TeamGrid>
           {teamMembers.map((member, index) => (
             <TeamMember 
@@ -607,9 +618,7 @@ const EquipoPage: React.FC = () => {
                 <h3>{member.name}</h3>
                 <p className="role">{member.role}</p>
                 <p className="bio">{member.bio}</p>
-                <DepartmentBadge $color={getDepartmentColor(member.division)}>
-                  {member.division}
-                </DepartmentBadge>
+                <p className="division">{member.division}</p>
                 <SocialLinks className="social-links">
                   <a 
                     href={`mailto:${member.social.email}`} 
@@ -647,9 +656,21 @@ const EquipoPage: React.FC = () => {
           ))}
         </TeamGrid>
         
-        <DepartmentTitle department="Área Comercial">
-          Equipo Comercial
-        </DepartmentTitle>
+        <h2 style={{
+          textAlign: 'center',
+          color: '#0a4b2a',
+          margin: '4rem 0 2rem',
+          fontSize: '1.8rem',
+          fontWeight: 700,
+          position: 'relative',
+          display: 'inline-block',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          padding: '0 1rem 0.5rem',
+          borderBottom: '3px solid #7cda24'
+        }}>
+          Divisiones y Líderes
+        </h2>
         <TeamGrid>
           {teamMembers.slice(8).map((member, index) => (
             <TeamMember 
@@ -668,9 +689,7 @@ const EquipoPage: React.FC = () => {
                 <h3>{member.name}</h3>
                 <p className="role">{member.role}</p>
                 <p className="bio">{member.bio}</p>
-                <DepartmentBadge $color={getDepartmentColor(member.division)}>
-                  {member.division}
-                </DepartmentBadge>
+                <p className="division">{member.division}</p>
                 <SocialLinks className="social-links">
                   <a 
                     href={`mailto:${member.social.email}`} 
