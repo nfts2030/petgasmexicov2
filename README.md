@@ -6,7 +6,7 @@
 [![Styled Components](https://img.shields.io/badge/styled--components-DB7093?logo=styled-components&logoColor=white)](https://styled-components.com/)
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?logo=vercel)](https://vercel.com)
 [![Última Actualización](https://img.shields.io/badge/Última_Actualización-24_Jun_2025-brightgreen)]()
-[![Versión 2.3.1](https://img.shields.io/badge/Versión-2.3.1-blue)]()
+[![Versión 2.4.0](https://img.shields.io/badge/Versión-2.4.0-blue)]()
 
 Versión móvil optimizada del sitio web oficial de [PETGAS México](https://petgas.com.mx/). Este proyecto es una adaptación fiel del sitio web original, diseñada específicamente para ofrecer la mejor experiencia en dispositivos móviles, con mejoras en la interfaz de usuario y rendimiento.
 
@@ -46,6 +46,26 @@ Cada tipo de plástico se muestra en una tarjeta interactiva con las siguientes 
 ### Símbolos de Identificación
 
 Cada tipo de plástico incluye su símbolo de identificación estándar superpuesto sobre la imagen correspondiente. Los símbolos están diseñados para ser claramente visibles y reconocibles, con efectos de sombra y brillo para mejorar la legibilidad sobre diferentes fondos.
+
+## ✨ MEJORAS RECIENTES (v2.4.0)
+
+### 🎯 Mejoras en la Marquesina Superior
+
+- **Mayor visibilidad**
+  - Aumento del tamaño de la marquesina de 36px a 44px (48px en desktop)
+  - Tipografía más grande y legible con peso 600
+  - Mejor contraste y espaciado
+
+- **Efectos visuales mejorados**
+  - Resplandor verde suave con gradiente radial
+  - Efecto de desenfoque sutil en las imágenes
+  - Transiciones suaves al interactuar
+  - Tamaño aumentado de las imágenes para mejor visibilidad
+
+- **Ajustes en el Navbar**
+  - Posición ajustada para no solapar la marquesina
+  - Mejor espaciado vertical
+  - Optimización para diferentes tamaños de pantalla
 
 ## 🎨 IMPLEMENTACIÓN DEL HERO SECTION
 

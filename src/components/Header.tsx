@@ -11,7 +11,7 @@ const marquee = keyframes`
 const MarqueeContainer = styled.div`
   background: linear-gradient(90deg, #0a4b2a 0%, #0e6a3a 50%, #0a4b2a 100%);
   color: white;
-  padding: 0.5rem 0;
+  padding: 0.7rem 0;
   overflow: hidden;
   width: 100%;
   position: fixed;
@@ -19,10 +19,10 @@ const MarqueeContainer = styled.div`
   left: 0;
   right: 0;
   white-space: nowrap;
-  font-size: 0.8rem;
-  font-weight: 500;
-  line-height: 1.1;
-  height: 36px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.3;
+  height: 44px;
   display: flex !important;
   align-items: center;
   z-index: 1000;
@@ -39,9 +39,9 @@ const MarqueeContainer = styled.div`
   }
   
   @media (min-width: 768px) {
-    font-size: 0.85rem;
-    height: 40px;
-    padding: 0.6rem 0;
+    font-size: 1.05rem;
+    height: 48px;
+    padding: 0.8rem 0;
   }
 `;
 
@@ -90,13 +90,38 @@ const MarqueeItem = styled.span`
 `;
 
 const MarqueeImage = styled.img`
-  height: 20px;
+  height: 24px;
   width: auto;
   margin: 0 0.75rem;
   vertical-align: middle;
-  filter: drop-shadow(0 0 3px rgba(0, 255, 157, 0.5));
-  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 5px rgba(17, 145, 75, 0.6));
+  transition: transform 0.3s ease, filter 0.3s ease;
   flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, rgba(17,145,75,0.4) 0%, rgba(17,145,75,0.1) 60%, rgba(0,0,0,0) 80%);
+    filter: blur(4px);
+    z-index: -1;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover {
+    filter: drop-shadow(0 0 8px rgba(17, 145, 75, 0.8));
+    transform: scale(1.1);
+    
+    &::after {
+      opacity: 0.9;
+    }
+  }
   
   &:hover {
     transform: scale(1.1);
@@ -175,7 +200,7 @@ const HeaderContainer = styled.header`
   -webkit-backdrop-filter: blur(10px);
   padding: 0.75rem 1.5rem;
   position: fixed;
-  top: 30px; /* Ajuste para la marquesina */
+  top: 44px; /* Ajuste para la marquesina más gruesa */
   left: 0;
   right: 0;
   z-index: 1000;
@@ -188,7 +213,7 @@ const HeaderContainer = styled.header`
   
   @media (min-width: 768px) {
     padding: 1rem 2rem;
-    top: 36px; /* Ajuste para la marquesina en desktop */
+    top: 48px; /* Ajuste para la marquesina más gruesa en desktop */
     
     @supports (padding: max(0px)) {
       padding: 1rem max(2rem, env(safe-area-inset-right)) 1rem max(2rem, env(safe-area-inset-left));
@@ -520,9 +545,9 @@ const Header: React.FC = () => {
           {[...Array(4)].map((_, i) => (
             <MarqueeItem key={i}>
               <MarqueeText>BIENVENIDO A PETGAS MÉXICO</MarqueeText>
-              <MarqueeImage src="/img/bote_gasolina.png" alt="Bote de gasolina" />
+              <MarqueeImage src="/img/bote_gasolina.png" alt="Bote de gasolina" style={{ height: '28px' }} />
               <MarqueeText className="highlight">Transformando residuos plásticos en energía sostenible</MarqueeText>
-              <MarqueeImage src="/img/hero/logoGlow.png" alt="PETGAS Logo" />
+              <MarqueeImage src="/img/hero/logoGlow.png" alt="PETGAS Logo" style={{ height: '32px' }} />
             </MarqueeItem>
           ))}
         </MarqueeContent>
