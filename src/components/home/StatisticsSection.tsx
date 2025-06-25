@@ -45,13 +45,13 @@ const SlideTrack = styled.div`
 const SliderContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 650px; /* Aumentada aún más para mostrar imágenes más grandes */
+  height: 720px; /* Ajustada para bajar más el contenido */
   overflow: hidden;
   margin: 0;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Alinear al inicio para que el contenido baje */
-  padding-top: 100px; /* Bajar el contenido */
+  align-items: flex-start;
+  padding-top: 180px; /* Aumentado para bajar más el contenedor */
   
   /* Ajustes para pantallas grandes */
   @media (max-width: 1440px) {
@@ -294,26 +294,38 @@ const StatisticsSection: React.FC = () => {
       100% { background-position: 0% 50%; }
     }
     
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
-    line-height: 1.2;
-    background: linear-gradient(90deg, #0a4b2a, #ffeb3b, #0a4b2a);
-    background-size: 200% auto;
+    font-size: 1.9rem;
+    margin: 0 0 0.6rem 0;
+    font-weight: 800;
+    line-height: 1.15;
+    background: linear-gradient(90deg, #0a9d58, #8bc34a, #ffeb3b, #8bc34a, #0a9d58);
+    background-size: 300% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: gradient 5s ease infinite;
-    display: inline-block;
-    padding: 0 10px 5px;
-    text-shadow: none;
-    margin-top: 0;
+    animation: gradient 8s ease infinite;
+    display: block;
+    padding: 0 5px 3px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    letter-spacing: -0.5px;
+    
+    @media (max-width: 1200px) {
+      font-size: 1.7rem;
+    }
+    
+    @media (max-width: 992px) {
+      font-size: 1.5rem;
+    }
     
     @media (max-width: 768px) {
-      font-size: 1.8rem;
+      font-size: 1.3rem;
+      line-height: 1.15;
+      margin-bottom: 0.4rem;
     }
     
     @media (max-width: 480px) {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.3px;
     }
   `;
 
@@ -330,72 +342,75 @@ const StatisticsSection: React.FC = () => {
             transform: `translateX(-${currentSlide * 100}%)`,
             width: `${statisticsData.length * 100}%`
           }}>
-            {statisticsData.map((stat) => {
-              return (
-                <div 
-                  key={stat.id} 
-                  style={{
-                    flex: '0 0 100%',
-                    width: '100%',
-                    height: '100%',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    backgroundColor: '#f0f0f0',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                  }}
-                >
-                  <div style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '100%',
-                    height: '100%',
-                    backgroundImage: `url(${stat.image})`,
-                    backgroundSize: 'contain',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundColor: '#000',
-                    filter: 'brightness(0.9)'
-                  }} />
-                  <div style={{
-                    position: 'relative',
-                    zIndex: 2,
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                    padding: '40px 20px',
+            {statisticsData.map((stat) => (
+              <div 
+                key={stat.id} 
+                style={{
+                  flex: '0 0 100%',
+                  width: '100%',
+                  height: '100%',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  backgroundColor: '#f0f0f0',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <div style={{
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  width: '100%',
+                  height: '100%',
+                  backgroundImage: `url(${stat.image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundColor: '#000',
+                  filter: 'brightness(0.7)'
+                }} />
+                <div style={{
+                  maxWidth: '1000px',
+                  width: '90%',
+                  padding: '18px 22px', /* Padding ligeramente reducido */
+                  borderRadius: '10px',
+                  backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  backdropFilter: 'blur(10px)', /* Aumentamos ligeramente el desenfoque */
+                  margin: '0 auto 40px', /* Más margen inferior */
+                  transform: 'translateY(60px)', /* Bajamos más el contenedor */
+                  boxSizing: 'border-box',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                  textAlign: 'center',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <AnimatedTitle>{stat.title}</AnimatedTitle>
+                  <p style={{
+                    fontSize: '0.85rem', /* Tamaño de fuente más pequeño */
+                    lineHeight: '1.3', /* Menor interlineado para más compacidad */
+                    margin: '0.4rem auto 0',
+                    maxWidth: '800px',
+                    fontFamily: "'Montserrat', sans-serif", /* Fuente moderna */
+                    fontWeight: 400,
+                    color: '#ffffff',
+                    textShadow: '0 0 10px rgba(255, 255, 255, 0.6)', /* Efecto brillo más pronunciado */
                     textAlign: 'center',
-                    color: 'white',
-                    textShadow: '0 2px 4px rgba(0,0,0,0.8)'
+                    padding: '0 15px',
+                    width: '100%',
+                    boxSizing: 'border-box',
+                    letterSpacing: '0.3px', /* Espaciado de letras más ajustado */
+                    textTransform: 'uppercase', /* Texto en mayúsculas para mejor legibilidad */
+                    opacity: 0.95 /* Ligera transparencia para efecto moderno */
                   }}>
-                    <div style={{
-                      maxWidth: '1000px',
-                      width: '100%',
-                      padding: '25px',
-                      borderRadius: '10px',
-                      backgroundColor: 'rgba(0, 0, 0, 0.75)',
-                      backdropFilter: 'blur(6px)',
-                      marginBottom: '30px',
-                      transform: 'translateY(50px)' /* Bajar más el texto */
-                    }}>
-                      <AnimatedTitle>{stat.title}</AnimatedTitle>
-                      <p style={{
-                        fontSize: '1.3rem',
-                        lineHeight: '1.6',
-                        margin: '0 auto',
-                        maxWidth: '800px'
-                      }}>{stat.description}</p>
-                    </div>
-                  </div>
+                    {stat.description}
+                  </p>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </SlideTrack>
         </SliderContainer>
       </div>

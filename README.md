@@ -47,6 +47,89 @@ Cada tipo de plástico se muestra en una tarjeta interactiva con las siguientes 
 
 Cada tipo de plástico incluye su símbolo de identificación estándar superpuesto sobre la imagen correspondiente. Los símbolos están diseñados para ser claramente visibles y reconocibles, con efectos de sombra y brillo para mejorar la legibilidad sobre diferentes fondos.
 
+## 🎨 IMPLEMENTACIÓN DEL HERO SECTION
+
+### Características Implementadas
+
+1. **Diseño Responsivo**
+   - Adaptable a diferentes tamaños de pantalla
+   - Soporte para dispositivos con notch (iPhone X en adelante)
+   - Ajuste automático de espaciado y tamaños de fuente
+
+2. **Elementos Visuales**
+   - Logo central con efecto de resplandor animado
+   - Texto de bienvenida con sombra para mejor legibilidad
+   - Título principal con gradiente animado
+   - Subtítulo con lista de productos formateada dinámicamente
+
+3. **Efectos y Animaciones**
+   - Fondo con imagen animada con movimiento sutil
+   - Efecto de pulso en el logo
+   - Transiciones suaves para todos los elementos interactivos
+   - Animación de gradiente en el texto destacado
+
+### Estructura del Código
+
+```typescript
+<HeroContainer>
+  <HeroContent>
+    <LogoContainer>
+      <img src="/img/logoGlow.png" alt="PETGAS Logo" />
+      <LogoGlow />
+    </LogoContainer>
+    <WelcomeText>BIENVENIDO A PETGAS MÉXICO</WelcomeText>
+    <HeroTitle>
+      <GradientText>ENERGETIZANDO EL FUTURO CON ACCIONES POSITIVAS PARA EL PLANETA</GradientText>
+    </HeroTitle>
+    <HeroSubtitle>
+      La tecnología de Petgas transforma plásticos no reciclables en: {
+        ['Gasolina', 'Diesel', 'Parafina', 'Queroseno', 'Gas'].map((item, index, array) => (
+          <React.Fragment key={item}>
+            <strong>{item}</strong>
+            {index < array.length - 2 ? ', ' : index === array.length - 2 ? ' y ' : ''}
+          </React.Fragment>
+        ))
+      }.
+    </HeroSubtitle>
+  </HeroContent>
+</HeroContainer>
+```
+
+### Solución de Problemas Comunes
+
+1. **Superposición con el Header**
+   - Se solucionó agregando un margen superior fijo
+   - Se implementó soporte para safe-area-inset en iOS
+
+2. **Espaciado entre elementos**
+   - Se ajustaron los márgenes verticales para una mejor jerarquía visual
+   - Se optimizó el espacio en dispositivos móviles
+
+3. **Formato de texto**
+   - Se implementó una solución dinámica para la lista de productos
+   - Se aseguró la legibilidad en todos los fondos
+
+## 📱 CONFIGURACIÓN ESPECÍFICA PARA MÓVILES (IPHONE)
+
+ESTE PROYECTO ESTÁ 100% OPTIMIZADO PARA VERSIÓN MÓVIL, CON ESPECIAL ATENCIÓN A DISPOSITIVOS IPHONE.
+
+### AJUSTES DE DISEÑO PARA IPHONE
+
+- **Espaciado Superior del Header**: 240px en móviles para evitar solapamiento con la barra de estado de iOS
+- **Safe Area Insets**: Uso de `env(safe-area-inset-*)` para manejar el notch y el home indicator
+- **Menú Desplegable**:
+  - Fondo con efecto de vidrio esmerilado (blur)
+  - Bordes redondeados en el lado izquierdo
+  - Scroll suave optimizado para iOS
+  - Ajustes específicos para el área del notch
+
+### OPTIMIZACIONES PARA IPHONE
+
+- **Tamaños de Toque**: Mínimo 44x44px para todos los elementos interactivos
+- **Scroll Suave**: Mejor rendimiento en dispositivos iOS con `-webkit-overflow-scrolling: touch`
+- **Fuentes**: Ajuste automático de tamaño de fuente para mejor legibilidad
+- **Safe Area**: Soporte completo para dispositivos con notch y home indicator
+
 ## 🚀 Características Principales
 
 - **Diseño 100% móvil** con interfaz optimizada para pantallas táctiles

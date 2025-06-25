@@ -2,328 +2,24 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 
-// Animations
-const float3d = keyframes`
-  0%, 100% { 
-    transform: translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg);
-    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
-  }
-  50% { 
-    transform: translateY(-15px) translateZ(10px) rotateX(5deg) rotateY(5deg);
-    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.4));
-  }
-`;
-
+// Animación para el resplandor del logo
 const pulse = keyframes`
-  0% { box-shadow: 0 0 0 0 rgba(17, 145, 75, 0.6); }
-  70% { box-shadow: 0 0 0 15px rgba(17, 145, 75, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(17, 145, 75, 0); }
+  0% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.1); }
 `;
 
-const shine = keyframes`
-  0% { transform: translateX(-100%) rotate(30deg); }
-  100% { transform: translateX(100%) rotate(30deg); }
+// Animaciones
+const float = keyframes`
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
 `;
 
-
-const shadowPulse = keyframes`
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(0.9); opacity: 0.6; }
+const backgroundMove = keyframes`
+  0% { transform: scale(1) translate(0, 0); }
+  33% { transform: scale(1.05) translate(-2%, 2%); }
+  66% { transform: scale(1.03) translate(2%, -1%); }
+  100% { transform: scale(1) translate(0, 0); }
 `;
-
-// Styled Components
-const HeroContainer = styled.section`
-  position: relative;
-  min-height: 100vh;
-  min-height: 100dvh; /* Usa la altura dinámica de la ventana */
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  background: #f9f9f9;
-  padding-top: 300px; /* Aumentado a 300px para bajar más el contenido */
-  padding-left: 2rem;
-  padding-right: 2rem;
-  padding-bottom: 2rem;
-  overflow: hidden;
-  text-align: center;
-  box-sizing: border-box;
-  
-  /* Ajustes específicos para iOS */
-  @supports (-webkit-touch-callout: none) {
-    min-height: -webkit-fill-available;
-    height: 100%;
-    padding-top: constant(safe-area-inset-top); /* iOS 11.0 */
-    padding-top: env(safe-area-inset-top); /* iOS 11.2+ */
-  }
-  
-  @media (max-width: 768px) {
-    padding: 0 1.5rem 2rem;
-    min-height: 100vh;
-    min-height: 100dvh;
-    
-    @supports (-webkit-touch-callout: none) {
-      min-height: -webkit-fill-available;
-      height: 100%;
-      padding-top: max(1.5rem, constant(safe-area-inset-top));
-      padding-top: max(1.5rem, env(safe-area-inset-top));
-    }
-  }
-`;
-
-const HeroContent = styled.div`
-  max-width: 800px;
-  margin: 10rem auto 0; /* Reducido a 10rem ya que el HeroContainer tiene padding-top */
-  padding: 1rem 0;
-  width: 100%;
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  
-  @media (max-width: 768px) {
-    padding: 1rem 0;
-    justify-content: flex-start;
-    margin-top: 4rem; /* Reducido de 1rem a 4rem para móviles */
-    
-    @supports (-webkit-touch-callout: none) {
-      padding-top: max(1rem, env(safe-area-inset-top));
-    }
-  }
-`;
-
-const Logo3DContainer = styled.div`
-  margin: 120px auto 30px; /* Aumentado de 80px a 120px el margen superior */
-  width: 160px;
-  height: 160px;
-  position: relative;
-  perspective: 1200px;
-  z-index: 2;
-  transform-style: preserve-3d;
-  transition: transform 0.5s ease;
-  
-  &:hover {
-    transform: scale(1.05);
-  }
-`;
-
-const Logo3DInner = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  animation: ${float3d} 6s ease-in-out infinite;
-  will-change: transform;
-`;
-
-const LogoFront = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  transform: translateZ(30px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 0 15px rgba(17, 200, 100, 0.9));
-    animation: pulseGlow 4s ease-in-out infinite;
-    transform-style: preserve-3d;
-    
-    @keyframes pulseGlow {
-      0%, 100% {
-        filter: drop-shadow(0 0 15px rgba(17, 200, 100, 0.9));
-        transform: scale(1) translateZ(0);
-      }
-      50% {
-        filter: drop-shadow(0 0 30px rgba(17, 200, 100, 1));
-        transform: scale(1.08) translateZ(10px);
-      }
-    }
-  }
-`;
-
-const LogoEffects = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-`;
-
-const LogoGlow = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 180%;
-  height: 180%;
-  background: radial-gradient(
-    circle at center,
-    rgba(17, 200, 100, 0.3) 0%,
-    rgba(17, 160, 80, 0.15) 50%,
-    rgba(0, 0, 0, 0) 70%
-  );
-  border-radius: 50%;
-  animation: ${pulse} 4s ease-in-out infinite;
-  z-index: 1;
-  filter: blur(10px);
-  opacity: 0.8;
-  transition: all 0.5s ease;
-  
-  ${Logo3DContainer}:hover & {
-`;
-
-const LogoBorder = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 2px solid rgba(17, 200, 100, 0.4);
-  border-radius: 50%;
-  box-shadow: 
-    0 0 15px rgba(17, 200, 100, 0.6),
-    0 0 30px rgba(17, 200, 100, 0.3);
-  z-index: 2;
-  transition: all 0.5s ease;
-`;
-
-const LogoShine = styled.div`
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0) 40%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(255, 255, 255, 0) 60%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  transform: rotate(30deg);
-  animation: ${shine} 8s linear infinite;
-  z-index: 2;
-  pointer-events: none;
-`;
-
-interface LogoLightProps {
-  top: string;
-  left: string;
-  size: string;
-  delay: string;
-}
-
-const LogoLight = styled.div<LogoLightProps>`
-  position: absolute;
-  top: ${props => props.top};
-  left: ${props => props.left};
-  width: ${props => props.size};
-  height: ${props => props.size};
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  filter: blur(3px);
-  z-index: 2;
-  opacity: 0.3;
-  animation: twinkle ${props => props.delay || '3s'} ease-in-out infinite;
-  
-  @keyframes twinkle {
-    0%, 100% { 
-      opacity: 0.3;
-      filter: blur(3px);
-    }
-    50% { 
-      opacity: 0.6;
-      filter: blur(1px);
-    }
-  }
-  opacity: 0.8;
-  z-index: 3;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateZ(15px);
-  ${Logo3DContainer}:hover & {
-    opacity: 0.95;
-    filter: blur(3px);
-    transform: translateZ(20px) scale(1.1);
-  }
-`;
-
-const LogoReflection = styled.div`
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  width: 40%;
-  height: 40%;
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 255, 255, 0.4) 40%,
-    rgba(255, 255, 255, 0) 70%
-  );
-  border-radius: 50%;
-  z-index: 4;
-  opacity: 0.7;
-  transform: translateZ(10px);
-  transition: all 0.5s ease;
-  filter: blur(1px);
-  
-  ${Logo3DContainer}:hover & {
-    opacity: 0.9;
-    transform: translateZ(15px) scale(1.1);
-  }
-`;
-
-const LogoShadow = styled.div`
-  position: absolute;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%) translateZ(-10px);
-  width: 70%;
-  height: 25px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(0, 0, 0, 0.5) 0%,
-    rgba(0, 0, 0, 0.2) 60%,
-    rgba(0, 0, 0, 0) 90%
-  );
-  filter: blur(6px);
-  animation: ${shadowPulse} 6s ease-in-out infinite;
-  z-index: 0;
-  opacity: 0.7;
-  border-radius: 50%;
-  transition: all 0.5s ease;
-  
-  ${Logo3DContainer}:hover & {
-    opacity: 0.8;
-    transform: translateX(-50%) translateZ(-10px) scale(1.1);
-    filter: blur(8px);
-  }
-`;
-
-// Gradient text component
-interface GradientTextProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-const GradientText: React.FC<GradientTextProps> = ({ children, className }) => {
-  return (
-    <GradientTextWrapper className={className}>
-      {children}
-    </GradientTextWrapper>
-  );
-};
 
 const gradientKeyframes = keyframes`
   0% { background-position: 0% 50%; }
@@ -331,11 +27,192 @@ const gradientKeyframes = keyframes`
   100% { background-position: 0% 50%; }
 `;
 
-const GradientTextWrapper = styled.span`
-  /* Fallback for older browsers */
-  color: #00ff9d;
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
+// Styled Components
+const HeroContainer = styled.section`
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: #0a2e38;
+  overflow: hidden;
+  padding: 100px 1.5rem 10vh;
+  box-sizing: border-box;
+  margin-top: 80px; /* Asegura espacio para el header fijo */
   
-  /* Gradient text for modern browsers */
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    right: -10%;
+    bottom: -10%;
+    background: url('/img/09/fdoininvo2.jpg') center/cover no-repeat;
+    animation: ${backgroundMove} 30s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    min-height: -webkit-fill-available;
+    height: 100%;
+    padding-bottom: calc(10vh + env(safe-area-inset-bottom));
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
+    min-height: auto;
+    
+    @supports (-webkit-touch-callout: none) {
+      min-height: -webkit-fill-available;
+      height: 100%;
+    }
+  }
+`;
+
+const HeroContent = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2rem;
+  
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2rem;
+  }
+  
+  @media (max-width: 768px) {
+    gap: 1.5rem;
+  }
+`;
+
+const HeroText = styled.div`
+  position: relative;
+  z-index: 3;
+  animation: ${fadeIn} 0.8s ease-out forwards;
+`;
+
+const HeroImageWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto 3rem;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: ${fadeIn} 0.8s ease-out 0.2s both;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  @media (max-width: 992px) {
+    max-width: 500px;
+    margin: 1.5rem auto 2.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    margin: 1.25rem auto 2rem;
+    border-radius: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    margin: 1rem auto 1.5rem;
+    border-radius: 10px;
+  }
+`;
+
+const HeroImage = styled.img`
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.5s ease;
+  
+  ${HeroImageWrapper}:hover & {
+    transform: scale(1.02);
+  }
+`;
+
+const MouseIcon = styled.div`
+  width: 24px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  position: relative;
+  margin: 0 auto 8px;
+  
+  &::before {
+    content: '';
+    width: 4px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    animation: scroll 2s infinite;
+  }
+  
+  @keyframes scroll {
+    0% { transform: translate(-50%, 0); opacity: 1; }
+    100% { transform: translate(-50%, 10px); opacity: 0; }
+  }
+`;
+
+const ScrollIndicator = styled.div`
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    color: #fff;
+    transform: translate(-50%, -3px);
+    
+    ${MouseIcon} {
+      border-color: #fff;
+      
+      &::before {
+        background: #fff;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    bottom: 20px;
+    font-size: 0.75rem;
+  }
+`;
+
+
+
+const GradientTextWrapper = styled.span`
+  color: #00ff9d;
   background: linear-gradient(
     90deg,
     #00ff9d,
@@ -357,23 +234,6 @@ const GradientTextWrapper = styled.span`
   display: inline-block;
   transition: all 0.3s ease;
   
-  /* For WebKit browsers */
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    background: linear-gradient(
-      90deg,
-      #00ff9d,
-      #b3ff00,
-      #fff700,
-      #ffde00,
-      #b3ff00,
-      #00ff9d
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    background-size: 300% 100%;
-  }
-  
   &:hover {
     text-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
     transform: scale(1.01);
@@ -381,107 +241,94 @@ const GradientTextWrapper = styled.span`
 `;
 
 const HeroTitle = styled.h1`
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: 800;
-  text-align: center;
-  margin: 0.5rem 0 1.5rem;
+  margin: 0 0 1.5rem 0;
   line-height: 1.2;
-  letter-spacing: -0.02em;
-  max-width: 800px;
-  width: 100%;
-  padding: 0 1.5rem;
-  box-sizing: border-box;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  max-width: 900px;
   
-  /* Reset any inherited background */
-  background: none;
-  animation: ${gradientKeyframes} 8s ease infinite;
-  text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+  @media (max-width: 1200px) {
+    font-size: 2.5rem;
+  }
   
   @media (max-width: 992px) {
-    font-size: 2.25rem;
+    text-align: center;
+    font-size: 2.2rem;
   }
   
   @media (max-width: 768px) {
     font-size: 2rem;
-    padding: 0 1rem;
-    margin: 0.5rem 0 1.25rem;
+    margin-bottom: 1.2rem;
   }
   
   @media (max-width: 480px) {
-    font-size: 1.75rem;
+    font-size: 1.8rem;
     line-height: 1.2;
-    margin: 0.5rem 0 1rem;
+  }
+`;
+
+const WelcomeText = styled.div`
+  margin-bottom: 1.2rem;
+  font-size: 1.8rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 
+               -1px -1px 0 #000,  
+               1px -1px 0 #000,
+               -1px 1px 0 #000,
+               1px 1px 0 #000;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+  padding: 0 1rem;
+  
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
   }
   
-  /* Ajustes específicos para iOS */
-  @supports (-webkit-touch-callout: none) {
-    margin: 0.5rem 0 1rem;
-    @media (max-width: 480px) {
-      margin: 0.25rem 0 0.75rem;
-    }
-  }
-  @supports not (background-clip: text) {
-    background: none;
-    color: #00ff9d; /* Fallback color */
-  }
-
-  @media (min-width: 375px) {
-    font-size: 2.2rem;
-  }
-
-  @media (min-width: 414px) {
-    font-size: 2.4rem;
-  }
-
-  @media (min-width: 768px) {
-    font-size: 3rem;
-    margin: 1.5rem 0;
-  }
-
-  @media (min-width: 1024px) {
+  @media (max-width: 480px) {
+    font-size: 1.3rem;
+    letter-spacing: 1px;
   }
 `;
 
 const HeroSubtitle = styled.p`
-  font-size: 1.15rem;
-  margin: 0 0 2.5rem;
-  color: #4a6b57;
-  line-height: 1.6;
+  font-size: 1.25rem;
+  color: #e0e0e0;
+  margin: 0.5rem 0 0;
   max-width: 800px;
-  width: 100%;
+  line-height: 1.6;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  padding: 0 1rem;
   text-align: center;
-  padding: 0 2rem;
-  box-sizing: border-box;
+  
+  strong {
+    color: #ffffff;
+    font-weight: 600;
+    white-space: nowrap;
+  }
   
   @media (max-width: 992px) {
-    font-size: 1.1rem;
-    padding: 0 1.5rem;
+    margin: 0 auto 2rem;
+    max-width: 700px;
   }
   
   @media (max-width: 768px) {
-    font-size: 1rem;
-    line-height: 1.5;
-    padding: 0 1.25rem;
-    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
   }
   
   @media (max-width: 480px) {
-    font-size: 0.95rem;
-    line-height: 1.4;
-    padding: 0 1rem;
-    margin-bottom: 1.75rem;
-  }
-  
-  /* Ajustes específicos para iOS */
-  @supports (-webkit-touch-callout: none) {
-    @media (max-width: 480px) {
-      margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    
+    strong {
+      margin-top: 0.6rem;
     }
-  }
-  
-  @media (min-width: 768px) {
-    font-size: 1.25rem;
-    margin: 1rem 0 2.5rem;
   }
 `;
 
@@ -542,46 +389,70 @@ const CtaButton = styled(Link)`
 
 
 
+// Componente GradientText
+const GradientText: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <GradientTextWrapper>{children}</GradientTextWrapper>
+);
+
+const LogoGlow = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(17,145,75,0.6) 0%, rgba(17,145,75,0.2) 60%, rgba(0,0,0,0) 80%);
+  filter: blur(8px);
+  animation: ${pulse} 4s infinite alternate;
+  z-index: 1;
+  opacity: 0.8;
+`;
+
+const LogoContainer = styled.div`
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 2rem auto 1.5rem;
+  z-index: 2;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 15px rgba(17, 200, 100, 0.7));
+    animation: ${float} 3s ease-in-out infinite;
+  }
+`;
+
 const HeroSection: React.FC = React.memo(() => {
   return (
     <HeroContainer>
       <HeroContent>
-        <Logo3DContainer>
-          <Logo3DInner>
-            <LogoFront>
-              <img 
-                src="/img/logoGlow.png" 
-                alt="PETGAS Logo" 
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = '/img/logo-header.png';
-                }}
-              />
-            </LogoFront>
-            <LogoEffects>
-              <LogoGlow />
-              <LogoBorder />
-              <LogoShine />
-              <LogoLight top="15%" left="20%" size="8px" delay="0s" />
-              <LogoLight top="25%" left="70%" size="6px" delay="0.5s" />
-              <LogoLight top="70%" left="15%" size="5px" delay="1s" />
-              <LogoLight top="75%" left="75%" size="7px" delay="1.5s" />
-              <LogoReflection />
-            </LogoEffects>
-          </Logo3DInner>
-          <LogoShadow />
-        </Logo3DContainer>
-
+        <LogoContainer>
+          <img src="/img/logoGlow.png" alt="PETGAS Logo" />
+          <LogoGlow />
+        </LogoContainer>
+        <WelcomeText>BIENVENIDO A PETGAS MÉXICO</WelcomeText>
+        
         <HeroTitle>
-          <GradientText>
-            ENERGETIZANDO EL FUTURO CON ACCIONES POSITIVAS PARA EL PLANETA
-          </GradientText>
+          <GradientText>ENERGETIZANDO EL FUTURO CON ACCIONES POSITIVAS PARA EL PLANETA</GradientText>
         </HeroTitle>
-        <HeroSubtitle>Soluciones innovadoras para el manejo de residuos plásticos y la generación de combustibles limpios.</HeroSubtitle>
+        
+        <HeroSubtitle>
+          La tecnología de Petgas transforma plásticos no reciclables en: {
+            ['Gasolina', 'Diesel', 'Parafina', 'Queroseno', 'Gas'].map((item, index, array) => (
+              <React.Fragment key={item}>
+                <strong>{item}</strong>
+                {index < array.length - 2 ? ', ' : index === array.length - 2 ? ' y ' : ''}
+              </React.Fragment>
+            ))
+          }.
+        </HeroSubtitle>
+        
 
-        <ButtonContainer>
-          <CtaButton to="/contacto">Contáctanos</CtaButton>
-        </ButtonContainer>
       </HeroContent>
     </HeroContainer>
   );
