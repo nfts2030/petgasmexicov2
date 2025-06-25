@@ -6,7 +6,7 @@
 [![Styled Components](https://img.shields.io/badge/styled--components-DB7093?logo=styled-components&logoColor=white)](https://styled-components.com/)
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?logo=vercel)](https://vercel.com)
 [![Última Actualización](https://img.shields.io/badge/Última_Actualización-24_Jun_2025-brightgreen)]()
-[![Versión 2.3.0](https://img.shields.io/badge/Versión-2.3.0-blue)]()
+[![Versión 2.3.1](https://img.shields.io/badge/Versión-2.3.1-blue)]()
 
 Versión móvil optimizada del sitio web oficial de [PETGAS México](https://petgas.com.mx/). Este proyecto es una adaptación fiel del sitio web original, diseñada específicamente para ofrecer la mejor experiencia en dispositivos móviles, con mejoras en la interfaz de usuario y rendimiento.
 
@@ -140,17 +140,24 @@ Este proyecto está optimizado para desplegarse en Vercel. Sigue estos pasos par
 
 ## 📦 Últimos Cambios
 
-### [24/06/2025] - Versión 2.3.0 - Actualización de Contenido y Diseño
+### [24/06/2025] - Versión 2.3.1 - Ajustes de Diseño y Contenido
+
+- **Ajustes en el Hero**
+  - Reposicionamiento del logo y contenido principal para mejor equilibrio visual
+  - Ajuste de márgenes y espaciado para una mejor jerarquía visual
+  - Cambio de color del texto de bienvenida a blanco con sombra mejorada
 
 - **Actualización de Contenido**
   - Cambio de "Transformación de Plásticos" a "Pirolisis No Catalitica" en la sección de servicios
   - Actualización del mensaje en el footer para reflejar con mayor precisión el proceso de transformación
   - Mejora en la descripción de los servicios ofrecidos
+  - Eliminación del número telefónico del footer
 
 - **Mejoras en la Interfaz de Usuario**
   - Optimización del diseño responsive para dispositivos móviles
   - Ajustes en el espaciado y la tipografía para mejor legibilidad
   - Actualización de los textos de llamada a la acción
+  - Mejora en la jerarquía visual del contenido principal
 
 - **Correcciones y Optimizaciones**
   - Eliminación del número de teléfono del footer

@@ -124,7 +124,7 @@ const HeroSubtitle = styled.p`
 const Logo3D = styled.div`
   width: 160px;
   height: 160px;
-  margin: 0 auto 20px;
+  margin: 0 auto 10px; /* Reducido el margen inferior de 20px a 10px */
   perspective: 1000px;
   animation: ${float} 6s ease-in-out infinite;
 `;
@@ -148,9 +148,9 @@ const HomePage: React.FC = () => {
             />
           </Logo3D>
           
-          <p style={{fontSize: '2rem', marginBottom: '15px', color: 'white', textShadow: '0 1px 3px rgba(0,0,0,0.5)'}}>BIENVENIDO A PETGAS MÉXICO</p>
-          <HeroTitle>ENERGETIZANDO EL FUTURO CON ACCIONES POSITIVAS PARA EL PLANETA</HeroTitle>
-          <HeroSubtitle>La tecnología de Petgas transforma plásticos no reciclables en: Gasolina, Diesel, Parafina, Queroseno y Gas.</HeroSubtitle>
+          <p style={{fontSize: '2rem', margin: '0 0 5px 0', color: 'white', textShadow: '0 2px 4px rgba(0,0,0,0.7)'}}>BIENVENIDO A PETGAS MÉXICO</p>
+          <HeroTitle style={{margin: '0 0 5px 0'}}>ENERGETIZANDO EL FUTURO CON ACCIONES POSITIVAS PARA EL PLANETA</HeroTitle>
+          <HeroSubtitle style={{margin: '0 0 10px 0'}}>La tecnología de Petgas transforma plásticos no reciclables en: Gasolina, Diesel, Parafina, Queroseno y Gas.</HeroSubtitle>
           
           
         </HeroContent>

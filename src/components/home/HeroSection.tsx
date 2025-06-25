@@ -38,10 +38,13 @@ const HeroContainer = styled.section`
   min-height: 100dvh; /* Usa la altura dinámica de la ventana */
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background: #f9f9f9;
-  padding: 0 2rem 2rem;
+  padding-top: 300px; /* Aumentado a 300px para bajar más el contenido */
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 2rem;
   overflow: hidden;
   text-align: center;
   box-sizing: border-box;
@@ -70,7 +73,7 @@ const HeroContainer = styled.section`
 
 const HeroContent = styled.div`
   max-width: 800px;
-  margin: 0 auto;
+  margin: 10rem auto 0; /* Reducido a 10rem ya que el HeroContainer tiene padding-top */
   padding: 1rem 0;
   width: 100%;
   position: relative;
@@ -84,7 +87,7 @@ const HeroContent = styled.div`
   @media (max-width: 768px) {
     padding: 1rem 0;
     justify-content: flex-start;
-    margin-top: 1rem;
+    margin-top: 4rem; /* Reducido de 1rem a 4rem para móviles */
     
     @supports (-webkit-touch-callout: none) {
       padding-top: max(1rem, env(safe-area-inset-top));
@@ -93,7 +96,7 @@ const HeroContent = styled.div`
 `;
 
 const Logo3DContainer = styled.div`
-  margin: 0 auto 30px;
+  margin: 120px auto 30px; /* Aumentado de 80px a 120px el margen superior */
   width: 160px;
   height: 160px;
   position: relative;
