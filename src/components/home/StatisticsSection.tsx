@@ -294,38 +294,43 @@ const StatisticsSection: React.FC = () => {
       100% { background-position: 0% 50%; }
     }
     
-    font-size: 1.9rem;
-    margin: 0 0 0.6rem 0;
+    font-size: 1.6rem;
+    margin: 0 0 0.4rem 0;
     font-weight: 800;
-    line-height: 1.15;
+    line-height: 1.1;
     background: linear-gradient(90deg, #0a9d58, #8bc34a, #ffeb3b, #8bc34a, #0a9d58);
     background-size: 300% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: gradient 8s ease infinite;
     display: block;
-    padding: 0 5px 3px;
+    padding: 0 5px 2px;
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-    letter-spacing: -0.5px;
+    letter-spacing: -0.3px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
     
     @media (max-width: 1200px) {
-      font-size: 1.7rem;
-    }
-    
-    @media (max-width: 992px) {
       font-size: 1.5rem;
     }
     
+    @media (max-width: 992px) {
+      font-size: 1.4rem;
+      max-width: 800px;
+    }
+    
     @media (max-width: 768px) {
-      font-size: 1.3rem;
-      line-height: 1.15;
-      margin-bottom: 0.4rem;
+      font-size: 1.25rem;
+      line-height: 1.1;
+      margin-bottom: 0.3rem;
+      max-width: 90%;
     }
     
     @media (max-width: 480px) {
-      font-size: 1.25rem;
-      margin-bottom: 0.3rem;
-      letter-spacing: -0.3px;
+      font-size: 1.1rem;
+      margin-bottom: 0.2rem;
+      letter-spacing: -0.2px;
     }
   `;
 
@@ -371,35 +376,41 @@ const StatisticsSection: React.FC = () => {
                   filter: 'brightness(0.7)'
                 }} />
                 <div style={{
-                  maxWidth: '1000px',
+                  maxWidth: '900px',
                   width: '90%',
-                  padding: '18px 22px', /* Padding ligeramente reducido */
-                  borderRadius: '10px',
-                  backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                  padding: '14px 18px',
+                  borderRadius: '8px',
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
-                  backdropFilter: 'blur(10px)', /* Aumentamos ligeramente el desenfoque */
-                  margin: '0 auto 40px', /* Más margen inferior */
-                  transform: 'translateY(60px)', /* Bajamos más el contenedor */
+                  backdropFilter: 'blur(10px)',
+                  margin: '0 auto 30px',
+                  transform: 'translateY(40px)',
                   boxSizing: 'border-box',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                  boxShadow: '0 6px 24px rgba(0, 0, 0, 0.4)',
                   textAlign: 'center',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  minHeight: 'auto'
                 }}>
                   <AnimatedTitle>{stat.title}</AnimatedTitle>
                   <p style={{
-                    fontSize: '0.85rem', /* Tamaño de fuente más pequeño */
-                    lineHeight: '1.3', /* Menor interlineado para más compacidad */
-                    margin: '0.4rem auto 0',
+                    fontSize: '0.8rem',
+                    lineHeight: '1.25',
+                    margin: '0.2rem auto 0',
                     maxWidth: '800px',
-                    fontFamily: "'Montserrat', sans-serif", /* Fuente moderna */
+                    fontFamily: "'Montserrat', sans-serif",
                     fontWeight: 400,
                     color: '#ffffff',
-                    textShadow: '0 0 10px rgba(255, 255, 255, 0.6)', /* Efecto brillo más pronunciado */
+                    textShadow: '0 0 10px rgba(255, 255, 255, 0.6)',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
                     textAlign: 'center',
-                    padding: '0 15px',
+                    padding: '0 10px',
                     width: '100%',
                     boxSizing: 'border-box',
                     letterSpacing: '0.3px', /* Espaciado de letras más ajustado */
