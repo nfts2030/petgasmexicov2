@@ -420,7 +420,7 @@ const teamMembers: TeamMember[] = [
   {
     id: 3,
     name: 'Jesús Manuel Escoto Faces',
-    role: 'CSO de Vinculación Global y Marketing',
+    role: 'Director de Mercadotecnia y Vinculación Global',
     image: '/equipo/PERSONAL.jpg',
     bio: 'Responsable de establecer y mantener relaciones estratégicas globales y desarrollar estrategias de marketing para posicionar a PETGAS en el mercado internacional.',
     email: 'jef@petgas.com.mx',
@@ -446,7 +446,7 @@ const teamMembers: TeamMember[] = [
   {
     id: 5,
     name: 'Diego Escoto Yunes',
-    role: 'Subdirector de Vinculación Global',
+    role: 'Director de Desarrollo Global',
     image: '/equipo/PERSONAL.jpg',
     bio: 'Apoya en la gestión de alianzas estratégicas y relaciones internacionales para el crecimiento global de PETGAS.',
     email: 'dey@petgas.com.mx',
