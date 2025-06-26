@@ -24,29 +24,37 @@ const AnimatedGradient = styled.span`
 
 // Styled components
 const HeroSection = styled.section`
-  background: linear-gradient(135deg, rgba(10, 75, 42, 0.9) 0%, rgba(5, 45, 25, 0.95) 100%), 
-              url('/img/04/fdoverdeiconos.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  color: white;
-  padding: 40px 0; /* Padding mínimo */
+  background: transparent;
+  color: #333;
+  padding: 15px 0;
   text-align: center;
   position: relative;
   margin: 0;
   width: 100%;
-  min-height: 200px; /* Altura fija reducida */
-  max-height: 200px;
+  min-height: auto;
+  max-height: none;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  /* Mejora para iOS */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   
-  /* Asegurar que el contenido no se corte en dispositivos móviles */
+  /* Ajustes para iOS */
   @supports (-webkit-touch-callout: none) {
-    /* iOS specific styles */
-    min-height: 200px;
-    max-height: 200px;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Ajustes para dispositivos muy pequeños */
+  @media (max-width: 360px) {
+    padding: 10px 0;
   }
   
   &::before {
@@ -62,94 +70,74 @@ const HeroSection = styled.section`
     z-index: 1;
   }
   
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30px; /* Degradado inferior más pequeño */
-    background: linear-gradient(to bottom, transparent, #f8f9fa);
-    z-index: 1;
-    clip-path: polygon(0 70%, 100% 40%, 100% 100%, 0% 100%);
-  }
+
 `;
 
 const HeroContent = styled.div`
   position: relative;
   z-index: 2;
-  max-width: 1200px;
   width: 100%;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 15px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  min-height: 60vh;
   
   @media (max-width: 768px) {
-    padding: 1.5rem 1rem;
-    min-height: 70vh;
-    box-sizing: border-box;
+    padding: 10px 15px;
   }
+  
+  /* Asegurar que el contenido no se desborde en iOS */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 `;
 
 const HeroTitle = styled.h1`
-  margin: 0;
-  font-size: 3.5rem;
-  font-weight: 800;
+  font-size: 2rem;
+  margin: 0 0 0.3rem 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
   line-height: 1.1;
-  letter-spacing: -1px;
-  padding: 0 1rem;
   position: relative;
   z-index: 2;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  margin-bottom: 1.5rem;
-  text-align: center;
-  width: 100%;
-  box-sizing: border-box;
-  
-  @media (max-width: 992px) {
-    font-size: 3rem;
-  }
+  padding: 0 15px;
+  color: #0a4b2a; /* Verde Petgas */
   
   @media (max-width: 768px) {
-    font-size: 2.5rem;
-    margin-bottom: 1.25rem;
-    padding: 0 0.5rem;
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
   }
   
   @media (max-width: 480px) {
-    font-size: 2.25rem;
-    line-height: 1.2;
-    margin-bottom: 1rem;
+    font-size: 1.6rem;
   }
 `;
 
 const HeroSubtitle = styled.p`
-  font-size: 1.25rem;
+  font-size: 1rem;
   max-width: 800px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.95);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  position: relative;
-  z-index: 2;
-  box-sizing: border-box;
   width: 100%;
-  font-weight: 600;
+  margin: 0.5rem auto;
+  line-height: 1.4;
+  font-weight: 400;
+  padding: 10px 15px;
+  color: #333;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   
   @media (max-width: 768px) {
-    font-size: 1.1rem;
-    line-height: 1.5;
-    padding: 0 0.5rem;
+    font-size: 0.95rem;
+    margin: 0.5rem auto;
+    padding: 8px 12px;
+    line-height: 1.4;
   }
   
   @media (max-width: 480px) {
-    font-size: 1rem;
-    line-height: 1.4;
+    font-size: 0.9rem;
+    padding: 6px 10px;
   }
 `;
 
@@ -624,65 +612,14 @@ const EquipoPage: React.FC = () => {
     <PageLayout>
       <HeroSection>
         <HeroContent>
-          <div style={{
-            background: 'linear-gradient(145deg, rgba(10, 75, 42, 0.9), rgba(15, 105, 62, 0.8))',
-            padding: '2.5rem 2rem',
-            borderRadius: '20px',
-            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.2)',
-            backdropFilter: 'blur(8px)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            transform: 'perspective(1000px) rotateX(0.5deg)',
-            transformStyle: 'preserve-3d',
-            transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
-          }}>
-            <HeroTitle style={{
-              fontSize: '2.8rem',
-              marginBottom: '1rem',
-              textShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
-              letterSpacing: '-0.5px',
-              position: 'relative',
-              display: 'inline-block',
-              padding: '0 1rem',
-              transform: 'translateZ(20px)'
-            }}>
-              <AnimatedGradient>
-                Nuestro Equipo
-              </AnimatedGradient>
-            </HeroTitle>
-            <HeroSubtitle style={{
-              fontSize: '1.2rem',
-              maxWidth: '800px',
-              lineHeight: '1.6',
-              color: 'rgba(255, 255, 255, 0.95)',
-              fontWeight: 400,
-              textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
-              padding: '0 1rem',
-              position: 'relative',
-              zIndex: 1
-            }}>
-              Conoce al equipo de expertos que está transformando la industria de los residuos plásticos en México
-            </HeroSubtitle>
-            <div style={{
-              position: 'absolute',
-              top: '20px',
-              right: '20px',
-              width: '60px',
-              height: '60px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%)',
-              zIndex: 0
-            }}></div>
-            <div style={{
-              position: 'absolute',
-              bottom: '10px',
-              left: '10px',
-              width: '80px',
-              height: '80px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(124, 218, 36, 0.2) 0%, rgba(124, 218, 36, 0) 70%)',
-              zIndex: 0
-            }}></div>
-          </div>
+          <HeroTitle>
+            <AnimatedGradient>
+              Nuestro Equipo
+            </AnimatedGradient>
+          </HeroTitle>
+          <HeroSubtitle>
+            Conoce al equipo de expertos que está transformando la industria de los residuos plásticos en México
+          </HeroSubtitle>
         </HeroContent>
       </HeroSection>
       

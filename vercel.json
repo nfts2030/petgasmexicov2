@@ -10,23 +10,34 @@
   "routes": [
     {
       "src": "/_next/static/(?:[^/]+/pages|pages|chunks|runtime-main)/.+",
-      "headers": { "cache-control": "public, max-age=31536000, immutable" }
+      "headers": { "cache-control": "public, max-age=31536000, immutable" },
+      "continue": true
     },
     {
       "src": "/static/(.*)",
-      "headers": { "cache-control": "public, max-age=31536000, immutable" }
+      "headers": { "cache-control": "public, max-age=31536000, immutable" },
+      "continue": true
     },
     {
       "src": "/service-worker.js",
-      "dest": "/service-worker.js"
+      "dest": "/service-worker.js",
+      "headers": { "cache-control": "public, max-age=0, must-revalidate" },
+      "continue": true
     },
     {
       "src": "/manifest.json",
-      "headers": { "cache-control": "public, max-age=0, must-revalidate" }
+      "headers": { "cache-control": "public, max-age=0, must-revalidate" },
+      "continue": true
     },
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "src": "/api/(.*)",
+      "dest": "/api/$1",
+      "continue": true
+    },
+    {
+      "src": "^/(.*)",
+      "dest": "/index.html",
+      "status": 200
     }
   ],
   "headers": [
@@ -37,8 +48,18 @@
         { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "X-XSS-Protection", "value": "1; mode=block" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/static/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

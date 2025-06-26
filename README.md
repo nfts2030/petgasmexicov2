@@ -47,7 +47,28 @@ Cada tipo de plástico se muestra en una tarjeta interactiva con las siguientes 
 
 Cada tipo de plástico incluye su símbolo de identificación estándar superpuesto sobre la imagen correspondiente. Los símbolos están diseñados para ser claramente visibles y reconocibles, con efectos de sombra y brillo para mejorar la legibilidad sobre diferentes fondos.
 
-## ✨ MEJORAS RECIENTES (v2.4.1)
+## ✨ MEJORAS RECIENTES (v2.4.2)
+
+### Mejoras en la Página del Equipo
+- **Diseño Rediseñado**: 
+  - HeroSection más compacto y optimizado para móviles
+  - Mejor jerarquía visual con tipografía mejorada
+  - Efectos sutiles para mejor legibilidad
+- **Optimizaciones Técnicas**:
+  - Eliminación de estilos en línea que causaban conflictos
+  - Mejor manejo de errores en la carga de imágenes
+  - Optimización del rendimiento en dispositivos móviles
+- **Compatibilidad**:
+  - Mejoras en la compatibilidad con iOS
+  - Corrección de problemas de visualización en iPhone
+  - Optimización para diferentes tamaños de pantalla
+
+### Correciones de Errores
+- Solucionado problema de error 404 al recargar la aplicación en producción
+- Mejor manejo de rutas en Vercel
+- Optimización de la configuración de despliegue
+
+### v2.4.1
 
 ### 🎨 Mejoras en la Página de Equipo
 
