@@ -1,50 +1,16 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite",
   "builds": [
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": { 
+      "config": {
         "distDir": "dist"
       }
     }
   ],
-  "build": {
-    "env": {
-      "NODE_VERSION": "20"
-    }
-  },
-  "installCommand": "npm install",
   "routes": [
-    {
-      "src": "^/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "^/assets/(.*)",
-      "dest": "/assets/$1"
-    },
-    {
-      "src": "^/favicon.ico",
-      "dest": "/favicon.ico"
-    },
-    {
-      "src": "^/manifest.json",
-      "dest": "/manifest.json"
-    },
-    {
-      "src": "^/service-worker.js",
-      "dest": "/service-worker.js"
-    },
-    {
-      "src": "^/(.*)",
-      "dest": "/index.html"
-    }
-  ],
-  "rewrites": [
-    { "source": "^/(.*)", "destination": "/index.html" }
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
   ]
 }

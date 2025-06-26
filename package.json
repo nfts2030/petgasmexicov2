@@ -5,12 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build --outDir dist --base=./",
+    "build": "tsc && vite build --outDir dist",
     "lint": "eslint .",
     "preview": "vite preview --port 3000 --host",
     "preview:build": "vite preview --port 3000 --host",
     "start": "vite --port 3000 --host",
-    "vercel-build": "npm run build"
+    "vercel-build": "node vercel-build.js"
   },
   "dependencies": {
     "@types/react-bootstrap": "^1.0.1",
