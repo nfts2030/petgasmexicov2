@@ -47,7 +47,42 @@ Cada tipo de plástico se muestra en una tarjeta interactiva con las siguientes 
 
 Cada tipo de plástico incluye su símbolo de identificación estándar superpuesto sobre la imagen correspondiente. Los símbolos están diseñados para ser claramente visibles y reconocibles, con efectos de sombra y brillo para mejorar la legibilidad sobre diferentes fondos.
 
-## ✨ MEJORAS RECIENTES (v2.4.0)
+## ✨ MEJORAS RECIENTES (v2.4.1)
+
+### 🎨 Mejoras en la Página de Equipo
+
+- **Fotos del Equipo**: Se han añadido las fotos oficiales de todos los miembros del equipo
+- **Diseño de Tarjetas**: Rediseño de las tarjetas de equipo con efectos visuales mejorados
+- **Spinner Animado**: Implementación de un spinner animado con las iniciales de cada miembro
+- **Efecto de Carga**: Transición suave al cargar las imágenes del equipo
+- **Optimización de Imágenes**: Todas las imágenes han sido optimizadas para carga rápida
+- **Diseño Responsivo**: Mejoras en la visualización en diferentes tamaños de pantalla
+- **Efecto de Brillo**: Añadido un efecto sutil de brillo alrededor de las fotos del equipo
+- **Corrección de Estilos**: Eliminación de fondos no deseados para mejor visualización de las imágenes
+
+### 🐛 Correcciones de Errores
+
+- Se corrigió el círculo gris en las tarjetas de equipo
+- Mejorada la visibilidad de las imágenes del personal
+- Ajustes en la altura de la sección principal para mejor experiencia móvil
+
+### ⚙️ Optimizaciones Técnicas
+
+- Actualización de dependencias
+- Mejora en el rendimiento de animaciones
+- Optimización del código para mejor mantenimiento
+
+### 📱 Mejoras de UI/UX
+
+- Transiciones más suaves entre elementos
+- Mejor contraste y legibilidad
+- Efectos visuales más pulidos
+
+---
+
+## 📋 Historial de Versiones
+
+### v2.4.0 (24 Jun 2025)
 
 ### 🎯 Mejoras en la Marquesina Superior
 

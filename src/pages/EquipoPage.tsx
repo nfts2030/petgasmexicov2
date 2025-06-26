@@ -231,27 +231,18 @@ const MemberImage = styled.div<{ $imageUrl?: string }>`
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(10, 75, 42, 0.7) 0%, rgba(10, 75, 42, 0.4) 100%);
+    background: transparent;
     z-index: 1;
   }
   
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 1;
-  }
+
   
   .logo-spinner-container {
     position: absolute;
-    z-index: 2; /* Detrás de la foto */
+    z-index: 1; /* Detrás de la foto */
     transform: scale(1.2); /* Spinner más grande */
     transition: transform 0.3s ease;
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
     border-radius: 50%;
     padding: 0;
     width: 100%;
