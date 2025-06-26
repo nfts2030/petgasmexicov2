@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build --base=./",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview --port 3000 --host",
+    "preview:build": "vite preview --port 3000 --host",
+    "start": "vite --port 3000 --host"
   },
   "dependencies": {
     "@types/react-bootstrap": "^1.0.1",

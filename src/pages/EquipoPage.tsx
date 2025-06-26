@@ -614,11 +614,11 @@ const EquipoPage: React.FC = () => {
         <HeroContent>
           <HeroTitle>
             <AnimatedGradient>
-              Nuestro Equipo
+              Conoce a Nuestro Equipo
             </AnimatedGradient>
           </HeroTitle>
           <HeroSubtitle>
-            Conoce al equipo de expertos que está transformando la industria de los residuos plásticos en México
+            Expertos comprometidos con la transformación de residuos plásticos en energía sostenible
           </HeroSubtitle>
         </HeroContent>
       </HeroSection>

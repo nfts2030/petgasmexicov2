@@ -3,9 +3,9 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
-  base: '/', // Asegura que las rutas base sean relativas
+  base: mode === 'production' ? '/' : '/',
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
@@ -15,6 +15,11 @@ export default defineConfig({
     port: 3000,
     open: true,
     cors: true,
+    historyApiFallback: true,
+  },
+  preview: {
+    port: 3000,
+    open: true,
   },
   build: {
     outDir: 'dist',
@@ -35,5 +40,6 @@ export default defineConfig({
   // Asegura que las rutas funcionen correctamente en producción
   define: {
     'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL || ''),
+    'process.env.NODE_ENV': JSON.stringify(mode),
   },
-});
+}));
