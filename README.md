@@ -47,7 +47,17 @@ Cada tipo de plástico se muestra en una tarjeta interactiva con las siguientes 
 
 Cada tipo de plástico incluye su símbolo de identificación estándar superpuesto sobre la imagen correspondiente. Los símbolos están diseñados para ser claramente visibles y reconocibles, con efectos de sombra y brillo para mejorar la legibilidad sobre diferentes fondos.
 
-## ✨ MEJORAS RECIENTES (v2.4.2)
+## ✨ MEJORAS RECIENTES (v2.4.3)
+
+### ✅ Despliegue en Vercel
+- **Configuración Optimizada**:
+  - Configuración simplificada de Vercel para mejor rendimiento
+  - Rutas SPA correctamente configuradas para evitar errores 404
+  - Scripts de construcción optimizados para producción
+- **Rendimiento Mejorado**:
+  - Tiempos de carga más rápidos
+  - Mejor manejo de caché
+  - Configuración de encabezados HTTP para seguridad
 
 ### Mejoras en la Página del Equipo
 - **Diseño Rediseñado**: 
@@ -64,9 +74,10 @@ Cada tipo de plástico incluye su símbolo de identificación estándar superpue
   - Optimización para diferentes tamaños de pantalla
 
 ### Correciones de Errores
-- Solucionado problema de error 404 al recargar la aplicación en producción
-- Mejor manejo de rutas en Vercel
-- Optimización de la configuración de despliegue
+- **Resuelto**: Error 404 al recargar la aplicación en producción
+- **Corregido**: Problemas de enrutamiento en Vercel
+- **Optimizado**: Configuración de despliegue para mejor rendimiento
+- **Actualizado**: Dependencias a sus versiones más recientes
 
 ### v2.4.1
 
@@ -598,9 +609,50 @@ Puedes ajustar los siguientes parámetros:
 - Velocidad de animación: Modifica las duraciones en las definiciones de `keyframes`
 - Colores: Actualiza los gradientes en `LogoGlow` y otros componentes
 
-## 🌐 Despliegue
+## 🌐 Despliegue en Vercel
 
-El proyecto está configurado para desplegarse fácilmente en Vercel o Netlify. Simplemente haz push a la rama `main` para desplegar automáticamente.
+El proyecto está configurado para desplegarse automáticamente en [Vercel](https://vercel.com) con cada push a la rama `main`. La configuración actual incluye:
+
+### Configuración Técnica
+- **Framework**: Vite + React
+- **Versión de Node.js**: 20.x
+- **Directorio de salida**: `/dist`
+- **Rutas SPA**: Configuradas para redirigir todas las rutas a `index.html`
+- **Headers de seguridad**: Configurados para una navegación segura
+
+### Solución de Problemas Comunes
+
+#### Error 404 al Recargar Páginas
+Este error ha sido resuelto mediante la configuración adecuada de las rutas en `vercel.json`:
+
+```json
+{
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
+  ]
+}
+```
+
+#### Configuración de Variables de Entorno
+Las variables de entorno deben configurarse en la configuración del proyecto en Vercel:
+
+- `NODE_ENV`: `production`
+- `PUBLIC_URL`: URL base de la aplicación
+
+### Despliegue Manual
+Si necesitas desplegar manualmente:
+
+```bash
+# Instalar dependencias
+npm install
+
+# Construir para producción
+npm run build
+
+# Iniciar servidor de vista previa
+npm run preview
+```
 
 ## 🤝 Cómo Contribuir
 
