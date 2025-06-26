@@ -30,12 +30,13 @@ const HeroSection = styled.section`
   background-position: center;
   background-attachment: fixed;
   color: white;
-  padding: 120px 20px 80px; /* Ajuste de padding superior para iPhone */
+  padding: 40px 0; /* Padding mínimo */
   text-align: center;
   position: relative;
   margin: 0;
   width: 100%;
-  min-height: 100vh;
+  min-height: 200px; /* Altura fija reducida */
+  max-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,7 +45,8 @@ const HeroSection = styled.section`
   /* Asegurar que el contenido no se corte en dispositivos móviles */
   @supports (-webkit-touch-callout: none) {
     /* iOS specific styles */
-    min-height: -webkit-fill-available;
+    min-height: 200px;
+    max-height: 200px;
   }
   
   &::before {
@@ -66,7 +68,7 @@ const HeroSection = styled.section`
     bottom: 0;
     left: 0;
     right: 0;
-    height: 100px;
+    height: 30px; /* Degradado inferior más pequeño */
     background: linear-gradient(to bottom, transparent, #f8f9fa);
     z-index: 1;
     clip-path: polygon(0 70%, 100% 40%, 100% 100%, 0% 100%);
@@ -193,15 +195,34 @@ const TeamMember = styled.div<{ $isVisible: boolean; $delay: number; $department
   }
 `;
 
-const MemberImage = styled.div`
-  width: 100%;
-  height: 280px;
+const MemberImage = styled.div<{ $imageUrl?: string }>`
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  background: url('/img/04/fdoverdeiconos.jpg') center/cover no-repeat;
+  border-radius: 50%;
   overflow: hidden;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+  
+  /* Efecto de borde brillante */
+  &::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid transparent;
+    border-image: linear-gradient(45deg, #7cda24, #0a4b2a, #7cda24);
+    border-image-slice: 1;
+    z-index: 1;
+    animation: borderGlow 3s ease infinite;
+  }
   
   &::before {
     content: '';
@@ -226,15 +247,69 @@ const MemberImage = styled.div`
   }
   
   .logo-spinner-container {
-    position: relative;
-    z-index: 2;
-    transform: scale(0.8);
+    position: absolute;
+    z-index: 2; /* Detrás de la foto */
+    transform: scale(1.2); /* Spinner más grande */
     transition: transform 0.3s ease;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
-    padding: 10px;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 2s ease-in-out infinite;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border: 3px solid transparent;
+      border-radius: 50%;
+      border-top-color: #7cda24;
+      border-right-color: #0a4b2a;
+      animation: spin 3s linear infinite;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 3px solid transparent;
+      border-radius: 50%;
+      border-bottom-color: #7cda24;
+      border-left-color: #0a4b2a;
+      animation: spinReverse 2.5s linear infinite;
+    }
+  }
+  
+  @keyframes borderGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  @keyframes spinReverse {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1.15); }
+    50% { transform: scale(1.25); }
+    100% { transform: scale(1.15); }
   }
   
   ${TeamMember}:hover & .logo-spinner-container {
@@ -395,7 +470,7 @@ const teamMembers: TeamMember[] = [
     id: 1,
     name: 'Daniel Rodríguez Gutiérrez',
     role: 'Director General',
-    image: '/equipo/PERSONAL.jpg',
+    image: '/equipo/daniel_rodriguez.png',
     bio: 'Líder de la visión estratégica y dirección general de PETGAS, con amplia experiencia en la gestión de proyectos de transformación de residuos.',
     email: 'drg@petgas.com.mx',
     division: 'Dirección General',
@@ -408,7 +483,7 @@ const teamMembers: TeamMember[] = [
     id: 2,
     name: 'José de Jesús Escoto Romero',
     role: 'Director Comercial',
-    image: '/equipo/PERSONAL.jpg',
+    image: '/equipo/Romero.jpg',
     bio: 'A cargo de las estrategias comerciales y desarrollo de negocios en PETGAS, con enfoque en la expansión de mercados y alianzas estratégicas.',
     email: 'jer@petgas.com.mx',
     division: 'Área Comercial',
@@ -421,7 +496,7 @@ const teamMembers: TeamMember[] = [
     id: 3,
     name: 'Jesús Manuel Escoto Faces',
     role: 'Director de Mercadotecnia y Vinculación Global',
-    image: '/equipo/PERSONAL.jpg',
+    image: '/equipo/jesus_escoto_faces.png',
     bio: 'Responsable de establecer y mantener relaciones estratégicas globales y desarrollar estrategias de marketing para posicionar a PETGAS en el mercado internacional.',
     email: 'jef@petgas.com.mx',
     division: 'Vinculación Global',
@@ -434,7 +509,7 @@ const teamMembers: TeamMember[] = [
     id: 4,
     name: 'Andoni Álvarez Heiling',
     role: 'Director Jurídico',
-    image: '/equipo/PERSONAL.jpg',
+    image: '/equipo/andoni_alvarez.png',
     bio: 'Encargado de asesorar legalmente a la empresa, garantizando el cumplimiento normativo y protegiendo los intereses de PETGAS en todos los aspectos legales.',
     email: 'legal@petgas.com.mx',
     division: 'Área Legal',
@@ -447,7 +522,7 @@ const teamMembers: TeamMember[] = [
     id: 5,
     name: 'Diego Escoto Yunes',
     role: 'Director de Desarrollo Global',
-    image: '/equipo/PERSONAL.jpg',
+    image: '/equipo/diego_escoto.png',
     bio: 'Apoya en la gestión de alianzas estratégicas y relaciones internacionales para el crecimiento global de PETGAS.',
     email: 'dey@petgas.com.mx',
     division: 'Vinculación Global',
@@ -460,7 +535,7 @@ const teamMembers: TeamMember[] = [
     id: 6,
     name: 'Fabio Baca Padilla',
     role: 'Director Desarrollo Tecnológico',
-    image: '/equipo/tecnologia.jpg',
+    image: '/equipo/fabio_baca.png',
     bio: 'Líder en la implementación de tecnologías innovadoras para la optimización de procesos de transformación de residuos.',
     email: 'fbp@petgas.com.mx',
     division: 'Tecnología',
@@ -473,7 +548,7 @@ const teamMembers: TeamMember[] = [
     id: 7,
     name: 'Kathia Liahut Lopez',
     role: 'Responsable Área Química',
-    image: '/equipo/quimica.jpg',
+    image: '/equipo/katia_liahut.png',
     bio: 'Experta en procesos químicos y control de calidad, asegurando los más altos estándares en la producción de combustibles sostenibles.',
     email: 'quimica@petgas.com.mx',
     division: 'Investigación',
@@ -514,7 +589,7 @@ const teamMembers: TeamMember[] = [
     id: 10,
     name: 'Sandra M. Ponce de Leon',
     role: 'Líder de Alianzas Internacionales',
-    image: '/equipo/partnerships.jpg',
+    image: '/equipo/sandra_ponce.png',
     bio: 'Responsable de establecer y mantener alianzas estratégicas a nivel internacional para el crecimiento global de PETGAS.',
     email: 'spd@petgas.com.mx',
     division: 'Executiva International Partnerships',
@@ -527,7 +602,7 @@ const teamMembers: TeamMember[] = [
     id: 11,
     name: 'Estefania Ferrera Salgado',
     role: 'Líder de Desarrollo Web3',
-    image: '/equipo/web3.jpg',
+    image: '/equipo/Estefania.jpg',
     bio: 'Especialista en tecnologías blockchain y Web3, liderando la estrategia de transformación digital de PETGAS.',
     email: 'efs@petgas.com.mx',
     division: 'Web3',
@@ -633,9 +708,42 @@ const EquipoPage: React.FC = () => {
               $departmentColor={getDepartmentColor(member.division)}
               className="team-member"
             >
-              <MemberImage className="member-image">
+              <MemberImage 
+                className="member-image"
+                $imageUrl={member.image}
+              >
                 <div className="logo-spinner-container">
                   <LogoSpinner text={member.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()} />
+                </div>
+                <div style={{
+                  position: 'absolute',
+                  top: '20px',
+                  left: '20px',
+                  right: '20px',
+                  bottom: '20px',
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  zIndex: 3,
+                  border: 'none',
+                  background: 'transparent'
+                }}>
+                  <img 
+                    src={member.image} 
+                    alt={member.name}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.3s ease',
+                      transform: 'scale(1.05)'
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.1)';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                    }}
+                  />
                 </div>
               </MemberImage>
               <MemberInfo>
@@ -694,9 +802,42 @@ const EquipoPage: React.FC = () => {
               $departmentColor={getDepartmentColor(member.division)}
               className="team-member"
             >
-              <MemberImage className="member-image">
+              <MemberImage 
+                className="member-image"
+                $imageUrl={member.image}
+              >
                 <div className="logo-spinner-container">
                   <LogoSpinner text={member.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()} />
+                </div>
+                <div style={{
+                  position: 'absolute',
+                  top: '20px',
+                  left: '20px',
+                  right: '20px',
+                  bottom: '20px',
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  zIndex: 3,
+                  border: 'none',
+                  background: 'transparent'
+                }}>
+                  <img 
+                    src={member.image} 
+                    alt={member.name}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.3s ease',
+                      transform: 'scale(1.05)'
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.1)';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                    }}
+                  />
                 </div>
               </MemberImage>
               <MemberInfo>
