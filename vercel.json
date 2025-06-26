@@ -12,5 +12,7 @@
   "routes": [
     { "handle": "filesystem" },
     { "src": "/.*", "dest": "/index.html" }
-  ]
+  ],
+  "buildCommand": "npm install && npm run build",
+  "outputDirectory": "dist"
 }
