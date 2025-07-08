@@ -16,7 +16,7 @@
     "test": "vitest",
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
-    "vercel-build": "npm install --legacy-peer-deps && npm run build",
+    "vercel-build": "yarn install --immutable --immutable-cache --check-cache && yarn build",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\""
   },
   "dependencies": {
