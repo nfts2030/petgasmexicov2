@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(20px); }
@@ -138,21 +139,23 @@ const ServiceImage = styled.img`
 `;
 
 const ServicesSectionNew: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <ServicesContainer>
-      <SectionTitle>Nuestros Servicios</SectionTitle>
-      <Subtitle>Soluciones integrales para la gestión y transformación de residuos plásticos</Subtitle>
+      <SectionTitle>{t('services.title')}</SectionTitle>
+      <Subtitle>{t('services.subtitle')}</Subtitle>
       
       <ServiceCard>
         <ServiceImage 
           src="/img/bote_gasolina.png" 
-          alt="Transformación de Plásticos" 
+          alt={t('services.pyrolysis_title')} 
         />
         <ServiceTitle>
-          <AnimatedGradientText>Pirolisis No Catalitica</AnimatedGradientText>
+          <AnimatedGradientText>{t('services.pyrolysis_title')}</AnimatedGradientText>
         </ServiceTitle>
         <ServiceDescription>
-          Aprovechamos las cadenas de carbono que contiene el plástico para gasificarlas y condensarlas en combustibles limpios.
+          {t('services.pyrolysis_description')}
         </ServiceDescription>
       </ServiceCard>
     </ServicesContainer>

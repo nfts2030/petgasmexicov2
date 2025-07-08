@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const ProcessContainer = styled.section`
   padding: 6rem 2rem;
@@ -156,31 +157,32 @@ const ProcessDescription = styled.p`
   margin: 0;
 `;
 
-const processSteps = [
-  {
-    id: 1,
-    title: 'Vinculación con Centros de Acopio',
-    description: 'A través de alianzas estratégicas logramos valorizar residuos plásticos no reciclables que anteriormente eran considerados "basura".',
-    icon: 'fas fa-handshake',
-    isEven: false
-  },
-  {
-    id: 2,
-    title: 'Gestión de Residuos',
-    description: 'Nuestro enfoque sostenible garantiza que los residuos plásticos sean transformados de manera responsable y eficiente.',
-    icon: 'fas fa-recycle',
-    isEven: true
-  },
-  {
-    id: 3,
-    title: 'Autosuficiencia Energética',
-    description: 'Los combustibles de los vehículos de recolección son Petgas, logrando hacer nuestro movimiento totalmente autosuficiente y alineado con los acuerdos de París.',
-    icon: 'fas fa-leaf',
-    isEven: false
-  }
-];
-
 const ProcessSection: React.FC = () => {
+  const { t } = useLanguage();
+  const processSteps = [
+    {
+      id: 1,
+      title: t('process.step1_title'),
+      description: t('process.step1_description'),
+      icon: 'fas fa-handshake',
+      isEven: false
+    },
+    {
+      id: 2,
+      title: t('process.step2_title'),
+      description: t('process.step2_description'),
+      icon: 'fas fa-recycle',
+      isEven: true
+    },
+    {
+      id: 3,
+      title: t('process.step3_title'),
+      description: t('process.step3_description'),
+      icon: 'fas fa-leaf',
+      isEven: false
+    }
+  ];
+
   // Animaciones
   const container = {
     hidden: { opacity: 0 },
@@ -207,9 +209,9 @@ const ProcessSection: React.FC = () => {
 
   return (
     <ProcessContainer id="proceso">
-      <SectionTitle>Nuestro Proceso</SectionTitle>
+      <SectionTitle>{t('process.title')}</SectionTitle>
       <SectionSubtitle>
-        Pasos para avanzar en la difícil tarea de la descarbonización mundial.
+        {t('process.subtitle')}
       </SectionSubtitle>
       
       <ProcessTimeline>

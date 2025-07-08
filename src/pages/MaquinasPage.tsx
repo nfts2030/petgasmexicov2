@@ -1,9 +1,20 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
-import { FaTachometerAlt, FaClock, FaGasPump, FaFire, FaUsers, FaIndustry, FaRecycle, FaLeaf, FaChartLine, FaShieldAlt } from 'react-icons/fa';
-import { Helmet } from 'react-helmet';
-import { keyframes } from 'styled-components';
-import styled from 'styled-components';
+import { 
+  FaTachometerAlt, 
+  FaClock, 
+  FaGasPump, 
+  FaFire, 
+  FaUsers, 
+  FaIndustry, 
+  FaRecycle, 
+  FaLeaf, 
+  FaChartLine, 
+  FaShieldAlt 
+} from 'react-icons/fa';
+import { Helmet } from 'react-helmet-async';
+import styled, { keyframes } from 'styled-components';
+import { useLanguage } from '../contexts/LanguageContext';
 import '../../src/styles/equipmentSection.css';
 import '../../src/styles/processBenefits.css';
 
@@ -34,6 +45,8 @@ const AnimatedGradientText = styled.h1`
 `;
 
 const MaquinasPage: React.FC = () => {
+  const { t } = useLanguage();
+  
   useEffect(() => {
     // Animaciones al hacer scroll
     const animateOnScroll = () => {
@@ -62,8 +75,8 @@ const MaquinasPage: React.FC = () => {
   return (
     <div className="maquinas-page">
       <Helmet>
-        <title>Nuestros Equipos - PETGAS México</title>
-        <meta name="description" content="Conoce nuestros equipos de pirólisis para transformar residuos plásticos en combustibles limpios y sostenibles." />
+        <title>{t('maquinas.helmet_title')}</title>
+        <meta name="description" content={t('maquinas.helmet_description')} />
       </Helmet>
 
       {/* Header placeholder */}
@@ -83,7 +96,7 @@ const MaquinasPage: React.FC = () => {
           position: 'relative',
           zIndex: 2
         }}>
-          <AnimatedGradientText>Nuestras Plantas de Pirólisis NO Catalítica</AnimatedGradientText>
+          <AnimatedGradientText>{t('maquinas.hero_title')}</AnimatedGradientText>
           <p style={{ 
             marginBottom: '0', 
             fontSize: '1.1rem', 
@@ -93,7 +106,7 @@ const MaquinasPage: React.FC = () => {
             padding: '0 10px',
             fontWeight: '700',
             textShadow: 'none'
-          }}>Soluciones industriales para la transformación de residuos plásticos en combustibles limpios</p>
+          }}>{t('maquinas.hero_subtitle')}</p>
         </div>
       </section>
       
@@ -104,117 +117,117 @@ const MaquinasPage: React.FC = () => {
           {/* Equipo P-90 */}
           <div className="equipment-card">
             <div className="equipment-image-container">
-              <img src="/img/p01.jpeg" alt="Planta de Pirólisis NO Catalítica PETGAS P-90" className="equipment-image" />
-              <span className="equipment-badge">90 kg/ciclo • Inicio Rápido</span>
+              <img src="/img/p01.jpeg" alt={t('maquinas.p90_alt')} className="equipment-image" />
+              <span className="equipment-badge">{t('maquinas.p90_badge')}</span>
             </div>
             <div className="equipment-info">
               <h3>PETGAS P-90</h3>
-              <p>Sistema de pirólisis compacto ideal para pequeñas empresas y proyectos piloto. Procesa 90 kg por ciclo con alta eficiencia energética.</p>
+              <p>{t('maquinas.p90_description')}</p>
               <div className="specs">
                 <div className="spec-item">
-                  <span><FaTachometerAlt /> Capacidad</span>
-                  <span>90 kg/ciclo</span>
+                  <span><FaTachometerAlt /> {t('maquinas.spec_capacity')}</span>
+                  <span>{t('maquinas.p90_capacity')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaClock /> Duración</span>
-                  <span>5-6 horas/ciclo</span>
+                  <span><FaClock /> {t('maquinas.spec_duration')}</span>
+                  <span>{t('maquinas.p90_duration')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaGasPump /> Producción</span>
-                  <span>45L Gasolina + 25L Diésel</span>
+                  <span><FaGasPump /> {t('maquinas.spec_production')}</span>
+                  <span>{t('maquinas.p90_production')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaFire /> Potencia</span>
-                  <span>5 kW</span>
+                  <span><FaFire /> {t('maquinas.spec_power')}</span>
+                  <span>{t('maquinas.p90_power')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaUsers /> Operadores</span>
-                  <span>3 personas</span>
+                  <span><FaUsers /> {t('maquinas.spec_operators')}</span>
+                  <span>{t('maquinas.p90_operators')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaFire /> Consumo Gas LP</span>
-                  <span>15 L/h (1-2h/encendido)</span>
+                  <span><FaFire /> {t('maquinas.spec_lp_gas_consumption')}</span>
+                  <span>{t('maquinas.p90_lp_gas_consumption')}</span>
                 </div>
               </div>
-              <a href="/contacto" className="equipment-cta">Solicitar cotización</a>
+              <a href="/contacto" className="equipment-cta">{t('maquinas.cta_request_quote')}</a>
             </div>
           </div>
           
           {/* Equipo 4K-1R */}
           <div className="equipment-card">
             <div className="equipment-image-container">
-              <img src="/img/4k-1R.jpeg" alt="Planta de Pirólisis NO Catalítica PETGAS 4K-1R" className="equipment-image" />
-              <span className="equipment-badge">8,000 kg/día • 1 Reactor</span>
+              <img src="/img/4k-1R.jpeg" alt={t('maquinas.4k1r_alt')} className="equipment-image" />
+              <span className="equipment-badge">{t('maquinas.4k1r_badge')}</span>
             </div>
             <div className="equipment-info">
               <h3>PETGAS 4K-1R</h3>
-              <p>Sistema industrial con reactor simple para procesamiento continuo de residuos plásticos. Ideal para medianas empresas con alta producción de desechos.</p>
+              <p>{t('maquinas.4k1r_description')}</p>
               <div className="specs">
                 <div className="spec-item">
-                  <span><FaTachometerAlt /> Capacidad</span>
-                  <span>8,000 kg/día</span>
+                  <span><FaTachometerAlt /> {t('maquinas.spec_capacity')}</span>
+                  <span>{t('maquinas.4k1r_capacity')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaClock /> Duración</span>
-                  <span>8-10 horas/ciclo</span>
+                  <span><FaClock /> {t('maquinas.spec_duration')}</span>
+                  <span>{t('maquinas.4k1r_duration')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaGasPump /> Producción</span>
-                  <span>3,600L Gasolina + 2,000L Diésel</span>
+                  <span><FaGasPump /> {t('maquinas.spec_production')}</span>
+                  <span>{t('maquinas.4k1r_production')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaFire /> Quemadores</span>
-                  <span>1 quemador PETGAS</span>
+                  <span><FaFire /> {t('maquinas.spec_burners')}</span>
+                  <span>{t('maquinas.4k1r_burners')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaIndustry /> Reactor</span>
-                  <span>1 reactor en acero inoxidable</span>
+                  <span><FaIndustry /> {t('maquinas.spec_reactor')}</span>
+                  <span>{t('maquinas.4k1r_reactor')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaUsers /> Operadores</span>
-                  <span>3 personas</span>
+                  <span><FaUsers /> {t('maquinas.spec_operators')}</span>
+                  <span>{t('maquinas.4k1r_operators')}</span>
                 </div>
               </div>
-              <a href="/contacto" className="equipment-cta">Solicitar cotización</a>
+              <a href="/contacto" className="equipment-cta">{t('maquinas.cta_request_quote')}</a>
             </div>
           </div>
           
           {/* Equipo 4K-2R */}
           <div className="equipment-card">
             <div className="equipment-image-container">
-              <img src="/img/Planta4k-2r.jpeg" alt="Planta de Pirólisis NO Catalítica PETGAS 4K-2R" className="equipment-image" />
-              <span className="equipment-badge">16,000+ kg/día • 2 Reactores</span>
+              <img src="/img/Planta4k-2r.jpeg" alt={t('maquinas.4k2r_alt')} className="equipment-image" />
+              <span className="equipment-badge">{t('maquinas.4k2r_badge')}</span>
             </div>
             <div className="equipment-info">
               <h3>PETGAS 4K-2R</h3>
-              <p>Sistema industrial de doble reactor para máxima capacidad de procesamiento. Diseñado para operaciones continuas 24/7 con máxima eficiencia.</p>
+              <p>{t('maquinas.4k2r_description')}</p>
               <div className="specs">
                 <div className="spec-item">
-                  <span><FaTachometerAlt /> Capacidad</span>
-                  <span>16,000+ kg/día</span>
+                  <span><FaTachometerAlt /> {t('maquinas.spec_capacity')}</span>
+                  <span>{t('maquinas.4k2r_capacity')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaClock /> Duración</span>
-                  <span>8-10 horas/ciclo</span>
+                  <span><FaClock /> {t('maquinas.spec_duration')}</span>
+                  <span>{t('maquinas.4k2r_duration')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaGasPump /> Producción</span>
-                  <span>7,200L Gasolina + 4,000L Diésel</span>
+                  <span><FaGasPump /> {t('maquinas.spec_production')}</span>
+                  <span>{t('maquinas.4k2r_production')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaFire /> Quemadores</span>
-                  <span>2 quemadores PETGAS</span>
+                  <span><FaFire /> {t('maquinas.spec_burners')}</span>
+                  <span>{t('maquinas.4k2r_burners')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaIndustry /> Reactores</span>
-                  <span>2 reactores en acero inoxidable</span>
+                  <span><FaIndustry /> {t('maquinas.spec_reactors')}</span>
+                  <span>{t('maquinas.4k2r_reactors')}</span>
                 </div>
                 <div className="spec-item">
-                  <span><FaUsers /> Operadores</span>
-                  <span>4 personas</span>
+                  <span><FaUsers /> {t('maquinas.spec_operators')}</span>
+                  <span>{t('maquinas.4k2r_operators')}</span>
                 </div>
               </div>
-              <a href="/contacto" className="equipment-cta">Solicitar cotización</a>
+              <a href="/contacto" className="equipment-cta">{t('maquinas.cta_request_quote')}</a>
             </div>
           </div>
         </div>
@@ -226,15 +239,15 @@ const MaquinasPage: React.FC = () => {
         <Container>
           {/* Sección de Proceso */}
           <div className="process-section">
-            <h2 className="section-title">Nuestro Proceso</h2>
+            <h2 className="section-title">{t('maquinas.process_title')}</h2>
             
             <div className="process-steps">
               {/* Paso 1 */}
               <div className="process-step">
                 <div className="step-number">1</div>
                 <div className="step-content">
-                  <h4>Recolección</h4>
-                  <p>Recolectamos residuos plásticos no reciclables de diversas fuentes para darles una segunda vida.</p>
+                  <h4>{t('maquinas.process_step1_title')}</h4>
+                  <p>{t('maquinas.process_step1_description')}</p>
                 </div>
               </div>
               
@@ -242,8 +255,8 @@ const MaquinasPage: React.FC = () => {
               <div className="process-step">
                 <div className="step-number">2</div>
                 <div className="step-content">
-                  <h4>Procesamiento</h4>
-                  <p>Los residuos se procesan en nuestras plantas de pirólisis a altas temperaturas controladas.</p>
+                  <h4>{t('maquinas.process_step2_title')}</h4>
+                  <p>{t('maquinas.process_step2_description')}</p>
                 </div>
               </div>
               
@@ -251,8 +264,8 @@ const MaquinasPage: React.FC = () => {
               <div className="process-step">
                 <div className="step-number">3</div>
                 <div className="step-content">
-                  <h4>Conversión</h4>
-                  <p>El plástico se convierte en gases que luego se condensan en combustibles limpios.</p>
+                  <h4>{t('maquinas.process_step3_title')}</h4>
+                  <p>{t('maquinas.process_step3_description')}</p>
                 </div>
               </div>
               
@@ -260,8 +273,8 @@ const MaquinasPage: React.FC = () => {
               <div className="process-step">
                 <div className="step-number">4</div>
                 <div className="step-content">
-                  <h4>Distribución</h4>
-                  <p>Los combustibles resultantes se distribuyen para su uso en diversas aplicaciones industriales y comerciales.</p>
+                  <h4>{t('maquinas.process_step4_title')}</h4>
+                  <p>{t('maquinas.process_step4_description')}</p>
                 </div>
               </div>
             </div>
@@ -269,7 +282,7 @@ const MaquinasPage: React.FC = () => {
           
           {/* Sección de Beneficios */}
           <div className="benefits-section">
-            <h2 className="section-title">Beneficios Clave</h2>
+            <h2 className="section-title">{t('maquinas.benefits_title')}</h2>
             
             <div className="benefits-grid">
               {/* Beneficio 1 */}
@@ -278,8 +291,8 @@ const MaquinasPage: React.FC = () => {
                   <div className="benefit-icon">
                     <FaRecycle />
                   </div>
-                  <h4>Reducción de Residuos</h4>
-                  <p>Eliminamos plásticos no reciclables que de otra manera terminarían en vertederos o en el océano, contribuyendo a un planeta más limpio.</p>
+                  <h4>{t('maquinas.benefit1_title')}</h4>
+                  <p>{t('maquinas.benefit1_description')}</p>
                 </div>
               </div>
               
@@ -289,8 +302,8 @@ const MaquinasPage: React.FC = () => {
                   <div className="benefit-icon">
                     <FaLeaf />
                   </div>
-                  <h4>Energía Limpia</h4>
-                  <p>Producción de combustibles con hasta un 80% menos de emisiones de CO₂ en comparación con los combustibles fósiles tradicionales.</p>
+                  <h4>{t('maquinas.benefit2_title')}</h4>
+                  <p>{t('maquinas.benefit2_description')}</p>
                 </div>
               </div>
               
@@ -300,8 +313,8 @@ const MaquinasPage: React.FC = () => {
                   <div className="benefit-icon">
                     <FaChartLine />
                   </div>
-                  <h4>Finanzas Regenerativas</h4>
-                  <p>Transformamos un problema de gestión de residuos plásticos en oportunidades económicas sostenibles.</p>
+                  <h4>{t('maquinas.benefit3_title')}</h4>
+                  <p>{t('maquinas.benefit3_description')}</p>
                 </div>
               </div>
               
@@ -311,8 +324,8 @@ const MaquinasPage: React.FC = () => {
                   <div className="benefit-icon">
                     <FaShieldAlt />
                   </div>
-                  <h4>Cumplimiento Normativo</h4>
-                  <p>Ayudamos a las empresas a cumplir con las regulaciones ambientales y a alcanzar sus objetivos de sostenibilidad corporativa.</p>
+                  <h4>{t('maquinas.benefit4_title')}</h4>
+                  <p>{t('maquinas.benefit4_description')}</p>
                 </div>
               </div>
             </div>
@@ -320,10 +333,10 @@ const MaquinasPage: React.FC = () => {
           
           {/* Llamado a la acción */}
           <div className="cta-container">
-            <h3>¿Quisieras saber más de cómo implementar PETGAS en tu cadena de valor comercial?</h3>
-            <p>Juntos podemos implementar un plan para descarbonizar tu empresa o a ti mismo</p>
+            <h3>{t('maquinas.cta_title')}</h3>
+            <p>{t('maquinas.cta_subtitle')}</p>
             <a href="/contacto" className="cta-button">
-              Contáctanos Ahora
+              {t('maquinas.cta_button')}
             </a>
           </div>
         </Container>

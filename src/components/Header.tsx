@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
+import LanguageSelector from './LanguageSelector'; // Import LanguageSelector
+import { useLanguage } from '../contexts/LanguageContext'; // Import useLanguage
 
 // Animación de la marquesina mejorada
 const marquee = keyframes`
@@ -502,6 +504,7 @@ const Overlay = styled.div<{ $isOpen: boolean }>`
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage(); // Use the translation hook
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -544,9 +547,9 @@ const Header: React.FC = () => {
         <MarqueeContent>
           {[...Array(4)].map((_, i) => (
             <MarqueeItem key={i}>
-              <MarqueeText>BIENVENIDO A PETGAS MÉXICO</MarqueeText>
+              <MarqueeText>{t('marquee.welcome')}</MarqueeText>
               <MarqueeImage src="/img/bote_gasolina.png" alt="Bote de gasolina" style={{ height: '28px' }} />
-              <MarqueeText className="highlight">Transformando residuos plásticos en energía sostenible</MarqueeText>
+              <MarqueeText className="highlight">{t('marquee.tagline')}</MarqueeText>
               <MarqueeImage src="/img/hero/logoGlow.png" alt="PETGAS Logo" style={{ height: '32px' }} />
             </MarqueeItem>
           ))}
@@ -566,9 +569,11 @@ const Header: React.FC = () => {
               <div className="bar"></div>
               <div className="bar"></div>
             </div>
-            <span>Mobile Mode</span>
+            <span>{t('mobileMode')}</span>
           </MobileModeIndicator>
           
+          <LanguageSelector /> {/* Add LanguageSelector here */}
+
           <MenuButton 
             onClick={toggleMenu} 
             aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
@@ -588,7 +593,7 @@ const Header: React.FC = () => {
                   to="/" 
                   $isActive={location.pathname === '/'}
                 >
-                  INICIO
+                  {t('header.home')}
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -596,7 +601,7 @@ const Header: React.FC = () => {
                   to="/equipo" 
                   $isActive={location.pathname === '/equipo'}
                 >
-                  EQUIPO
+                  {t('header.team')}
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -604,7 +609,7 @@ const Header: React.FC = () => {
                   to="/maquinas" 
                   $isActive={location.pathname === '/maquinas'}
                 >
-                  NUESTRAS MÁQUINAS
+                  {t('header.machines')}
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -612,7 +617,7 @@ const Header: React.FC = () => {
                   to="/combustibles" 
                   $isActive={location.pathname === '/combustibles'}
                 >
-                  COMBUSTIBLES
+                  {t('header.fuels')}
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -620,7 +625,7 @@ const Header: React.FC = () => {
                   to="/creditos" 
                   $isActive={location.pathname === '/creditos'}
                 >
-                  CRÉDITOS PLÁSTICOS
+                  {t('header.credits')}
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -628,7 +633,7 @@ const Header: React.FC = () => {
                   to="/contacto" 
                   $isActive={location.pathname === '/contacto'}
                 >
-                  CONTACTO
+                  {t('header.contact')}
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -637,7 +642,7 @@ const Header: React.FC = () => {
                   $isActive={location.pathname === '/intranet'}
                   $highlight
                 >
-                  INTRANET
+                  {t('header.intranet')}
                 </NavLink>
               </NavItem>
             </NavList>
@@ -649,3 +654,4 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+

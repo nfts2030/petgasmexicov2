@@ -1,10 +1,12 @@
-import React, { Suspense, lazy, useMemo, useEffect } from 'react';
+import { Suspense, lazy, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import LoadingSpinner from './components/ui/LoadingSpinner';
 import WhatsAppButton from './components/common/WhatsAppButton';
+import { HelmetProvider } from 'react-helmet-async';
+import { LanguageProvider } from './contexts/LanguageContext'; // Import LanguageProvider
 
 // Importar estilos globales
 import './App.css';
@@ -71,16 +73,20 @@ const App: React.FC = () => {
   ), []);
   
   return (
-    <AppContainer>
-      <Header />
-      <MainContent>
-        <Suspense fallback={<LoadingSpinner />}>
-          {routes}
-        </Suspense>
-      </MainContent>
-      <Footer />
-      <WhatsAppButton />
-    </AppContainer>
+    <HelmetProvider>
+      <LanguageProvider>
+        <AppContainer>
+          <Header />
+          <MainContent>
+            <Suspense fallback={<LoadingSpinner />}>
+              {routes}
+            </Suspense>
+          </MainContent>
+          <Footer />
+          <WhatsAppButton />
+        </AppContainer>
+      </LanguageProvider>
+    </HelmetProvider>
   );
 }
 

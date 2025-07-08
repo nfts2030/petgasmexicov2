@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled, { keyframes, css } from 'styled-components';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FaTrashAlt, FaRecycle, FaOilCan, FaTint, FaCheckDouble, FaCheck } from 'react-icons/fa';
 import { Chart, registerables } from 'chart.js';
+import { useLanguage } from '../contexts/LanguageContext';
 
 // Register Chart.js components
 Chart.register(...registerables);
@@ -238,6 +239,7 @@ const FuelImage = styled.div`
 // Fuel content styles moved to inline components
 
 const CombustiblesPage: React.FC = () => {
+  const { t } = useLanguage();
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
   const processSectionRef = useRef<HTMLDivElement>(null);
@@ -339,32 +341,32 @@ const CombustiblesPage: React.FC = () => {
     {
       id: 1,
       icon: <FaTrashAlt />,
-      title: 'Recolección de Residuos',
-      description: 'Recolección de residuos plásticos post-consumo de diferentes fuentes.'
+      title: t('combustibles.step1_title'),
+      description: t('combustibles.step1_description')
     },
     {
       id: 2,
       icon: <FaRecycle />,
-      title: 'Clasificación y Limpieza',
-      description: 'Separación por tipo de plástico y limpieza para eliminar impurezas.'
+      title: t('combustibles.step2_title'),
+      description: t('combustibles.step2_description')
     },
     {
       id: 3,
       icon: <FaOilCan />,
-      title: 'Proceso de Pirólisis NO Catalítica',
-      description: 'Transformación térmica de plásticos a 400-500°C en ausencia de oxígeno.'
+      title: t('combustibles.step3_title'),
+      description: t('combustibles.step3_description')
     },
     {
       id: 4,
       icon: <FaTint />,
-      title: 'Refinación',
-      description: 'Purificación y separación de los diferentes hidrocarburos obtenidos.'
+      title: t('combustibles.step4_title'),
+      description: t('combustibles.step4_description')
     },
     {
       id: 5,
       icon: <FaCheckDouble />,
-      title: 'Control de Calidad',
-      description: 'Análisis de laboratorio para garantizar los estándares de calidad requeridos.'
+      title: t('combustibles.step5_title'),
+      description: t('combustibles.step5_description')
     }
   ];
 
@@ -372,45 +374,45 @@ const CombustiblesPage: React.FC = () => {
   const fuels = [
     {
       id: 1,
-      name: 'PETGAS ULTRA',
+      name: t('combustibles.petgas_ultra_name'),
       image: '/img/combustibles/petgas-ultra.png',
-      description: 'Combustible premium de alto octanaje, representa el 48% del producto final.',
-      properties: ['48% del rendimiento', 'Alto octanaje']
+      description: t('combustibles.petgas_ultra_description'),
+      properties: [t('combustibles.petgas_ultra_prop1'), t('combustibles.petgas_ultra_prop2')]
     },
     {
       id: 2,
-      name: 'PETDIESEL',
+      name: t('combustibles.petdiesel_name'),
       video: '/img/diesel.mp4',
-      description: 'Combustible diésel de alto rendimiento, representa el 28% del producto final.',
-      properties: ['28% del rendimiento', 'Alto poder calorífico', 'Bajo en azufre']
+      description: t('combustibles.petdiesel_description'),
+      properties: [t('combustibles.petdiesel_prop1'), t('combustibles.petdiesel_prop2'), t('combustibles.petdiesel_prop3')]
     },
     {
       id: 3,
-      name: 'Heavy PetDiesel',
+      name: t('combustibles.heavy_petdiesel_name'),
       image: '/img/combustibles/avion.png',
-      description: 'Combustible para aviación, representa el 12% del producto final.',
-      properties: ['12% del rendimiento', 'Alto rendimiento', 'Para uso aeronáutico']
+      description: t('combustibles.heavy_petdiesel_description'),
+      properties: [t('combustibles.heavy_petdiesel_prop1'), t('combustibles.heavy_petdiesel_prop2'), t('combustibles.heavy_petdiesel_prop3')]
     },
     {
       id: 4,
-      name: 'PETFINA',
+      name: t('combustibles.petfina_name'),
       video: '/img/parafina.mp4',
-      description: 'Producto refinado, representa el 5% del producto final.',
-      properties: ['5% del rendimiento', 'Alta pureza', 'Usos específicos']
+      description: t('combustibles.petfina_description'),
+      properties: [t('combustibles.petfina_prop1'), t('combustibles.petfina_prop2'), t('combustibles.petfina_prop3')]
     },
     {
       id: 5,
-      name: 'PETSOLEO',
+      name: t('combustibles.petsoleo_name'),
       image: '/img/combustibles/petdiesel.jpg',
-      description: 'Producto secundario, representa el 5% del producto final.',
-      properties: ['5% del rendimiento', 'Versátil', 'Múltiples usos industriales']
+      description: t('combustibles.petsoleo_description'),
+      properties: [t('combustibles.petsoleo_prop1'), t('combustibles.petsoleo_prop2'), t('combustibles.petsoleo_prop3')]
     },
     {
       id: 6,
-      name: 'COQUE',
+      name: t('combustibles.coque_name'),
       image: '/img/coque.jpeg',
-      description: 'Material residual no convertido, solo el 2% del total procesado.',
-      properties: ['2% del total', 'Minimizado', 'Gestionado responsablemente']
+      description: t('combustibles.coque_description'),
+      properties: [t('combustibles.coque_prop1'), t('combustibles.coque_prop2'), t('combustibles.coque_prop3')]
     }
   ];
 
@@ -419,9 +421,9 @@ const CombustiblesPage: React.FC = () => {
     <div className="combustibles-page">
       <HeroSection>
         <HeroContent>
-          <HeroTitle>COMBUSTIBLES NO FÓSILES</HeroTitle>
+          <HeroTitle>{t('combustibles.hero_title')}</HeroTitle>
           <HeroSubtitle>
-            A través de un proceso de Pirólisis No Catalítica o Ingeniería Inversa el cual se realiza en ausencia de oxígeno. No quemamos plástico. Realizamos un proceso de gasificación cerrado. No generamos ninguna clase de emisión al medio ambiente. Transformamos los residuos plásticos de su estado original sólido a gaseoso, para posteriormente condensar mediante un proceso cuántico innovador a partir de la longitud de la cadena de carbonos de cada combustible, obteniendo productos de mejor calidad que los combustibles fósiles actualmente utilizados.
+            {t('combustibles.hero_subtitle')}
           </HeroSubtitle>
         </HeroContent>
       </HeroSection>
@@ -430,9 +432,9 @@ const CombustiblesPage: React.FC = () => {
         <Container>
           <Row className="justify-content-center mb-5">
             <Col lg={10} className="text-center">
-              <SectionTitle>Nuestro Proceso de Conversión</SectionTitle>
+              <SectionTitle>{t('combustibles.process_title')}</SectionTitle>
               <p className="lead">
-                Tecnología patentada que transforma residuos plásticos en combustibles de alta calidad a través de un proceso sostenible y eficiente.
+                {t('combustibles.process_subtitle')}
               </p>
             </Col>
           </Row>
@@ -463,9 +465,9 @@ const CombustiblesPage: React.FC = () => {
         <Container>
           <Row className="justify-content-center mb-5">
             <Col lg={8} className="text-center">
-              <SectionTitle>Nuestros Productos</SectionTitle>
+              <SectionTitle>{t('combustibles.products_title')}</SectionTitle>
               <p className="lead">
-                Combustibles de alta calidad obtenidos a través de nuestro proceso de transformación de residuos plásticos.
+                {t('combustibles.products_subtitle')}
               </p>
             </Col>
           </Row>

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PlasticCard from '../PlasticCard';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const SectionContainer = styled.section`
   padding: 80px 20px;
@@ -70,6 +71,7 @@ const CardsContainer = styled.div`
 
 
 const PlasticTypesSection: React.FC = () => {
+  const { t } = useLanguage();
   // Efecto de montaje/desmontaje
   React.useEffect(() => {
     // Lógica de inicialización aquí si es necesario
@@ -81,54 +83,54 @@ const PlasticTypesSection: React.FC = () => {
   const plasticTypes = [
   {
     id: 1,
-    name: 'Tereftalato de Polietileno',
+    name: t('plastics.pet_name'),
     type: 'PET',
-    description: 'Botellas de agua, refrescos, envases de alimentos, bandejas, alfombras, ropa, fibra textil, muebles, envases de productos de limpieza, envases de cosméticos.',
+    description: t('plastics.pet_description'),
     image: '/img/plasticos/pet.png',
     symbol: '/img/pet_symbol.png',
     number: '1'
   },
   {
     id: 2,
-    name: 'Polietileno de Alta Densidad',
+    name: t('plastics.hdpe_name'),
     type: 'HDPE',
-    description: 'Botes de Gel, Botellas de lácteos, botellas de shampoo, baldes, botellas de detergente, juguetes, envases de comida, decoración, envases de jugos, tuberías para agua.',
+    description: t('plastics.hdpe_description'),
     image: '/img/plasticos/hdpe.png',
     symbol: '/img/hdpe_symbol.png',
     number: '2'
   },
   {
     id: 4,
-    name: 'Polietileno de Baja Densidad',
+    name: t('plastics.ldpe_name'),
     type: 'LDPE',
-    description: 'Bolsas de plástico, envolturas, botellas exprimibles, tapas flexibles.',
-    image: '/img/plastic_bags_LDPE.png',
+    description: t('plastics.ldpe_description'),
+    image: '/img/plasticos/ldpe.png',
     symbol: '/img/ldpe_symbol.png',
     number: '4'
   },
   {
     id: 5,
-    name: 'Polipropileno',
+    name: t('plastics.pp_name'),
     type: 'PP',
-    description: 'Envases de yogur, tapas de botellas, popotes, envases de medicamentos, envases de ketchup, envases de mantequilla, envases de helado, envases de salsas, envases de aderezos, envases de mermelada.',
+    description: t('plastics.pp_description'),
     image: '/img/Polipropileno.png',
     symbol: '/img/pp_symbol.png',
     number: '5'
   },
   {
     id: 6,
-    name: 'Poliestireno',
+    name: t('plastics.ps_name'),
     type: 'PS',
-    description: 'Vasos desechables, bandejas de carne, envases de comida rápida, cajas de CD, envases de huevos, envases de postres, envases de lácteos, envases de helado, envases de mantequilla, envases de queso crema.',
+    description: t('plastics.ps_description'),
     image: '/img/plasticos/ps.png',
     symbol: '/img/ps_symbol.png',
     number: '6'
   },
   {
     id: 7,
-    name: 'Otros Plásticos',
+    name: t('plastics.other_name'),
     type: 'OTROS',
-    description: 'Incluye policarbonatos, nailon, fibra de vidrio, acrílicos y otros plásticos mixtos.',
+    description: t('plastics.other_description'),
     image: '/img/plasticos/otros.png',
     symbol: '/img/otros_symbol.png',
     number: '7+'
@@ -139,8 +141,8 @@ const PlasticTypesSection: React.FC = () => {
 
   return (
     <SectionContainer>
-      <Title>Tipos de plásticos Pirolizables</Title>
-      <Subtitle>Conoce los diferentes tipos de plástico que transformamos en energía</Subtitle>
+      <Title>{t('plastics.title')}</Title>
+      <Subtitle>{t('plastics.subtitle')}</Subtitle>
       <CardsContainer>
         {plasticTypes.map((plastic) => (
           <PlasticCard

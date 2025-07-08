@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 import styled, { keyframes } from 'styled-components';
 import PageLayout from '../components/layout/PageLayout';
 import LogoSpinner from '../components/ui/LogoSpinner';
@@ -448,11 +448,11 @@ const teamMembers: TeamMember[] = [
   {
     id: 1,
     name: 'Daniel Rodríguez Gutiérrez',
-    role: 'Director General',
+    role: 'team.role_director_general',
     image: '/equipo/daniel_rodriguez.png',
-    bio: 'Líder de la visión estratégica y dirección general de PETGAS, con amplia experiencia en la gestión de proyectos de transformación de residuos.',
+    bio: 'team.bio_daniel_rodriguez',
     email: 'drg@petgas.com.mx',
-    division: 'Dirección General',
+    division: 'team.division_general_management',
     social: {
       email: 'drg@petgas.com.mx',
       linkedin: '#'
@@ -461,11 +461,11 @@ const teamMembers: TeamMember[] = [
   {
     id: 2,
     name: 'José de Jesús Escoto Romero',
-    role: 'Director Comercial',
+    role: 'team.role_commercial_director',
     image: '/equipo/Romero.jpg',
-    bio: 'A cargo de las estrategias comerciales y desarrollo de negocios en PETGAS, con enfoque en la expansión de mercados y alianzas estratégicas.',
+    bio: 'team.bio_jose_escoto',
     email: 'jer@petgas.com.mx',
-    division: 'Área Comercial',
+    division: 'team.division_commercial_area',
     social: {
       email: 'jer@petgas.com.mx',
       linkedin: '#'
@@ -474,11 +474,11 @@ const teamMembers: TeamMember[] = [
   {
     id: 3,
     name: 'Jesús Manuel Escoto Faces',
-    role: 'Director de Mercadotecnia y Vinculación Global',
+    role: 'team.role_marketing_global_linkage_director',
     image: '/equipo/jesus_escoto_faces.png',
-    bio: 'Responsable de establecer y mantener relaciones estratégicas globales y desarrollar estrategias de marketing para posicionar a PETGAS en el mercado internacional.',
+    bio: 'team.bio_jesus_escoto',
     email: 'jef@petgas.com.mx',
-    division: 'Vinculación Global',
+    division: 'team.division_global_linkage',
     social: {
       email: 'jef@petgas.com.mx',
       linkedin: '#'
@@ -487,11 +487,11 @@ const teamMembers: TeamMember[] = [
   {
     id: 4,
     name: 'Andoni Álvarez Heiling',
-    role: 'Director Jurídico',
+    role: 'team.role_legal_director',
     image: '/equipo/andoni_alvarez.png',
-    bio: 'Encargado de asesorar legalmente a la empresa, garantizando el cumplimiento normativo y protegiendo los intereses de PETGAS en todos los aspectos legales.',
+    bio: 'team.bio_andoni_alvarez',
     email: 'legal@petgas.com.mx',
-    division: 'Área Legal',
+    division: 'team.division_legal_area',
     social: {
       email: 'legal@petgas.com.mx',
       linkedin: '#'
@@ -500,11 +500,11 @@ const teamMembers: TeamMember[] = [
   {
     id: 5,
     name: 'Diego Escoto Yunes',
-    role: 'Director de Desarrollo Global',
+    role: 'team.role_global_development_director',
     image: '/equipo/diego_escoto.png',
-    bio: 'Apoya en la gestión de alianzas estratégicas y relaciones internacionales para el crecimiento global de PETGAS.',
+    bio: 'team.bio_diego_escoto',
     email: 'dey@petgas.com.mx',
-    division: 'Vinculación Global',
+    division: 'team.division_global_linkage',
     social: {
       email: 'dey@petgas.com.mx',
       linkedin: '#'
@@ -513,11 +513,11 @@ const teamMembers: TeamMember[] = [
   {
     id: 6,
     name: 'Fabio Baca Padilla',
-    role: 'Director Desarrollo Tecnológico',
+    role: 'team.role_technology_development_director',
     image: '/equipo/fabio_baca.png',
-    bio: 'Líder en la implementación de tecnologías innovadoras para la optimización de procesos de transformación de residuos.',
+    bio: 'team.bio_fabio_baca',
     email: 'fbp@petgas.com.mx',
-    division: 'Tecnología',
+    division: 'team.division_technology',
     social: {
       email: 'fbp@petgas.com.mx',
       linkedin: '#'
@@ -526,11 +526,11 @@ const teamMembers: TeamMember[] = [
   {
     id: 7,
     name: 'Kathia Liahut Lopez',
-    role: 'Responsable Área Química',
+    role: 'team.role_chemical_area_manager',
     image: '/equipo/katia_liahut.png',
-    bio: 'Experta en procesos químicos y control de calidad, asegurando los más altos estándares en la producción de combustibles sostenibles.',
+    bio: 'team.bio_kathia_liahut',
     email: 'quimica@petgas.com.mx',
-    division: 'Investigación',
+    division: 'team.division_research',
     social: {
       email: 'quimica@petgas.com.mx',
       linkedin: '#'
@@ -539,11 +539,11 @@ const teamMembers: TeamMember[] = [
   {
     id: 8,
     name: 'Christopher Trapp',
-    role: 'Miembro del consejo',
+    role: 'team.role_board_member',
     image: '/equipo/consejo.jpg',
-    bio: 'Miembro activo del consejo directivo, aportando experiencia y visión estratégica para el crecimiento sostenible de PETGAS.',
+    bio: 'team.bio_christopher_trapp',
     email: 'christopher.trapp@petgas.com.mx',
-    division: 'Consejo Directivo',
+    division: 'team.division_board_member',
     social: {
       email: 'christopher.trapp@petgas.com.mx',
       linkedin: '#'
@@ -554,11 +554,11 @@ const teamMembers: TeamMember[] = [
   {
     id: 9,
     name: 'Roberto Cerda',
-    role: 'Líder de Petgas Oceans',
+    role: 'team.role_oceans_leader',
     image: '/equipo/oceans.jpg',
-    bio: 'Encargado de la división especializada en soluciones oceánicas sostenibles y gestión de residuos marinos.',
+    bio: 'team.bio_roberto_cerda',
     email: 'oceans@petgas.com.mx',
-    division: 'Petgas Oceans',
+    division: 'team.division_petgas_oceans',
     social: {
       email: 'oceans@petgas.com.mx',
       linkedin: '#'
@@ -567,11 +567,11 @@ const teamMembers: TeamMember[] = [
   {
     id: 10,
     name: 'Sandra M. Ponce de Leon',
-    role: 'Líder de Alianzas Internacionales',
+    role: 'team.role_international_alliances_leader',
     image: '/equipo/sandra_ponce.png',
-    bio: 'Responsable de establecer y mantener alianzas estratégicas a nivel internacional para el crecimiento global de PETGAS.',
+    bio: 'team.bio_sandra_ponce',
     email: 'spd@petgas.com.mx',
-    division: 'Executiva International Partnerships',
+    division: 'team.division_executive_international_partnerships',
     social: {
       email: 'spd@petgas.com.mx',
       linkedin: '#'
@@ -580,11 +580,11 @@ const teamMembers: TeamMember[] = [
   {
     id: 11,
     name: 'Estefania Ferrera Salgado',
-    role: 'Líder de Desarrollo Web3',
+    role: 'team.role_web3_development_leader',
     image: '/equipo/Estefania.jpg',
-    bio: 'Especialista en tecnologías blockchain y Web3, liderando la estrategia de transformación digital de PETGAS.',
+    bio: 'team.bio_estefania_ferrera',
     email: 'efs@petgas.com.mx',
-    division: 'Web3',
+    division: 'team.division_web3',
     social: {
       email: 'efs@petgas.com.mx',
       linkedin: '#'
@@ -593,7 +593,7 @@ const teamMembers: TeamMember[] = [
 ];
 
 const EquipoPage: React.FC = () => {
-  const location = useLocation();
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   
   useEffect(() => {
@@ -606,7 +606,7 @@ const EquipoPage: React.FC = () => {
     }, 100);
     
     return () => clearTimeout(timer);
-  }, [location]);
+  }, []);
 
   return (
     <PageLayout>
@@ -614,18 +614,18 @@ const EquipoPage: React.FC = () => {
         <HeroContent>
           <HeroTitle>
             <AnimatedGradient>
-              Conoce a Nuestro Equipo
+              {t('team.page_title')}
             </AnimatedGradient>
           </HeroTitle>
           <HeroSubtitle>
-            Expertos comprometidos con la transformación de residuos plásticos en energía sostenible
+            {t('team.page_subtitle')}
           </HeroSubtitle>
         </HeroContent>
       </HeroSection>
       
       <TeamContainer>
         <DepartmentTitle department="Dirección General">
-          Equipo Directivo
+          {t('team.management_team')}
         </DepartmentTitle>
         <TeamGrid>
           {teamMembers.map((member, index) => (
@@ -676,16 +676,16 @@ const EquipoPage: React.FC = () => {
               </MemberImage>
               <MemberInfo>
                 <h3>{member.name}</h3>
-                <p className="role">{member.role}</p>
-                <p className="bio">{member.bio}</p>
+                <p className="role">{t(member.role)}</p>
+                <p className="bio">{t(member.bio)}</p>
                 <DepartmentBadge $color={getDepartmentColor(member.division)}>
-                  {member.division}
+                  {t(member.division)}
                 </DepartmentBadge>
                 <SocialLinks className="social-links">
                   <a 
                     href={`mailto:${member.social.email}`} 
-                    aria-label={`Enviar correo a ${member.name}`} 
-                    title={`Enviar correo a ${member.social.email}`}
+                    aria-label={`${t('team.social_send_email')} ${member.name}`} 
+                    title={`${t('team.social_send_email')} ${member.social.email}`}
                     className="email-link"
                   >
                     <i className="fas fa-envelope"></i>
@@ -695,8 +695,8 @@ const EquipoPage: React.FC = () => {
                       href={member.social.linkedin} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      aria-label={`Perfil de LinkedIn de ${member.name.split(' ')[0]}`} 
-                      title={`Ver perfil de LinkedIn`}
+                      aria-label={`${t('team.social_linkedin_profile')} ${member.name.split(' ')[0]}`} 
+                      title={t('team.social_linkedin_view')}
                     >
                       <i className="fab fa-linkedin-in"></i>
                     </a>
@@ -706,8 +706,8 @@ const EquipoPage: React.FC = () => {
                       href={member.social.twitter} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      aria-label={`Perfil de Twitter de ${member.name.split(' ')[0]}`} 
-                      title={`Ver perfil de Twitter`}
+                      aria-label={`${t('team.social_twitter_profile')} ${member.name.split(' ')[0]}`} 
+                      title={t('team.social_twitter_view')}
                     >
                       <i className="fab fa-twitter"></i>
                     </a>
@@ -719,7 +719,7 @@ const EquipoPage: React.FC = () => {
         </TeamGrid>
         
         <DepartmentTitle department="Área Comercial">
-          Equipo Comercial
+          {t('team.commercial_team')}
         </DepartmentTitle>
         <TeamGrid>
           {teamMembers.slice(8).map((member, index) => (
@@ -770,16 +770,16 @@ const EquipoPage: React.FC = () => {
               </MemberImage>
               <MemberInfo>
                 <h3>{member.name}</h3>
-                <p className="role">{member.role}</p>
-                <p className="bio">{member.bio}</p>
+                <p className="role">{t(member.role)}</p>
+                <p className="bio">{t(member.bio)}</p>
                 <DepartmentBadge $color={getDepartmentColor(member.division)}>
-                  {member.division}
+                  {t(member.division)}
                 </DepartmentBadge>
                 <SocialLinks className="social-links">
                   <a 
                     href={`mailto:${member.social.email}`} 
-                    aria-label={`Enviar correo a ${member.name}`} 
-                    title={`Enviar correo a ${member.social.email}`}
+                    aria-label={`${t('team.social_send_email')} ${member.name}`} 
+                    title={`${t('team.social_send_email')} ${member.social.email}`}
                     className="email-link"
                   >
                     <i className="fas fa-envelope"></i>
@@ -789,8 +789,8 @@ const EquipoPage: React.FC = () => {
                       href={member.social.linkedin} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      aria-label={`Perfil de LinkedIn de ${member.name.split(' ')[0]}`} 
-                      title={`Ver perfil de LinkedIn`}
+                      aria-label={`${t('team.social_linkedin_profile')} ${member.name.split(' ')[0]}`} 
+                      title={t('team.social_linkedin_view')}
                     >
                       <i className="fab fa-linkedin-in"></i>
                     </a>
@@ -803,9 +803,9 @@ const EquipoPage: React.FC = () => {
       </TeamContainer>
       
       <div style={{ marginTop: '3rem', textAlign: 'center' }}>
-        <h2 style={{ color: '#0a4b2a', marginBottom: '1rem' }}>¿Quieres unirte a nuestro equipo?</h2>
+        <h2 style={{ color: '#0a4b2a', marginBottom: '1rem' }}>{t('team.join_team_title')}</h2>
         <p style={{ marginBottom: '1.5rem' }}>
-          Estamos en constante búsqueda de talento comprometido con la sostenibilidad y la innovación.
+          {t('team.join_team_description')}
         </p>
         <a 
           href="/contacto" 
@@ -822,7 +822,7 @@ const EquipoPage: React.FC = () => {
           onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#0d6a3a')}
           onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#0a4b2a')}
         >
-          Contáctanos
+          {t('team.contact_us_button')}
         </a>
       </div>
     </PageLayout>

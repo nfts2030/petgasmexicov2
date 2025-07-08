@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { FC } from 'react';
 import styled, { keyframes } from 'styled-components';
 import PageLayout from '../components/layout/PageLayout';
 import { submitContactForm } from '../services/contactService';
+import { useLanguage } from '../contexts/LanguageContext';
 
 // Styled Components
 const ContactContainer = styled.div`
@@ -135,7 +136,7 @@ const fadeIn = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `;
 
-const Alert = styled.div<{ show: boolean; type: 'success' | 'error' }>`
+const Alert = styled.div<{ $show: boolean; type: 'success' | 'error' }>`
   position: fixed;
   top: 20px;
   right: 20px;
@@ -148,7 +149,7 @@ const Alert = styled.div<{ show: boolean; type: 'success' | 'error' }>`
   max-width: 400px;
   animation: ${fadeIn} 0.3s ease-out;
   background-color: ${props => props.type === 'success' ? '#4CAF50' : '#F44336'};
-  display: ${props => props.show ? 'block' : 'none'};
+  display: ${props => props.$show ? 'block' : 'none'};
   transition: opacity 0.3s ease;
   cursor: pointer;
 `;
@@ -169,6 +170,7 @@ interface SubmitStatus {
 }
 
 const ContactoPage: FC = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -200,12 +202,12 @@ const ContactoPage: FC = () => {
     
     // Validar el formulario
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      showAlert('Por favor completa todos los campos requeridos', false);
+      showAlert(t('contact.alert_fill_fields'), false);
       return;
     }
     
     if (!formData.privacy) {
-      showAlert('Debes aceptar la política de privacidad', false);
+      showAlert(t('contact.alert_accept_privacy'), false);
       return;
     }
     
@@ -215,7 +217,7 @@ const ContactoPage: FC = () => {
       await submitContactForm(formData);
       
       // Mostrar mensaje de éxito
-      showAlert('¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.', true);
+      showAlert(t('contact.alert_success'), true);
       
       // Limpiar el formulario
       setFormData({
@@ -227,7 +229,7 @@ const ContactoPage: FC = () => {
         privacy: false
       });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Hubo un error al enviar el mensaje';
+      const errorMessage = error instanceof Error ? error.message : t('contact.alert_error');
       showAlert(errorMessage, false);
     } finally {
       setIsSubmitting(false);
@@ -251,10 +253,10 @@ const ContactoPage: FC = () => {
   };
   
   return (
-    <PageLayout title="Contáctanos">
+    <PageLayout title={t('contact.title')}>
       {/* Alertas */}
       <Alert 
-        show={submitStatus.show} 
+        $show={submitStatus.show} 
         type={submitStatus.success ? 'success' : 'error'}
         onClick={() => setSubmitStatus(prev => ({ ...prev, show: false }))}
       >
@@ -263,24 +265,23 @@ const ContactoPage: FC = () => {
 
       <ContactContainer>
         <ContactInfo>
-          <h3>Información de Contacto</h3>
+          <h3>{t('contact.info_title')}</h3>
           <p>
-            Estamos aquí para ayudarte. Si tienes alguna pregunta sobre nuestros productos o servicios, 
-            no dudes en contactarnos a través del formulario o utilizando cualquiera de los siguientes medios.
+            {t('contact.info_text')}
           </p>
           
           <InfoItem>
             <div className="icon">📍</div>
             <div className="details">
-              <h4>Dirección</h4>
-              <p>Ciudad de México, México</p>
+              <h4>{t('contact.address')}</h4>
+              <p>{t('contact.address_text')}</p>
             </div>
           </InfoItem>
           
           <InfoItem>
             <div className="icon">📞</div>
             <div className="details">
-              <h4>Teléfono</h4>
+              <h4>{t('contact.phone')}</h4>
               <p><a href="tel:+522295484549" style={{ color: '#2c3e50', textDecoration: 'none' }}>+52 229 548 4549</a></p>
             </div>
           </InfoItem>
@@ -288,13 +289,13 @@ const ContactoPage: FC = () => {
           <InfoItem>
             <div className="icon">✉️</div>
             <div className="details">
-              <h4>Correo Electrónico</h4>
+              <h4>{t('contact.email')}</h4>
               <p><a href="mailto:contacto@petgas.com.mx" style={{ color: '#2c3e50', textDecoration: 'none' }}>contacto@petgas.com.mx</a></p>
             </div>
           </InfoItem>
           
           <div className="social-links">
-            <h4>Síguenos en Redes Sociales</h4>
+            <h4>{t('contact.follow_us')}</h4>
             <div className="social-icons" style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
               <a href="https://twitter.com/petgasmx" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Twitter" style={{ color: '#2c3e50', fontSize: '1.5rem' }}>
                 <i className="fab fa-twitter"></i>
@@ -310,11 +311,11 @@ const ContactoPage: FC = () => {
         </ContactInfo>
         
         <Form onSubmit={handleSubmit} id="contactForm">
-          <h3 style={{ marginTop: 0, marginBottom: '1.5rem', color: '#0a4b2a' }}>Envíanos un Mensaje</h3>
-          <p style={{ marginTop: '-1rem', marginBottom: '1.5rem', color: '#555' }}>Completa el formulario y nos pondremos en contacto contigo a la brevedad.</p>
+          <h3 style={{ marginTop: 0, marginBottom: '1.5rem', color: '#0a4b2a' }}>{t('contact.form_title')}</h3>
+          <p style={{ marginTop: '-1rem', marginBottom: '1.5rem', color: '#555' }}>{t('contact.form_subtitle')}</p>
           
           <FormGroup>
-            <label htmlFor="name">Nombre Completo *</label>
+            <label htmlFor="name">{t('contact.full_name')}</label>
             <input
               type="text"
               id="name"
@@ -327,7 +328,7 @@ const ContactoPage: FC = () => {
           </FormGroup>
           
           <FormGroup>
-            <label htmlFor="email">Correo Electrónico *</label>
+            <label htmlFor="email">{t('contact.email_address')}</label>
             <input
               type="email"
               id="email"
@@ -340,7 +341,7 @@ const ContactoPage: FC = () => {
           </FormGroup>
           
           <FormGroup>
-            <label htmlFor="phone">Teléfono</label>
+            <label htmlFor="phone">{t('contact.phone_number')}</label>
             <input
               type="tel"
               id="phone"
@@ -352,7 +353,7 @@ const ContactoPage: FC = () => {
           </FormGroup>
           
           <FormGroup>
-            <label htmlFor="subject">Asunto *</label>
+            <label htmlFor="subject">{t('contact.subject')}</label>
             <select
               id="subject"
               name="subject"
@@ -361,18 +362,18 @@ const ContactoPage: FC = () => {
               required
               disabled={isSubmitting}
             >
-              <option value="">Selecciona un asunto</option>
-              <option value="cotizacion">Solicitud de Cotización</option>
-              <option value="ventas">Información de Ventas</option>
-              <option value="soporte">Soporte Técnico</option>
-              <option value="trabajo">Bolsa de Trabajo</option>
-              <option value="prensa">Prensa y Medios</option>
-              <option value="otro">Otro</option>
+              <option value="">{t('contact.select_subject')}</option>
+              <option value="cotizacion">{t('contact.quote_request')}</option>
+              <option value="ventas">{t('contact.sales_info')}</option>
+              <option value="soporte">{t('contact.technical_support')}</option>
+              <option value="trabajo">{t('contact.job_openings')}</option>
+              <option value="prensa">{t('contact.press_media')}</option>
+              <option value="otro">{t('contact.other')}</option>
             </select>
           </FormGroup>
           
           <FormGroup>
-            <label htmlFor="message">Mensaje *</label>
+            <label htmlFor="message">{t('contact.message')}</label>
             <textarea
               id="message"
               name="message"
@@ -395,9 +396,7 @@ const ContactoPage: FC = () => {
               disabled={isSubmitting}
               style={{ marginRight: '0.5rem', marginTop: '0.25rem' }}
             />
-            <label htmlFor="privacy" style={{ margin: 0, fontWeight: 'normal', fontSize: '0.9rem' }}>
-              Acepto la <a href="#" style={{ color: '#0a4b2a', textDecoration: 'underline' }}>Política de Privacidad</a> *
-            </label>
+            <label htmlFor="privacy" style={{ margin: 0, fontWeight: 'normal', fontSize: '0.9rem' }} dangerouslySetInnerHTML={{ __html: t('contact.privacy_policy') }} />
           </FormGroup>
           
           <SubmitButton 
@@ -408,9 +407,9 @@ const ContactoPage: FC = () => {
             {isSubmitting ? (
               <>
                 <i className="fas fa-spinner fa-spin" style={{ marginRight: '0.5rem' }}></i>
-                Enviando...
+                {t('contact.sending')}
               </>
-            ) : 'Enviar Mensaje'}
+            ) : t('contact.send_message')}
           </SubmitButton>
         </Form>
       </ContactContainer>
@@ -423,7 +422,7 @@ const ContactoPage: FC = () => {
           style={{ border: 0 }}
           allowFullScreen={false}
           loading="lazy"
-          title="Ubicación de PETGAS México"
+          title={t('contact.location')}
         ></iframe>
       </div>
     </PageLayout>

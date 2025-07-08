@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FaRecycle, FaHandHoldingUsd, FaFingerprint } from 'react-icons/fa';
 import { SiBlockchaindotcom } from 'react-icons/si';
+import { useLanguage } from '../contexts/LanguageContext';
 
 // Animation for background gradient
 const gradientBG = keyframes`
@@ -179,6 +180,7 @@ const StepNumber = styled.div`
 `;
 
 const CreditosPage: React.FC = () => {
+  const { t } = useLanguage();
   useEffect(() => {
     // Scroll to top on mount
     window.scrollTo(0, 0);
@@ -189,9 +191,9 @@ const CreditosPage: React.FC = () => {
       {/* Hero Section */}
       <HeroSection>
         <Container>
-          <HeroTitle>Créditos Plásticos</HeroTitle>
+          <HeroTitle>{t('creditos.hero_title')}</HeroTitle>
           <HeroSubtitle>
-            Hemos construido una infraestructura de tecnología y personas para capturar los desechos plásticos.
+            {t('creditos.hero_subtitle')}
           </HeroSubtitle>
         </Container>
       </HeroSection>
@@ -200,7 +202,7 @@ const CreditosPage: React.FC = () => {
       <Section $bgColor="#f8f9fa">
         <Container>
           <SectionHeader>
-            <SectionTitle>Soluciones Impactantes</SectionTitle>
+            <SectionTitle>{t('creditos.impact_title')}</SectionTitle>
           </SectionHeader>
           
           <Row className="g-4">
@@ -209,9 +211,9 @@ const CreditosPage: React.FC = () => {
                 <SolutionIcon>
                   <FaRecycle />
                 </SolutionIcon>
-                <h3 style={{ color: '#1a5f2f', textAlign: 'center', marginBottom: '15px' }}>Impacto Social</h3>
+                <h3 style={{ color: '#1a5f2f', textAlign: 'center', marginBottom: '15px' }}>{t('creditos.social_impact_title')}</h3>
                 <p style={{ lineHeight: '1.7', color: '#555', textAlign: 'center' }}>
-                  Logramos esto haciendo que la recolección y el reciclaje de plástico sean rentables para algunas de las personas más marginadas y empobrecidas del mundo.
+                  {t('creditos.social_impact_text')}
                 </p>
               </SolutionCard>
             </Col>
@@ -221,9 +223,9 @@ const CreditosPage: React.FC = () => {
                 <SolutionIcon>
                   <FaFingerprint />
                 </SolutionIcon>
-                <h3 style={{ color: '#1a5f2f', textAlign: 'center', marginBottom: '15px' }}>Tecnología Confiable</h3>
+                <h3 style={{ color: '#1a5f2f', textAlign: 'center', marginBottom: '15px' }}>{t('creditos.reliable_tech_title')}</h3>
                 <p style={{ lineHeight: '1.7', color: '#555', textAlign: 'center' }}>
-                  Hemos desarrollado una solución tecnológica para generar confianza y transparencia, para poner fin a la corrupción y las tácticas turbias detrás de escena.
+                  {t('creditos.reliable_tech_text')}
                 </p>
               </SolutionCard>
             </Col>
@@ -235,9 +237,9 @@ const CreditosPage: React.FC = () => {
       <Section $bgColor="linear-gradient(135deg, #1a5f2f 0%, #2e8b57 100%)" $textColor="white">
         <Container>
           <SectionHeader>
-            <SectionTitle style={{ color: 'white' }}>Tecnología Blockchain Transparente</SectionTitle>
+            <SectionTitle style={{ color: 'white' }}>{t('creditos.blockchain_title')}</SectionTitle>
             <SectionSubtitle style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-              Desde la recolección del plástico en origen, pasando por el proceso de clasificación hasta su eventual reciclaje y reintegración a la cadena de suministro, cada paso del proceso se rastrea mediante la tecnología blockchain.
+              {t('creditos.blockchain_text')}
             </SectionSubtitle>
           </SectionHeader>
 
@@ -258,7 +260,7 @@ const CreditosPage: React.FC = () => {
               <SiBlockchaindotcom />
             </div>
             <p style={{ margin: 0, fontSize: '1.2rem', fontWeight: 500, maxWidth: '800px' }}>
-              El uso de blockchain significa que ni nosotros ni ningún otro eslabón dentro de la cadena podemos alterar los datos.
+              {t('creditos.blockchain_quote')}
             </p>
           </div>
         </Container>
@@ -268,8 +270,8 @@ const CreditosPage: React.FC = () => {
       <Section $bgColor="#fff">
         <Container>
           <SectionHeader>
-            <SectionTitle>¿Cómo funcionan los créditos plásticos?</SectionTitle>
-            <SectionSubtitle>Transformando residuos en oportunidades sostenibles</SectionSubtitle>
+            <SectionTitle>{t('creditos.how_it_works_title')}</SectionTitle>
+            <SectionSubtitle>{t('creditos.how_it_works_subtitle')}</SectionSubtitle>
           </SectionHeader>
 
           <Row className="g-4">
@@ -279,9 +281,9 @@ const CreditosPage: React.FC = () => {
                 <div style={{ fontSize: '2.5rem', color: '#1a5f2f', marginBottom: '20px' }}>
                   <FaRecycle />
                 </div>
-                <h3 style={{ color: '#1a5f2f', marginBottom: '15px' }}>Concepto Básico</h3>
+                <h3 style={{ color: '#1a5f2f', marginBottom: '15px' }}>{t('creditos.step1_title')}</h3>
                 <p style={{ lineHeight: '1.7', color: '#555' }}>
-                  Un crédito de plástico es una muestra de valor por el acto de limpiar los desechos plásticos del medio ambiente.
+                  {t('creditos.step1_text')}
                 </p>
               </CreditStep>
             </Col>
@@ -292,9 +294,9 @@ const CreditosPage: React.FC = () => {
                 <div style={{ fontSize: '2.5rem', color: '#1a5f2f', marginBottom: '20px' }}>
                   <FaHandHoldingUsd />
                 </div>
-                <h3 style={{ color: '#1a5f2f', marginBottom: '15px' }}>Financiamiento</h3>
+                <h3 style={{ color: '#1a5f2f', marginBottom: '15px' }}>{t('creditos.step2_title')}</h3>
                 <p style={{ lineHeight: '1.7', color: '#555' }}>
-                  Cada crédito financia directamente las actividades de limpieza y procesamiento de desechos plásticos, apoyando a las comunidades locales.
+                  {t('creditos.step2_text')}
                 </p>
               </CreditStep>
             </Col>
@@ -305,9 +307,9 @@ const CreditosPage: React.FC = () => {
                 <div style={{ fontSize: '2.5rem', color: '#1a5f2f', marginBottom: '20px' }}>
                   <FaFingerprint />
                 </div>
-                <h3 style={{ color: '#1a5f2f', marginBottom: '15px' }}>Trazabilidad Total</h3>
+                <h3 style={{ color: '#1a5f2f', marginBottom: '15px' }}>{t('creditos.step3_title')}</h3>
                 <p style={{ lineHeight: '1.7', color: '#555' }}>
-                  Cada crédito está registrado en blockchain, garantizando transparencia y rastreabilidad en todo el proceso de reciclaje.
+                  {t('creditos.step3_text')}
                 </p>
               </CreditStep>
             </Col>
@@ -327,7 +329,7 @@ const CreditosPage: React.FC = () => {
             <a href="https://www.empower.eco/" target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center' }}>
               <img 
                 src="/img/creditos/green-horizontal-logo-eco.png" 
-                alt="Empower Eco" 
+                alt={t('creditos.partner_alt')} 
                 style={{ maxWidth: '300px', height: 'auto' }}
               />
             </a>

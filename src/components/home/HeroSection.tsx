@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 // Animación para el resplandor del logo
 const pulse = keyframes`
@@ -236,6 +237,15 @@ const GradientText = styled.span`
 `;
 
 const HeroSection: React.FC = React.memo(() => {
+  const { t } = useLanguage();
+  const products = [
+    t('hero.gasoline'),
+    t('hero.diesel'),
+    t('hero.paraffin'),
+    t('hero.kerosene'),
+    t('hero.gas'),
+  ];
+
   return (
     <HeroContainer>
       <HeroContent>
@@ -243,15 +253,15 @@ const HeroSection: React.FC = React.memo(() => {
           <img src="/img/logoGlow.png" alt="PETGAS Logo" />
           <LogoGlow />
         </LogoContainer>
-        <WelcomeText>BIENVENIDO A PETGAS MÉXICO</WelcomeText>
+        <WelcomeText>{t('hero.welcome')}</WelcomeText>
         
         <HeroTitle>
-          <GradientText>ENERGETIZANDO EL FUTURO CON ACCIONES POSITIVAS PARA EL PLANETA</GradientText>
+          <GradientText>{t('hero.title')}</GradientText>
         </HeroTitle>
         
         <HeroSubtitle>
-          La tecnología de Petgas transforma plásticos no reciclables en: {
-            ['Gasolina', 'Diesel', 'Parafina', 'Queroseno', 'Gas'].map((item, index, array) => (
+          {t('hero.subtitle_prefix')} {
+            products.map((item, index, array) => (
               <React.Fragment key={item}>
                 <strong>{item}</strong>
                 {index < array.length - 2 ? ', ' : index === array.length - 2 ? ' y ' : ''}

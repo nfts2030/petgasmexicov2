@@ -453,6 +453,56 @@ src/
 └── types/               # Definiciones de tipos TypeScript
 ```
 
+## 🌍 Sistema de Traducción
+
+La aplicación incluye un sistema de traducción personalizado basado en React Context. Aquí está cómo funciona:
+
+### Archivos de Traducción
+- `src/translations/es.json`: Contiene todas las cadenas en español
+- `src/translations/en.json`: Contiene todas las cadenas en inglés
+
+### Uso en Componentes
+
+1. **Importar el hook useLanguage**
+   ```typescript
+   import { useLanguage } from '../contexts/LanguageContext';
+   ```
+
+2. **Usar el hook para traducir**
+   ```typescript
+   const MiComponente = () => {
+     const { t } = useLanguage();
+     
+     return (
+       <div>
+         <h1>{t('clave.traduccion')}</h1>
+       </div>
+     );
+   };
+   ```
+
+### Estructura de Traducciones
+
+Las traducciones están organizadas por secciones. Por ejemplo:
+
+```json
+{
+  "header": {
+    "home": "INICIO",
+    "team": "EQUIPO"
+  },
+  "maquinas": {
+    "title": "Nuestras Plantas de Pirólisis"
+  }
+}
+```
+
+### Agregar Nuevas Traducciones
+
+1. Abre ambos archivos de traducción (`es.json` y `en.json`)
+2. Añade la nueva clave en la sección apropiada
+3. Asegúrate de mantener la misma estructura en ambos archivos
+
 ## 🚀 Páginas Principales
 
 - **Inicio** (`/`) - Página principal con información destacada y efectos visuales modernos
@@ -793,4 +843,4 @@ export default tseslint.config({
   },
 })
 ```
-\n## Última actualización: jue 26 jun 2025 16:22:44 EST
+\n## Última actualización: viernes, 4 de julio de 2025

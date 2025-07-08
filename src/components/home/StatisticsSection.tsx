@@ -1,9 +1,55 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { useLanguage } from '../../contexts/LanguageContext';
 
-// Animación de gradiente para el texto (definida en línea)
+// Animación de gradiente para el texto
+const gradient = keyframes`
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+`;
 
-// Componente de texto con gradiente animado (definido en línea)
+// Estilo para el título con gradiente animado (MOVido fuera del componente)
+const AnimatedTitle = styled.h2`
+  font-size: 1.6rem;
+  margin: 0 0 0.4rem 0;
+  font-weight: 800;
+  line-height: 1.1;
+  background: linear-gradient(90deg, #0a9d58, #8bc34a, #ffeb3b, #8bc34a, #0a9d58);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ${gradient} 8s ease infinite;
+  display: block;
+  padding: 0 5px 2px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  letter-spacing: -0.3px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  
+  @media (max-width: 1200px) {
+    font-size: 1.5rem;
+  }
+  
+  @media (max-width: 992px) {
+    font-size: 1.4rem;
+    max-width: 800px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+    line-height: 1.1;
+    margin-bottom: 0.3rem;
+    max-width: 90%;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+    letter-spacing: -0.2px;
+  }
+`;
 
 // Types
 interface Statistic {
@@ -83,6 +129,7 @@ const SliderContainer = styled.div`
 `;
 
 const StatisticsSection: React.FC = () => {
+  const { t } = useLanguage();
   // Image paths - Rutas de imágenes actualizadas
   const sliderImages = [
     '/img/11/fdobotellasslider.jpg',
@@ -111,47 +158,47 @@ const StatisticsSection: React.FC = () => {
   const statisticsData: Statistic[] = useMemo(() => [
     {
       id: 1,
-      title: "MENOS DEL 10% DEL PLÁSTICO",
-      description: "SE RECICLA A NIVEL GLOBAL SEGÚN LA OCDE",
+      title: t('statistics.stat1_title'),
+      description: t('statistics.stat1_description'),
       image: sliderImages[0],
       alt: "Botellas de plástico apiladas"
     },
     {
       id: 2,
-      title: "MÁS DE 11 MILLONES DE TONELADAS",
-      description: "DE PLÁSTICO TERMINAN EN LOS OCÉANOS CADA AÑO",
+      title: t('statistics.stat2_title'),
+      description: t('statistics.stat2_description'),
       image: sliderImages[1],
       alt: "Tortuga marina afectada por plásticos"
     },
     {
       id: 3,
-      title: "MÁS DE 400 AÑOS",
-      description: "PUEDE TARDAR UNA BOTELLA DE PLÁSTICO EN DEGRADARSE",
+      title: t('statistics.stat3_title'),
+      description: t('statistics.stat3_description'),
       image: sliderImages[2],
       alt: "Juguetes de plástico"
     },
     {
       id: 4,
-      title: "EL 80% DE LA BASURA MARINA",
-      description: "PROVIENE DE FUENTES TERRESTRES, PRINCIPALMENTE PLÁSTICOS",
+      title: t('statistics.stat4_title'),
+      description: t('statistics.stat4_description'),
       image: sliderImages[3],
       alt: "Microplásticos en el océano"
     },
     {
       id: 5,
-      title: "PARA 2050 HABRÁ MÁS PLÁSTICO",
-      description: "QUE PECES EN EL MAR (EN PESO) SEGÚN LA ONU",
+      title: t('statistics.stat5_title'),
+      description: t('statistics.stat5_description'),
       image: sliderImages[4],
       alt: "Predicción de plásticos en el océano para 2050"
     },
     {
       id: 6,
-      title: "ENERGÍA LIMPIA DE RESIDUOS",
-      description: "TRANSFORMAMOS PLÁSTICOS EN COMBUSTIBLES SOSTENIBLES",
+      title: t('statistics.stat6_title'),
+      description: t('statistics.stat6_description'),
       image: sliderImages[5],
       alt: "Planta de transformación de plásticos"
     }
-  ], [sliderImages]);
+  ], [sliderImages, t]);
   
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying] = useState(true);
@@ -286,53 +333,7 @@ const StatisticsSection: React.FC = () => {
   
   // La animación de gradiente se ha movido directamente al estilo del componente AnimatedTitle
 
-  // Estilo para el título con gradiente animado
-  const AnimatedTitle = styled.h2`
-    @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    
-    font-size: 1.6rem;
-    margin: 0 0 0.4rem 0;
-    font-weight: 800;
-    line-height: 1.1;
-    background: linear-gradient(90deg, #0a9d58, #8bc34a, #ffeb3b, #8bc34a, #0a9d58);
-    background-size: 300% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient 8s ease infinite;
-    display: block;
-    padding: 0 5px 2px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-    letter-spacing: -0.3px;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-    
-    @media (max-width: 1200px) {
-      font-size: 1.5rem;
-    }
-    
-    @media (max-width: 992px) {
-      font-size: 1.4rem;
-      max-width: 800px;
-    }
-    
-    @media (max-width: 768px) {
-      font-size: 1.25rem;
-      line-height: 1.1;
-      margin-bottom: 0.3rem;
-      max-width: 90%;
-    }
-    
-    @media (max-width: 480px) {
-      font-size: 1.1rem;
-      margin-bottom: 0.2rem;
-      letter-spacing: -0.2px;
-    }
-  `;
+  
 
   return (
     <div style={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
