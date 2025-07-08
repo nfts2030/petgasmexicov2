@@ -75,11 +75,14 @@ export default defineConfig(({ mode }) => {
       transformMixedEsModules: true,
     },
     rollupOptions: {
-      // Ensure React is only included once
-      external: ['react', 'react-dom'],
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
+              return 'vendor';
+            }
+            return 'vendor';
+          }
         },
       },
     },
