@@ -7,65 +7,9 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 // Styled Components
 const ContactContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  margin-top: 2rem;
-  
-  @media (min-width: 992px) {
-    grid-template-columns: 1fr 1fr;
-  }
-`;
-
-const ContactInfo = styled.div`
-  h3 {
-    color: #0a4b2a;
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  p {
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-`;
-
-const InfoItem = styled.div`
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
-  
-  .icon {
-    background-color: #0a4b2a;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 1rem;
-    flex-shrink: 0;
-  }
-  
-  .details {
-    h4 {
-      margin: 0 0 0.25rem 0;
-      color: #333;
-    }
-    
-    p, a {
-      margin: 0;
-      color: #666;
-      text-decoration: none;
-      display: block;
-      
-      &:hover {
-        color: #0a4b2a;
-      }
-    }
-  }
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 1rem;
 `;
 
 const Form = styled.form`
@@ -264,52 +208,6 @@ const ContactoPage: FC = () => {
       </Alert>
 
       <ContactContainer>
-        <ContactInfo>
-          <h3>{t('contact.info_title')}</h3>
-          <p>
-            {t('contact.info_text')}
-          </p>
-          
-          <InfoItem>
-            <div className="icon">📍</div>
-            <div className="details">
-              <h4>{t('contact.address')}</h4>
-              <p>{t('contact.address_text')}</p>
-            </div>
-          </InfoItem>
-          
-          <InfoItem>
-            <div className="icon">📞</div>
-            <div className="details">
-              <h4>{t('contact.phone')}</h4>
-              <p><a href="tel:+522295484549" style={{ color: '#2c3e50', textDecoration: 'none' }}>+52 229 548 4549</a></p>
-            </div>
-          </InfoItem>
-          
-          <InfoItem>
-            <div className="icon">✉️</div>
-            <div className="details">
-              <h4>{t('contact.email')}</h4>
-              <p><a href="mailto:contacto@petgas.com.mx" style={{ color: '#2c3e50', textDecoration: 'none' }}>contacto@petgas.com.mx</a></p>
-            </div>
-          </InfoItem>
-          
-          <div className="social-links">
-            <h4>{t('contact.follow_us')}</h4>
-            <div className="social-icons" style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-              <a href="https://twitter.com/petgasmx" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Twitter" style={{ color: '#2c3e50', fontSize: '1.5rem' }}>
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="https://instagram.com/petgasmx/" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Instagram" style={{ color: '#2c3e50', fontSize: '1.5rem' }}>
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a href="https://www.youtube.com/@PETGASMX" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="YouTube" style={{ color: '#2c3e50', fontSize: '1.5rem' }}>
-                <i className="fab fa-youtube"></i>
-              </a>
-            </div>
-          </div>
-        </ContactInfo>
-        
         <Form onSubmit={handleSubmit} id="contactForm">
           <h3 style={{ marginTop: 0, marginBottom: '1.5rem', color: '#0a4b2a' }}>{t('contact.form_title')}</h3>
           <p style={{ marginTop: '-1rem', marginBottom: '1.5rem', color: '#555' }}>{t('contact.form_subtitle')}</p>
@@ -413,18 +311,6 @@ const ContactoPage: FC = () => {
           </SubmitButton>
         </Form>
       </ContactContainer>
-      
-      <div style={{ marginTop: '3rem' }}>
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.8570471128795!2d-99.1331847856189!3d19.42702088688986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff35f5bd1563%3A0x6c366f0e2de02ff7!2sEl%20%C3%81ngel%20de%20la%20Independencia!5e0!3m2!1ses-419!2smx!4v1620000000000!5m2!1ses-419!2smx"
-          width="100%"
-          height="450"
-          style={{ border: 0 }}
-          allowFullScreen={false}
-          loading="lazy"
-          title={t('contact.location')}
-        ></iframe>
-      </div>
     </PageLayout>
   );
 };

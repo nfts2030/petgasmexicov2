@@ -13,7 +13,6 @@ import './App.css';
 
 // Páginas (lazy loaded)
 const HomePage = lazy(() => import('./pages/HomePage'));
-const EquipoPage = lazy(() => import('./pages/EquipoPage'));
 const MaquinasPage = lazy(() => import('./pages/MaquinasPage'));
 const CombustiblesPage = lazy(() => import('./pages/CombustiblesPage'));
 const CreditosPage = lazy(() => import('./pages/CreditosPage'));
@@ -31,11 +30,13 @@ const AppContainer = styled.div`
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-image: url('/img/04/fdoverdeiconos.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+  background-image: 
+    var(--bg-gradient-secondary),
+    url('/img/04/fdoverdeiconos.jpg');
+  background-size: cover, cover;
+  background-position: center, center;
+  background-attachment: fixed, fixed;
+  background-repeat: no-repeat, no-repeat;
 `;
 
 const MainContent = styled.main`
@@ -62,7 +63,6 @@ const App: React.FC = () => {
   const routes = useMemo(() => (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/equipo" element={<EquipoPage />} />
       <Route path="/maquinas" element={<MaquinasPage />} />
       <Route path="/combustibles" element={<CombustiblesPage />} />
       <Route path="/creditos" element={<CreditosPage />} />

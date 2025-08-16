@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import LanguageSelector from './LanguageSelector'; // Import LanguageSelector
-import { useLanguage } from '../contexts/LanguageContext'; // Import useLanguage
+import LanguageSelector from './LanguageSelector';
+import MobileModeIndicator from './ui/MobileModeIndicator';
+import useMobileDetection from '../hooks/useMobileDetection';
+import { useLanguage } from '../contexts/LanguageContext';
 
 // Animación de la marquesina mejorada
 const marquee = keyframes`
@@ -11,8 +13,8 @@ const marquee = keyframes`
 `;
 
 const MarqueeContainer = styled.div`
-  background: linear-gradient(90deg, #0a4b2a 0%, #0e6a3a 50%, #0a4b2a 100%);
-  color: white;
+  background: var(--bg-gradient-primary);
+  color: var(--text-color);
   padding: 0.7rem 0;
   overflow: hidden;
   width: 100%;
@@ -37,7 +39,7 @@ const MarqueeContainer = styled.div`
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, #0a4b2a, #4caf50, #0a4b2a);
+    background: var(--bg-gradient-accent);
   }
   
   @media (min-width: 768px) {
@@ -151,50 +153,7 @@ const MarqueeText = styled.span`
   }
 `;
 
-// Animación para las barras de señal celular
-const signalBars = keyframes`
-  0%, 100% { opacity: 0.6; transform: scaleY(1); }
-  25% { opacity: 1; transform: scaleY(1.2); }
-  50% { opacity: 0.8; transform: scaleY(0.8); }
-  75% { opacity: 1; transform: scaleY(1.1); }
-`;
 
-const MobileModeIndicator = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 5px 12px;
-  border-radius: 20px;
-  margin: 0 10px;
-  
-  span {
-    color: #fff;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-  
-  .signal-bars {
-    display: flex;
-    align-items: flex-end;
-    height: 16px;
-    gap: 2px;
-    
-    .bar {
-      width: 4px;
-      background: #4ade80;
-      border-radius: 2px;
-      animation: ${signalBars} 2s ease-in-out infinite;
-      
-      &:nth-child(1) { height: 25%; animation-delay: 0.1s; }
-      &:nth-child(2) { height: 50%; animation-delay: 0.2s; }
-      &:nth-child(3) { height: 75%; animation-delay: 0.3s; }
-      &:nth-child(4) { height: 100%; animation-delay: 0.4s; }
-    }
-  }
-`;
 
 const HeaderContainer = styled.header`
   background-color: rgba(10, 75, 42, 0.98);
@@ -207,7 +166,7 @@ const HeaderContainer = styled.header`
   right: 0;
   z-index: 1000;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(240, 253, 244, 0.1);
   
   @supports (padding: max(0px)) {
     padding: 0.75rem max(1.5rem, env(safe-area-inset-right)) 0.75rem max(1.5rem, env(safe-area-inset-left));
@@ -504,7 +463,8 @@ const Overlay = styled.div<{ $isOpen: boolean }>`
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const { t } = useLanguage(); // Use the translation hook
+  const { t } = useLanguage();
+  const { isMobile } = useMobileDetection();
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -562,15 +522,7 @@ const Header: React.FC = () => {
             <img src="/img/logo-header.png" alt="PETGAS Logo" />
           </Logo>
           
-          <MobileModeIndicator>
-            <div className="signal-bars">
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-            </div>
-            <span>{t('mobileMode')}</span>
-          </MobileModeIndicator>
+          <MobileModeIndicator show={isMobile} />
           
           <LanguageSelector /> {/* Add LanguageSelector here */}
 
@@ -596,14 +548,7 @@ const Header: React.FC = () => {
                   {t('header.home')}
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink 
-                  to="/equipo" 
-                  $isActive={location.pathname === '/equipo'}
-                >
-                  {t('header.team')}
-                </NavLink>
-              </NavItem>
+
               <NavItem>
                 <NavLink 
                   to="/maquinas" 
