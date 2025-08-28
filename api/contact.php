@@ -59,7 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $filename = 'contact_submissions_' . date('Y-m-d') . '.json';
         
         // Append to file
-        file_put_contents('./' . $filename, $json . ",\n", FILE_APPEND | LOCK_EX);
+        file_put_contents('./' . $filename, $json . ",
+", FILE_APPEND | LOCK_EX);
         
         // Also save to a single file for easier access
         $allSubmissions = [];
@@ -78,11 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allSubmissions[] = $submission;
         file_put_contents($allSubmissionsFile, json_encode($allSubmissions, JSON_PRETTY_PRINT));
 
-        // Try to send email using multiple methods
-        $emailSent = false;
-        $errorMessage = '';
-
-        // Method 1: Try PHPMailer with provided credentials
+        // Try to send email using PHPMailer first
         if ($mailerAvailable) {
             try {
                 $mail = new PHPMailer\PHPMailer\PHPMailer(true);
@@ -129,52 +126,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Send email
                 if ($mail->send()) {
-                    $emailSent = true;
+                    $response = ['success' => true, 'message' => '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.'];
+                } else {
+                    // Even if email fails, we still saved to file
+                    $response = ['success' => true, 'message' => '¡Mensaje recibido con éxito! Nos pondremos en contacto contigo pronto.'];
                 }
             } catch (Exception $e) {
                 // Log the error for debugging
                 error_log("PHPMailer Error: " . $e->getMessage());
-                $errorMessage = $e->getMessage();
+                // Even if email fails, we still saved to file
+                $response = ['success' => true, 'message' => '¡Mensaje recibido con éxito! Nos pondremos en contacto contigo pronto.'];
             }
-        }
-
-        // Method 2: Try PHP mail() function if PHPMailer failed
-        if (!$emailSent) {
-            try {
-                $to = 'contacto@petgas.com.mx';
-                $emailSubject = 'Nuevo mensaje de contacto: ' . $subject;
-                
-                $emailBody = "
-                Nuevo mensaje de contacto
-                
-                Nombre: $name
-                Email: $email
-                Teléfono: $phone
-                Asunto: $subject
-                
-                Mensaje:
-                $message
-                ";
-                
-                $headers = "From: contacto@petgas.com.mx\r\n";
-                $headers .= "Reply-To: $email\r\n";
-                $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-                
-                // Try to send email using PHP mail() function
-                if (mail($to, $emailSubject, $emailBody, $headers)) {
-                    $emailSent = true;
-                }
-            } catch (Exception $e) {
-                error_log("PHP mail() Error: " . $e->getMessage());
-                $errorMessage = $e->getMessage();
-            }
-        }
-
-        // Set response based on whether email was sent
-        if ($emailSent) {
-            $response = ['success' => true, 'message' => '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.'];
         } else {
-            // Even if email fails, we still saved to file
+            // If PHPMailer is not available, just save to file
             $response = ['success' => true, 'message' => '¡Mensaje recibido con éxito! Nos pondremos en contacto contigo pronto.'];
         }
     }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Environment Detection Test</title>
+</head>
+<body>
+    <h1>Environment Detection Test</h1>
+    <p>Current hostname: <span id="hostname"></span></p>
+    <p>Is Vercel: <span id="isVercel"></span></p>
+    <p>API Endpoint: <span id="apiEndpoint"></span></p>
+
+    <script>
+        // Function to detect if we're running on Vercel
+        const isVercelDeployment = () => {
+            // Check multiple conditions to determine if we're on Vercel
+            return (
+                (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) ||
+                (typeof window !== 'undefined' && window.location.hostname.includes('petgasmobile')) ||
+                process.env.NODE_ENV === 'production'
+            );
+        };
+
+        // Determine the correct API endpoint based on environment
+        const isVercel = isVercelDeployment();
+        const apiEndpoint = isVercel ? '/api/contact' : '/api/contact.php';
+
+        // Display results
+        document.getElementById('hostname').textContent = window.location.hostname;
+        document.getElementById('isVercel').textContent = isVercel ? 'Yes' : 'No';
+        document.getElementById('apiEndpoint').textContent = apiEndpoint;
+    </script>
+</body>
+</html>
