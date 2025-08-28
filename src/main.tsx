@@ -7,7 +7,7 @@ import 'normalize.css';
 import './i18n';
 
 // Set the basename for the router
-const basename = process.env.NODE_ENV === 'production' ? '/' : '/';
+const basename = import.meta.env.PROD ? '/' : '/';
 
 // Get the root container
 const container = document.getElementById('root');
@@ -18,6 +18,9 @@ if (!container) {
 
 // Create a root
 const root = createRoot(container);
+
+// Log environment for debugging
+console.log('Environment:', import.meta.env.MODE);
 
 // Render the app
 root.render(
