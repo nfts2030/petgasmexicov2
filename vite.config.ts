@@ -4,118 +4,80 @@ import { resolve } from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
 import type { PluginOption } from 'vite';
 
-// https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  // Cargar variables de entorno
   const env = loadEnv(mode, process.cwd(), '');
-  
-  return {
-  plugins: [
-    react({
-      // Use the new JSX runtime
-      jsxRuntime: 'automatic',
-      // Configure Babel plugins
-      babel: {
-        plugins: [
-          '@emotion/babel-plugin',
-          // Ensure React is only imported once
-          ['@babel/plugin-transform-react-jsx', {
-            runtime: 'automatic',
-            importSource: '@emotion/react'
-          }]
-        ]
-      },
-      // Exclude problematic files from transformation
-      exclude: /node_modules\/.*\/node_modules\/react/,
-    }),
-    // Visualize bundle size in analyze mode
-    ...(process.env.ANALYZE === 'true' ? [
-      visualizer({
-        open: true,
-        filename: 'dist/stats.html',
-        gzipSize: true,
-        brotliSize: true,
-      }) as unknown as PluginOption
-    ] : []),
-  ],
-  base: env.VITE_BASE_URL || '/',
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, 'src'),
-      // Ensure React is resolved to a single copy
-      'react': resolve(__dirname, 'node_modules/react'),
-      'react-dom': resolve(__dirname, 'node_modules/react-dom'),
+  const isProduction = mode === 'production';
+
+  const config = {
+    base: isProduction ? '/' : '/',
+    server: {
+      port: 3000,
+      strictPort: true,
+      host: true,
     },
-  },
-  server: {
-    port: parseInt(env.VITE_PORT || '3000'),
-    open: true,
-    cors: true,
-    strictPort: true,
-    host: true,
-    proxy: {
-      // Configuración de proxy para desarrollo
-      '/api': {
-        target: 'http://localhost:8080',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-        configure: (proxy, _options) => {
-          proxy.on('error', (err, _req, _res) => {
-            console.error('Proxy error:', err);
-          });
-        }
+    plugins: [
+      react({
+        jsxRuntime: 'automatic',
+        babel: {
+          plugins: [
+            '@emotion/babel-plugin',
+            ['@babel/plugin-transform-react-jsx', {
+              runtime: 'automatic',
+              importSource: '@emotion/react'
+            }]
+          ]
+        },
+        exclude: /node_modules\/.*\/node_modules\/react/,
+      }),
+      ...(process.env.ANALYZE === 'true' ? [
+        visualizer({
+          open: true,
+          filename: 'dist/stats.html',
+          gzipSize: true,
+          brotliSize: true,
+        }) as unknown as PluginOption
+      ] : [])
+    ],
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, 'src'),
+        'react': resolve(__dirname, 'node_modules/react'),
+        'react-dom': resolve(__dirname, 'node_modules/react-dom'),
       },
     },
-  },
-  preview: {
-    port: 3000,
-    open: true,
-  },
-  build: {
-    outDir: 'dist',
-    sourcemap: false,
-    chunkSizeWarningLimit: 1500,
-    commonjsOptions: {
-      include: [/node_modules/],
-      transformMixedEsModules: true,
-    },
-    rollupOptions: {
-      output: {
-        manualChunks: (id) => {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
+    build: {
+      outDir: 'dist',
+      sourcemap: true,
+      assetsInlineLimit: 0,
+      rollupOptions: {
+        output: {
+          manualChunks: (id: string) => {
+            if (id.includes('node_modules')) {
+              if (id.includes('react') || id.includes('react-dom')) {
+                return 'vendor-react';
+              }
+              if (id.includes('@emotion')) {
+                return 'vendor-emotion';
+              }
               return 'vendor';
             }
-            return 'vendor';
-          }
+          },
+          entryFileNames: 'assets/[name]-[hash].js',
+          chunkFileNames: 'assets/[name]-[hash].js',
+          assetFileNames: 'assets/[name]-[hash][extname]',
         },
       },
+      chunkSizeWarningLimit: 1500,
+      commonjsOptions: {
+        include: [/node_modules/],
+        transformMixedEsModules: true,
+      },
     },
-  },
-  // Optimización de dependencias
-  optimizeDeps: {
-    include: [
-      'react',
-      'react-dom',
-      'react-router-dom',
-      'react-helmet-async',
-      'styled-components',
-      '@emotion/react',
-      '@emotion/styled',
-    ],
-    exclude: [],
-  },
-  
-  // Definición de variables de entorno
-  define: {
-    'process.env': {
-      NODE_ENV: JSON.stringify(mode),
-      VITE_APP_VERSION: JSON.stringify(process.env.npm_package_version),
+    preview: {
+      port: 3000,
+      open: true,
     },
-    __APP_ENV__: JSON.stringify(env.APP_ENV || mode),
-  },
-  
-  // Configuración de compilación
-  esbuild: {},
   };
+
+  return config;
 });
