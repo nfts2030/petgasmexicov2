@@ -424,7 +424,7 @@ const Footer: React.FC = () => {
           </SocialIcons>
         </FooterLogo>
         <FooterBottom>
-          <p> {new Date().getFullYear()} PetGas. Todos los derechos reservados. <VersionBadge>v2.0.0</VersionBadge></p>
+          <p> {currentYear} PetGas. Todos los derechos reservados. <VersionBadge>v2.0.0</VersionBadge></p>
           <FooterLinks>
             <a href="mailto:contacto@petgas.com.mx">contacto@petgas.com.mx</a>
           </FooterLinks>
