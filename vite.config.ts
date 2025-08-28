@@ -56,9 +56,14 @@ export default defineConfig(({ mode }) => {
     proxy: {
       // Configuración de proxy para desarrollo
       '/api': {
-        target: env.VITE_API_URL || 'http://localhost:3001',
+        target: 'http://localhost:8080',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
+        configure: (proxy, _options) => {
+          proxy.on('error', (err, _req, _res) => {
+            console.error('Proxy error:', err);
+          });
+        }
       },
     },
   },

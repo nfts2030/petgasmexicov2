@@ -158,10 +158,10 @@ const ContactoPage: FC = () => {
     setIsSubmitting(true);
     
     try {
-      await submitContactForm(formData);
+      const result = await submitContactForm(formData);
       
       // Mostrar mensaje de éxito
-      showAlert(t('contact.alert_success'), true);
+      showAlert(result.message, true);
       
       // Limpiar el formulario
       setFormData({

@@ -17,6 +17,14 @@ const mockWindow = (width: number, userAgent: string) => {
 };
 
 describe('useMobileDetection', () => {
+  beforeAll(() => {
+    vi.useFakeTimers();
+  });
+
+  afterAll(() => {
+    vi.useRealTimers();
+  });
+
   beforeEach(() => {
     // Reset window size and user agent before each test
     mockWindow(1024, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
@@ -77,6 +85,9 @@ describe('useMobileDetection', () => {
       
       // Trigger resize event
       window.dispatchEvent(new Event('resize'));
+      
+      // Fast-forward timers
+      vi.runAllTimers();
     });
     
     // Should now detect as mobile

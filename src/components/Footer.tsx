@@ -26,6 +26,18 @@ const floatAnimation = keyframes`
   }
 `;
 
+const VersionBadge = styled.span`
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  margin-left: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+`;
+
 const FooterContainer = styled.footer`
   position: relative;
   overflow: hidden;
@@ -412,7 +424,7 @@ const Footer: React.FC = () => {
           </SocialIcons>
         </FooterLogo>
         <FooterBottom>
-          <p>© {currentYear} PETGAS MÉXICO. Todos los derechos reservados.</p>
+          <p> {new Date().getFullYear()} PetGas. Todos los derechos reservados. <VersionBadge>v2.0.0</VersionBadge></p>
           <FooterLinks>
             <a href="mailto:contacto@petgas.com.mx">contacto@petgas.com.mx</a>
           </FooterLinks>
