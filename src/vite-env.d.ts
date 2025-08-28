@@ -1,12 +1,23 @@
 /// <reference types="vite/client" />
 
-// Para módulos JSON
+// Environment Variables
+interface ImportMetaEnv {
+  readonly VITE_APP_TITLE: string;
+  readonly VITE_API_BASE_URL: string;
+  // Add other environment variables here
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
+// JSON Modules
 declare module '*.json' {
   const value: any;
   export default value;
 }
 
-// Para módulos CSS
+// CSS Modules
 interface CSSModuleClasses {
   [key: string]: string;
 }

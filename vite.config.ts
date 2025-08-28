@@ -50,7 +50,13 @@ export default defineConfig(({ mode }) => {
       outDir: 'dist',
       sourcemap: true,
       assetsInlineLimit: 0,
+      minify: 'esbuild',
+      target: 'esnext',
+      cssCodeSplit: true,
       rollupOptions: {
+        input: {
+          main: resolve(__dirname, 'index.html')
+        },
         output: {
           manualChunks: (id: string) => {
             if (id.includes('node_modules')) {
@@ -72,6 +78,7 @@ export default defineConfig(({ mode }) => {
       commonjsOptions: {
         include: [/node_modules/],
         transformMixedEsModules: true,
+        esmExternals: true,
       },
     },
     preview: {

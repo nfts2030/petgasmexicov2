@@ -16,8 +16,10 @@
     "moduleResolution": "bundler",
     "noEmit": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "react",
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
+    "allowUmdGlobalAccess": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
