@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
   loadEnv(mode, process.cwd(), '');
   const isProduction = mode === 'production';
 
-  const config = {
+  return {
     base: isProduction ? '/' : '/',
     server: {
       port: 3000,
@@ -19,13 +19,7 @@ export default defineConfig(({ mode }) => {
       react({
         jsxRuntime: 'automatic',
         babel: {
-          plugins: [
-            '@emotion/babel-plugin',
-            ['@babel/plugin-transform-react-jsx', {
-              runtime: 'automatic',
-              importSource: '@emotion/react'
-            }]
-          ]
+          plugins: []
         },
         exclude: /node_modules\/.*\/node_modules\/react/,
       }),
@@ -78,6 +72,4 @@ export default defineConfig(({ mode }) => {
       open: true,
     },
   };
-
-  return config;
 });
