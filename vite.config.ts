@@ -5,7 +5,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import type { PluginOption } from 'vite';
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
+  loadEnv(mode, process.cwd(), '');
   const isProduction = mode === 'production';
 
   const config = {
