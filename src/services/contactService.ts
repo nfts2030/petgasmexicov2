@@ -24,8 +24,12 @@ export const submitContactForm = async (formData: ContactFormData) => {
 
     const response = await fetch(endpoint, {
       method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       body: JSON.stringify({
         name: formData.name,

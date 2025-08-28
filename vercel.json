@@ -13,21 +13,20 @@
       "use": "@vercel/node"
     }
   ],
-  "rewrites": [
-    { 
-      "source": "/api/contact",
-      "destination": "/api/contact",
-      "has": [
-        {
-          "type": "header",
-          "key": "Content-Type",
-          "value": "application/json"
-        }
-      ]
+  "routes": [
+    {
+      "src": "/api/contact",
+      "dest": "/api/contact",
+      "methods": ["POST", "OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization"
+      }
     },
-    { 
-      "source": "/(.*)",
-      "destination": "/index.html"
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ],
   "buildCommand": "npm install && npm run build",

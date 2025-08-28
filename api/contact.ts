@@ -3,10 +3,11 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import nodemailer from 'nodemailer';
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
-  // Handle CORS
+  // Set CORS headers for all responses
   response.setHeader('Access-Control-Allow-Origin', '*');
   response.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  response.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  response.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  response.setHeader('Access-Control-Max-Age', '86400'); // 24 hours
   
   // Handle preflight requests
   if (request.method === 'OPTIONS') {
@@ -16,11 +17,10 @@ export default async function handler(request: VercelRequest, response: VercelRe
   
   // Only allow POST requests
   if (request.method !== 'POST') {
-    response.status(405).json({ 
+    return response.status(405).json({ 
       success: false, 
       message: 'Método no permitido. Solo se permiten solicitudes POST.' 
     });
-    return;
   }
 
   try {
