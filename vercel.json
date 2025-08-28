@@ -9,15 +9,24 @@
       }
     },
     {
-      "src": "api/**/*.ts",
+      "src": "api/contact.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "handle": "filesystem" },
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/.*", "dest": "/index.html" }
+    {
+      "src": "/api/contact",
+      "dest": "/api/contact",
+      "methods": ["GET", "POST", "OPTIONS"]
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ],
   "buildCommand": "npm install && npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/contact" }
+  ]
 }

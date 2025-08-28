@@ -7,55 +7,34 @@ interface ContactFormData {
   privacy?: boolean;
 }
 
-// Function to detect if we're running on Vercel
-const isVercelDeployment = (): boolean => {
-  // Check multiple conditions to determine if we're on Vercel
-  return (
-    (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) ||
-    (typeof window !== 'undefined' && window.location.hostname.includes('petgasmobile')) ||
-    process.env.NODE_ENV === 'production'
-  );
+// Function to get the base URL for API requests
+const getBaseUrl = (): string => {
+  // In production, use relative URL (Vercel will handle the domain)
+  if (process.env.NODE_ENV === 'production') {
+    return '';
+  }
+  // In development, use the local server
+  return 'http://localhost:3000';
 };
 
 export const submitContactForm = async (formData: ContactFormData) => {
   try {
-    // Determine the correct API endpoint based on environment
-    const isVercel = isVercelDeployment();
-    const apiEndpoint = isVercel ? '/api/contact' : '/api/contact.php';
+    const baseUrl = getBaseUrl();
+    const endpoint = `${baseUrl}/api/contact`;
 
-    // Create request body
-    let body: string | URLSearchParams;
-    const headers: Record<string, string> = {};
-    
-    if (isVercel) {
-      // Vercel (Node.js API) - use JSON
-      body = JSON.stringify({
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         name: formData.name,
         email: formData.email,
         phone: formData.phone || '',
         subject: formData.subject,
         message: formData.message,
         privacy: !!formData.privacy
-      });
-      headers['Content-Type'] = 'application/json';
-    } else {
-      // Local development (PHP API) - use URLSearchParams
-      body = new URLSearchParams({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone || '',
-        subject: formData.subject,
-        message: formData.message,
-        privacy: formData.privacy ? '1' : '0',
-      });
-      headers['Content-Type'] = 'application/x-www-form-urlencoded';
-    }
-
-    // Send request to backend
-    const response = await fetch(apiEndpoint, {
-      method: 'POST',
-      headers: headers,
-      body: body,
+      }),
     });
 
     // Check if response is OK
