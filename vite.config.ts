@@ -15,11 +15,16 @@ export default defineConfig(({ mode }) => {
       strictPort: true,
       host: true,
     },
+    define: {
+      'process.env': {},
+      global: 'globalThis',
+    },
     plugins: [
       react({
         jsxRuntime: 'automatic',
         babel: {
-          plugins: []
+          babelrc: true,
+          configFile: true,
         },
         exclude: /node_modules\/.*\/node_modules\/react/,
       }),
