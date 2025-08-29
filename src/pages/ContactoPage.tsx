@@ -114,6 +114,8 @@ interface SubmitStatus {
   success: boolean;
   warning?: boolean;
   message: string;
+  sent?: boolean;
+  stored?: boolean;
 }
 
 const ContactoPage: FC = () => {
@@ -164,15 +166,19 @@ const ContactoPage: FC = () => {
       const result = await submitContactForm(formData);
       
       // Mostrar mensaje de éxito o advertencia
-      if (result.stored) {
+      if (result.sent) {
+        // Email enviado exitosamente
+        showAlert(result.message || '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.', true);
+      } else if (result.stored) {
+        // Email no se pudo enviar pero se guardó
         showAlert(
-          result.message + ' ' + t('contact.message_stored_notice') || 
-          '¡Mensaje recibido! Nos pondremos en contacto contigo pronto. Puede haber un retraso en el envío del correo electrónico.',
+          result.message || 
+          '¡Mensaje recibido! Sin embargo, hubo un problema al enviar la notificación. Hemos guardado tu mensaje y nos pondremos en contacto contigo pronto.',
           true,
           true // warning flag
         );
       } else {
-        showAlert(result.message, true);
+        showAlert(result.message || '¡Mensaje recibido!', true);
       }
       
       // Limpiar el formulario

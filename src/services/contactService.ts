@@ -9,7 +9,14 @@ interface ContactFormData {
   privacy?: boolean;
 }
 
-export const submitContactForm = async (formData: ContactFormData) => {
+interface ContactFormResponse {
+  success: boolean;
+  message: string;
+  sent?: boolean;
+  stored?: boolean;
+}
+
+export const submitContactForm = async (formData: ContactFormData): Promise<ContactFormResponse> => {
   return retryApiCall(async () => {
     try {
       // Use relative URL for both development and production
@@ -35,19 +42,14 @@ export const submitContactForm = async (formData: ContactFormData) => {
       });
 
       // Safely parse the response
-      const data = await safeJsonParse(response);
+      const data = await safeJsonParse(response) as ContactFormResponse;
 
-      // Even if the response indicates storage instead of email sending,
-      // we still treat it as a success since the form was received
       if (data.success) {
-        const message = data.stored 
-          ? (data.message || '¡Mensaje recibido! Nos pondremos en contacto contigo pronto.')
-          : (data.message || '¡Mensaje enviado con éxito!');
-          
-        return { 
-          success: true, 
-          message,
-          stored: !!data.stored
+        return {
+          success: true,
+          message: data.message || '¡Mensaje recibido! Nos pondremos en contacto contigo pronto.',
+          sent: data.sent,
+          stored: data.stored
         };
       } else {
         // If the API explicitly returns success: false, treat it as an error

@@ -3,6 +3,22 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Load environment variables from .env file
+if (file_exists(__DIR__ . '/.env')) {
+    $lines = file(__DIR__ . '/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos(trim($line), '#') === 0) continue;
+        list($name, $value) = explode('=', $line, 2);
+        $name = trim($name);
+        $value = trim($value);
+        if (!array_key_exists($name, $_ENV)) {
+            putenv("$name=$value");
+            $_ENV[$name] = $value;
+            $_SERVER[$name] = $value;
+        }
+    }
+}
+
 // Handle CORS
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
@@ -84,19 +100,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             try {
                 $mail = new PHPMailer\PHPMailer\PHPMailer(true);
 
-                // Server settings
+                // Server settings from environment variables
                 $mail->isSMTP();
-                $mail->Host = 'mail.petgas.com.mx';
+                $mail->Host = getenv('SMTP_HOST') ?: 'mail.petgas.com.mx';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'contacto@petgas.com.mx';
-                $mail->Password = 'NyeaR[QcW;tP';
-                $mail->SMTPSecure = 'ssl';
-                $mail->Port = 465;
+                $mail->Username = getenv('SMTP_USERNAME') ?: 'contacto@petgas.com.mx';
+                $mail->Password = getenv('SMTP_PASSWORD');
+                $mail->SMTPSecure = getenv('SMTP_SECURE') ?: 'ssl';
+                $mail->Port = getenv('SMTP_PORT') ?: 465;
                 $mail->CharSet = 'UTF-8';
+                
+                // Debugging
+                $mail->SMTPDebug = 2; // Enable verbose debug output
+                $mail->Debugoutput = function($str, $level) {
+                    error_log("PHPMailer: $str");
+                };
 
                 // Recipients
-                $mail->setFrom('contacto@petgas.com.mx', 'PETGAS Web');
-                $mail->addAddress('contacto@petgas.com.mx', 'Contacto PETGAS');
+                $fromEmail = getenv('MAIL_FROM') ?: 'contacto@petgas.com.mx';
+                $toEmail = getenv('MAIL_TO') ?: 'contacto@petgas.com.mx';
+                $mail->setFrom($fromEmail, 'PETGAS Web');
+                $mail->addAddress($toEmail, 'Contacto PETGAS');
                 $mail->addReplyTo($email, $name);
 
                 // Content
@@ -126,10 +150,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Send email
                 if ($mail->send()) {
-                    $response = ['success' => true, 'message' => '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.'];
+                    $response = [
+                        'success' => true, 
+                        'sent' => true,
+                        'message' => '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.'
+                    ];
                 } else {
-                    // Even if email fails, we still saved to file
-                    $response = ['success' => true, 'message' => '¡Mensaje recibido con éxito! Nos pondremos en contacto contigo pronto.'];
+                    // Email failed to send
+                    error_log("Failed to send email: " . $mail->ErrorInfo);
+                    $response = [
+                        'success' => true, 
+                        'sent' => false,
+                        'stored' => true,
+                        'message' => '¡Mensaje recibido! Sin embargo, hubo un problema al enviar la notificación. Hemos guardado tu mensaje y nos pondremos en contacto contigo pronto.'
+                    ];
                 }
             } catch (Exception $e) {
                 // Log the error for debugging
