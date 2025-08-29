@@ -173,6 +173,7 @@ const ContactoPage: FC = () => {
         privacy: false
       });
     } catch (error) {
+      console.error('Error in contact form:', error);
       const errorMessage = error instanceof Error ? error.message : t('contact.alert_error');
       showAlert(errorMessage, false);
     } finally {
@@ -189,10 +190,7 @@ const ContactoPage: FC = () => {
     
     // Ocultar la alerta después de 5 segundos
     setTimeout(() => {
-      setSubmitStatus(prev => ({
-        ...prev,
-        show: false
-      }));
+      setSubmitStatus(prev => ({ ...prev, show: false }));
     }, 5000);
   };
   

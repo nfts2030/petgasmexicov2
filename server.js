@@ -1,80 +1,119 @@
-import express from 'express';
-import { spawn } from 'child_process';
-import path from 'path';
-import { fileURLToPath } from 'url';
+// Development proxy server for API requests
+const { createServer } = require('http');
+const { parse } = require('url');
+const next = require('next');
 
-// Create __dirname equivalent for ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
-const app = express();
-const PORT = 8080;
+app.prepare().then(() => {
+  createServer((req, res) => {
+    // Handle API requests
+    const parsedUrl = parse(req.url, true);
+    const { pathname } = parsedUrl;
 
-// Middleware to parse URL-encoded bodies
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-// Enable CORS
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-  next();
-});
-
-// Serve the contact.php endpoint
-app.post('/api/contact.php', (req, res) => {
-  // Spawn a PHP process to handle the request
-  const php = spawn('php', [
-    '-f',
-    path.join(__dirname, 'api', 'contact.php')
-  ]);
-
-  // Collect PHP output
-  let phpResponse = '';
-  let phpError = '';
-
-  php.stdout.on('data', (data) => {
-    phpResponse += data.toString();
-  });
-
-  php.stderr.on('data', (data) => {
-    phpError += data.toString();
-  });
-
-  php.on('close', (code) => {
-    if (code !== 0) {
-      console.error(`PHP process exited with code ${code}`);
-      console.error(`PHP Error: ${phpError}`);
-      return res.status(500).json({ success: false, message: 'Server error: ' + phpError });
-    } else {
-      try {
-        // Try to parse the PHP response as JSON
-        const jsonResponse = JSON.parse(phpResponse);
-        res.json(jsonResponse);
-      } catch (e) {
-        // If it's not JSON, send it as plain text
-        res.setHeader('Content-Type', 'application/json');
-        res.send(phpResponse);
-      }
+    if (pathname.startsWith('/api/')) {
+      // Proxy API requests to the development API
+      return handleApiRequest(req, res, pathname);
     }
+
+    // Handle other requests with Next.js
+    return handle(req, res, parsedUrl);
+  }).listen(3000, (err) => {
+    if (err) throw err;
+    console.log('> Ready on http://localhost:3000');
   });
+});
 
-  // Prepare POST data for PHP
-  let postData = '';
-  for (const key in req.body) {
-    if (postData !== '') postData += '&';
-    postData += `${key}=${encodeURIComponent(req.body[key] || '')}`;
+function handleApiRequest(req, res, pathname) {
+  // For development, we'll simulate the API responses
+  if (pathname === '/api/contact') {
+    if (req.method === 'OPTIONS') {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+      res.setHeader('Access-Control-Max-Age', '86400');
+      res.status(200).end();
+      return;
+    }
+
+    if (req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk.toString();
+      });
+      req.on('end', () => {
+        try {
+          const data = JSON.parse(body);
+          
+          // Log the request data
+          console.log('=== CONTACT FORM SUBMISSION (DEVELOPMENT) ===');
+          console.log('Data:', data);
+          console.log('=============================================');
+          
+          // Simulate processing delay
+          setTimeout(() => {
+            res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.status(200).json({ 
+              success: true, 
+              message: '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.' 
+            });
+          }, 1000);
+        } catch (error) {
+          res.setHeader('Content-Type', 'application/json');
+          res.status(400).json({ 
+            success: false, 
+            message: 'Invalid JSON data' 
+          });
+        }
+      });
+      return;
+    }
+    
+    res.setHeader('Content-Type', 'application/json');
+    res.status(405).json({ 
+      success: false, 
+      message: 'Method not allowed' 
+    });
+    return;
   }
-
-  // Send the POST data to PHP
-  php.stdin.write(postData);
-  php.stdin.end();
-});
-
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Backend server running on http://localhost:${PORT}`);
-});
+  
+  // Handle other API routes
+  if (pathname === '/api/health') {
+    if (req.method === 'OPTIONS') {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+      res.setHeader('Access-Control-Max-Age', '86400');
+      res.status(200).end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.status(200).json({ 
+        success: true, 
+        message: 'API is working correctly',
+        timestamp: new Date().toISOString()
+      });
+      return;
+    }
+    
+    res.setHeader('Content-Type', 'application/json');
+    res.status(405).json({ 
+      success: false, 
+      message: 'Method not allowed' 
+    });
+    return;
+  }
+  
+  // API route not found
+  res.setHeader('Content-Type', 'application/json');
+  res.status(404).json({ 
+    success: false, 
+    message: 'API endpoint not found' 
+  });
+}

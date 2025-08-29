@@ -37,6 +37,9 @@ const AppContainer = styled.div`
   background-position: center, center;
   background-attachment: fixed, fixed;
   background-repeat: no-repeat, no-repeat;
+  
+  /* Fallback background in case the image fails to load */
+  background-color: #0d7a3d;
 `;
 
 const MainContent = styled.main`
@@ -52,11 +55,26 @@ const MainContent = styled.main`
   }
 `;
 
+// Error Boundary Component for Routes
+const RouteErrorBoundary = ({ children }: { children: React.ReactNode }) => {
+  useEffect(() => {
+    const handleError = (event: ErrorEvent) => {
+      console.error('Route error:', event.error);
+    };
+    
+    window.addEventListener('error', handleError);
+    return () => window.removeEventListener('error', handleError);
+  }, []);
+  
+  return <>{children}</>;
+};
+
 // Memoize the main App component
 const App: React.FC = () => {
   // Efecto de montaje
   useEffect(() => {
     // Aquí puedes agregar lógica de inicialización si es necesario
+    console.log('App mounted');
   }, []);
   
   // Memoize routes to prevent unnecessary re-renders
@@ -78,9 +96,11 @@ const App: React.FC = () => {
         <AppContainer>
           <Header />
           <MainContent>
-            <Suspense fallback={<LoadingSpinner />}>
-              {routes}
-            </Suspense>
+            <RouteErrorBoundary>
+              <Suspense fallback={<LoadingSpinner />}>
+                {routes}
+              </Suspense>
+            </RouteErrorBoundary>
           </MainContent>
           <Footer />
           <WhatsAppButton />

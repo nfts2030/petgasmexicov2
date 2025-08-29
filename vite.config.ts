@@ -4,86 +4,114 @@ import { resolve } from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
 import type { PluginOption } from 'vite';
 
+// https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  loadEnv(mode, process.cwd(), '');
-  const isProduction = mode === 'production';
-
+  // Cargar variables de entorno
+  const env = loadEnv(mode, process.cwd(), '');
+  
   return {
-    base: isProduction ? '/' : '/',
-    server: {
-      port: 3000,
-      strictPort: true,
-      host: true,
-    },
-    define: {
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV || mode),
+  plugins: [
+    react({
+      // Use the new JSX runtime
+      jsxRuntime: 'automatic',
+      // Configure Babel plugins
+      babel: {
+        plugins: [
+          '@emotion/babel-plugin',
+          // Ensure React is only imported once
+          ['@babel/plugin-transform-react-jsx', {
+            runtime: 'automatic',
+            importSource: '@emotion/react'
+          }]
+        ]
       },
-      global: 'globalThis',
+      // Exclude problematic files from transformation
+      exclude: /node_modules\/.*\/node_modules\/react/,
+    }),
+    // Visualize bundle size in analyze mode
+    ...(process.env.ANALYZE === 'true' ? [
+      visualizer({
+        open: true,
+        filename: 'dist/stats.html',
+        gzipSize: true,
+        brotliSize: true,
+      }) as unknown as PluginOption
+    ] : []),
+  ],
+  base: mode === 'production' ? '/' : '/',
+  publicDir: 'public',
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+      // Ensure React is resolved to a single copy
+      'react': resolve(__dirname, 'node_modules/react'),
+      'react-dom': resolve(__dirname, 'node_modules/react-dom'),
     },
-    plugins: [
-      react({
-        jsxRuntime: 'automatic',
-        babel: {
-          babelrc: true,
-          configFile: true,
-        },
-        exclude: /node_modules\/.*\/node_modules\/react/,
-      }),
-      ...(process.env.ANALYZE === 'true' ? [
-        visualizer({
-          open: true,
-          filename: 'dist/stats.html',
-          gzipSize: true,
-          brotliSize: true,
-        }) as unknown as PluginOption
-      ] : [])
-    ],
-    resolve: {
-      alias: {
-        '@': resolve(__dirname, 'src'),
-        'react': resolve(__dirname, 'node_modules/react'),
-        'react-dom': resolve(__dirname, 'node_modules/react-dom'),
+  },
+  server: {
+    port: parseInt(env.VITE_PORT || '3000'),
+    open: true,
+    cors: true,
+    strictPort: true,
+    host: true,
+    proxy: {
+      // Configuración de proxy para desarrollo
+      '/api': {
+        target: env.VITE_API_URL || 'http://localhost:3001',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
-    build: {
-      outDir: 'dist',
-      sourcemap: true,
-      assetsInlineLimit: 0,
-      minify: 'esbuild',
-      target: 'esnext',
-      cssCodeSplit: true,
-      rollupOptions: {
-        input: {
-          main: resolve(__dirname, 'index.html')
-        },
-        output: {
-          manualChunks: (id: string) => {
-            if (id.includes('node_modules')) {
-              if (id.includes('react') || id.includes('react-dom')) {
-                return 'vendor-react';
-              }
-              if (id.includes('@emotion')) {
-                return 'vendor-emotion';
-              }
+  },
+  preview: {
+    port: 3000,
+    open: true,
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    chunkSizeWarningLimit: 1500,
+    commonjsOptions: {
+      include: [/node_modules/],
+      transformMixedEsModules: true,
+    },
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
               return 'vendor';
             }
-          },
-          entryFileNames: 'assets/[name]-[hash].js',
-          chunkFileNames: 'assets/[name]-[hash].js',
-          assetFileNames: 'assets/[name]-[hash][extname]',
+            return 'vendor';
+          }
         },
       },
-      chunkSizeWarningLimit: 1500,
-      commonjsOptions: {
-        include: [/node_modules/],
-        transformMixedEsModules: true,
-        esmExternals: true,
-      },
     },
-    preview: {
-      port: 3000,
-      open: true,
+  },
+  // Optimización de dependencias
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      'react-router-dom',
+      'react-helmet-async',
+      'styled-components',
+      '@emotion/react',
+      '@emotion/styled',
+    ],
+    exclude: [],
+  },
+  
+  // Definición de variables de entorno
+  define: {
+    'process.env': {
+      NODE_ENV: JSON.stringify(mode),
+      VITE_APP_VERSION: JSON.stringify(process.env.npm_package_version),
     },
+    __APP_ENV__: JSON.stringify(env.APP_ENV || mode),
+  },
+  
+  // Configuración de compilación
+  esbuild: {},
   };
 });
