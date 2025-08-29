@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API JSON Response Test - PETGAS</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #0a4b2a;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #0d6a3d;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        h1, h2 {
+            color: #0a4b2a;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-ok {
+            background-color: #28a745;
+        }
+        .status-error {
+            background-color: #dc3545;
+        }
+        .status-pending {
+            background-color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>API JSON Response Test - PETGAS</h1>
+        <p>Esta página verifica que todos los endpoints de la API retornen respuestas JSON válidas.</p>
+        
+        <div class="test-section">
+            <h2>1. Health Endpoint</h2>
+            <button id="testHealth">Test /api/health</button>
+            <div id="healthResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>2. Email Test Endpoint</h2>
+            <button id="testEmailConnection">Test /api/test-email (GET)</button>
+            <button id="testEmailPost">Test /api/test-email (POST)</button>
+            <div id="emailResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>3. Contact Endpoint</h2>
+            <button id="testContactOptions">Test /api/contact (OPTIONS)</button>
+            <button id="testContactPost">Test /api/contact (POST - Invalid)</button>
+            <div id="contactResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>4. Validación de Respuestas JSON</h2>
+            <button id="testAllJson">Validar Todas las Respuestas</button>
+            <div id="validationResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Helper function to test JSON response
+        async function testJsonResponse(url, options = {}) {
+            try {
+                const response = await fetch(url, options);
+                const contentType = response.headers.get('content-type');
+                
+                // Check if response has content-type header
+                if (!contentType) {
+                    return {
+                        success: false,
+                        error: 'Missing Content-Type header',
+                        status: response.status,
+                        headers: [...response.headers.entries()]
+                    };
+                }
+                
+                // Check if content-type is JSON
+                if (!contentType.includes('application/json')) {
+                    return {
+                        success: false,
+                        error: `Invalid Content-Type: ${contentType}`,
+                        status: response.status,
+                        headers: [...response.headers.entries()]
+                    };
+                }
+                
+                // Try to parse JSON
+                const text = await response.text();
+                if (!text) {
+                    return {
+                        success: false,
+                        error: 'Empty response body',
+                        status: response.status
+                    };
+                }
+                
+                try {
+                    const json = JSON.parse(text);
+                    return {
+                        success: true,
+                        data: json,
+                        status: response.status,
+                        contentType: contentType
+                    };
+                } catch (parseError) {
+                    return {
+                        success: false,
+                        error: `Invalid JSON: ${parseError.message}`,
+                        status: response.status,
+                        text: text.substring(0, 200) + (text.length > 200 ? '...' : '')
+                    };
+                }
+            } catch (fetchError) {
+                return {
+                    success: false,
+                    error: `Fetch error: ${fetchError.message}`,
+                    url: url
+                };
+            }
+        }
+
+        // Test health endpoint
+        document.getElementById('testHealth').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('healthResult');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing...';
+            
+            const result = await testJsonResponse('/api/health');
+            resultDiv.className = result.success ? 'result success' : 'result error';
+            resultDiv.textContent = JSON.stringify(result, null, 2);
+        });
+
+        // Test email connection (GET)
+        document.getElementById('testEmailConnection').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('emailResult');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing...';
+            
+            const result = await testJsonResponse('/api/test-email');
+            resultDiv.className = result.success ? 'result success' : 'result error';
+            resultDiv.textContent = JSON.stringify(result, null, 2);
+        });
+
+        // Test email connection (POST)
+        document.getElementById('testEmailPost').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('emailResult');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing...';
+            
+            const result = await testJsonResponse('/api/test-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            resultDiv.className = result.success ? 'result success' : 'result error';
+            resultDiv.textContent = JSON.stringify(result, null, 2);
+        });
+
+        // Test contact OPTIONS
+        document.getElementById('testContactOptions').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('contactResult');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing...';
+            
+            const result = await testJsonResponse('/api/contact', {
+                method: 'OPTIONS'
+            });
+            resultDiv.className = result.success ? 'result success' : 'result error';
+            resultDiv.textContent = JSON.stringify(result, null, 2);
+        });
+
+        // Test contact POST with invalid data
+        document.getElementById('testContactPost').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('contactResult');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing...';
+            
+            const result = await testJsonResponse('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: '',
+                    email: 'invalid-email',
+                    subject: '',
+                    message: '',
+                    privacy: false
+                })
+            });
+            resultDiv.className = result.success ? 'result success' : 'result error';
+            resultDiv.textContent = JSON.stringify(result, null, 2);
+        });
+
+        // Test all JSON responses
+        document.getElementById('testAllJson').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('validationResult');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Validando todas las respuestas...\n';
+            
+            const tests = [
+                { name: 'Health Endpoint', url: '/api/health' },
+                { name: 'Email Test (GET)', url: '/api/test-email' },
+                { name: 'Email Test (POST)', url: '/api/test-email', method: 'POST' },
+                { name: 'Contact (OPTIONS)', url: '/api/contact', method: 'OPTIONS' }
+            ];
+            
+            let allPassed = true;
+            let results = [];
+            
+            for (const test of tests) {
+                const result = await testJsonResponse(test.url, {
+                    method: test.method,
+                    headers: test.method ? { 'Content-Type': 'application/json' } : undefined
+                });
+                
+                results.push({
+                    name: test.name,
+                    passed: result.success,
+                    details: result
+                });
+                
+                if (!result.success) {
+                    allPassed = false;
+                }
+                
+                resultDiv.textContent += `${test.name}: ${result.success ? '✅ PASS' : '❌ FAIL'}\n`;
+                if (!result.success) {
+                    resultDiv.textContent += `  Error: ${result.error}\n`;
+                }
+            }
+            
+            resultDiv.textContent += `\n--- RESUMEN ---\n`;
+            resultDiv.textContent += `Total tests: ${tests.length}\n`;
+            resultDiv.textContent += `Passed: ${results.filter(r => r.passed).length}\n`;
+            resultDiv.textContent += `Failed: ${results.filter(r => !r.passed).length}\n`;
+            resultDiv.textContent += `Overall: ${allPassed ? '✅ ALL PASS' : '❌ SOME FAILED'}\n`;
+            
+            resultDiv.className = allPassed ? 'result success' : 'result error';
+        });
+    </script>
+</body>
+</html>
