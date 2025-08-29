@@ -1,16 +1,22 @@
 #!/bin/bash
 
-# Instalar dependencias
+# Vercel build script for PETGAS Mobile
+
+echo "Starting PETGAS Mobile build process..."
+
+# Install dependencies
+echo "Installing dependencies..."
 npm install
 
-# Construir la aplicación
+# Build the React application
+echo "Building React application..."
 npm run build
 
-# Verificar que el directorio de salida existe
-if [ -d "dist" ]; then
-  echo "✅ Directorio de salida 'dist' encontrado"
-  ls -la dist/
+# Check if build was successful
+if [ $? -eq 0 ]; then
+  echo "Build completed successfully!"
+  echo "Build output is in the dist/ directory"
 else
-  echo "❌ Error: No se encontró el directorio de salida 'dist'"
+  echo "Build failed!"
   exit 1
 fi
