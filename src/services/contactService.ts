@@ -1,4 +1,4 @@
-import { retryApiCall } from '../utils/apiUtils';
+import { retryApiCall, safeJsonParse } from '../utils/apiUtils';
 
 interface ContactFormData {
   name: string;
@@ -34,38 +34,34 @@ export const submitContactForm = async (formData: ContactFormData) => {
         }),
       });
 
-      // Check if response is OK
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      // Safely parse the response
+      const data = await safeJsonParse(response);
 
-      // Try to parse response as JSON
-      let data;
-      try {
-        data = await response.json();
-      } catch (jsonError) {
-        // If JSON parsing fails, try to get text
-        const text = await response.text();
-        throw new Error(`Invalid JSON response: ${text}`);
+      // Even if the response indicates storage instead of email sending,
+      // we still treat it as a success since the form was received
+      if (data.success) {
+        const message = data.stored 
+          ? (data.message || '¡Mensaje recibido! Nos pondremos en contacto contigo pronto.')
+          : (data.message || '¡Mensaje enviado con éxito!');
+          
+        return { 
+          success: true, 
+          message,
+          stored: !!data.stored
+        };
+      } else {
+        // If the API explicitly returns success: false, treat it as an error
+        throw new Error(data.message || 'Error al procesar el mensaje');
       }
-
-      // Check if request was successful
-      if (!data.success) {
-        throw new Error(data.message || 'Error al enviar el mensaje');
-      }
-      
-      return { success: true, message: data.message || '¡Mensaje enviado con éxito!' };
     } catch (error) {
       console.error('Error submitting contact form:', error);
       
       // Provide a more user-friendly error message
-      let errorMessage = 'No se pudo enviar el mensaje. Por favor, inténtalo de nuevo más tarde.';
+      let errorMessage = 'No se pudo procesar tu mensaje. Por favor, inténtalo de nuevo más tarde.';
       
       if (error instanceof Error) {
         if (error.message.includes('Failed to fetch')) {
           errorMessage = 'No se pudo conectar con el servidor. Por favor, verifica tu conexión a internet.';
-        } else if (error.message.includes('HTTP error!')) {
-          errorMessage = 'Error de conexión con el servidor. Por favor, inténtalo de nuevo más tarde.';
         } else {
           errorMessage = error.message;
         }

@@ -15,6 +15,10 @@
     {
       "src": "api/health.ts",
       "use": "@vercel/node"
+    },
+    {
+      "src": "api/test-email.ts",
+      "use": "@vercel/node"
     }
   ],
   "rewrites": [
@@ -25,6 +29,10 @@
     {
       "source": "/api/health",
       "destination": "/api/health.ts"
+    },
+    {
+      "source": "/api/test-email",
+      "destination": "/api/test-email.ts"
     },
     {
       "source": "/(.*)",

@@ -80,7 +80,7 @@ const fadeIn = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `;
 
-const Alert = styled.div<{ $show: boolean; type: 'success' | 'error' }>`
+const Alert = styled.div<{ $show: boolean; type: 'success' | 'error' | 'warning' }>`
   position: fixed;
   top: 20px;
   right: 20px;
@@ -92,7 +92,9 @@ const Alert = styled.div<{ $show: boolean; type: 'success' | 'error' }>`
   z-index: 9999;
   max-width: 400px;
   animation: ${fadeIn} 0.3s ease-out;
-  background-color: ${props => props.type === 'success' ? '#4CAF50' : '#F44336'};
+  background-color: ${props => 
+    props.type === 'success' ? '#4CAF50' : 
+    props.type === 'warning' ? '#FF9800' : '#F44336'};
   display: ${props => props.$show ? 'block' : 'none'};
   transition: opacity 0.3s ease;
   cursor: pointer;
@@ -110,6 +112,7 @@ interface FormData {
 interface SubmitStatus {
   show: boolean;
   success: boolean;
+  warning?: boolean;
   message: string;
 }
 
@@ -160,8 +163,17 @@ const ContactoPage: FC = () => {
     try {
       const result = await submitContactForm(formData);
       
-      // Mostrar mensaje de éxito
-      showAlert(result.message, true);
+      // Mostrar mensaje de éxito o advertencia
+      if (result.stored) {
+        showAlert(
+          result.message + ' ' + t('contact.message_stored_notice') || 
+          '¡Mensaje recibido! Nos pondremos en contacto contigo pronto. Puede haber un retraso en el envío del correo electrónico.',
+          true,
+          true // warning flag
+        );
+      } else {
+        showAlert(result.message, true);
+      }
       
       // Limpiar el formulario
       setFormData({
@@ -173,7 +185,6 @@ const ContactoPage: FC = () => {
         privacy: false
       });
     } catch (error) {
-      console.error('Error in contact form:', error);
       const errorMessage = error instanceof Error ? error.message : t('contact.alert_error');
       showAlert(errorMessage, false);
     } finally {
@@ -181,10 +192,11 @@ const ContactoPage: FC = () => {
     }
   };
   
-  const showAlert = (message: string, success: boolean) => {
+  const showAlert = (message: string, success: boolean, warning: boolean = false) => {
     setSubmitStatus({
       show: true,
       success,
+      warning,
       message
     });
     
@@ -199,7 +211,7 @@ const ContactoPage: FC = () => {
       {/* Alertas */}
       <Alert 
         $show={submitStatus.show} 
-        type={submitStatus.success ? 'success' : 'error'}
+        type={submitStatus.warning ? 'warning' : submitStatus.success ? 'success' : 'error'}
         onClick={() => setSubmitStatus(prev => ({ ...prev, show: false }))}
       >
         {submitStatus.message}

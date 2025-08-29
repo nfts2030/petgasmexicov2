@@ -12,6 +12,12 @@ export const checkApiHealth = async (): Promise<boolean> => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      console.warn('API health check returned non-JSON response');
+      return false;
+    }
+    
     const data = await response.json();
     return data.success === true;
   } catch (error) {
@@ -45,3 +51,42 @@ export const retryApiCall = async <T>(
   
   throw lastError!;
 };
+
+// Helper function to safely parse API responses
+export const safeJsonParse = async (response: Response): Promise<any> => {
+  try {
+    const contentType = response.headers.get('content-type');
+    
+    if (!contentType || !contentType.includes('application/json')) {
+      // If not JSON, try to get text and create a generic response
+      const text = await response.text();
+      if (text) {
+        try {
+          return JSON.parse(text);
+        } catch {
+          // If parsing fails, return a generic response
+          return { 
+            success: response.status >= 200 && response.status < 300,
+            message: text || 'Request completed'
+          };
+        }
+      } else {
+        // Empty response
+        return { 
+          success: response.status >= 200 && response.status < 300,
+          message: 'Request completed successfully'
+        };
+      }
+    }
+    
+    // If JSON content type, parse normally
+    return await response.json();
+  } catch (error) {
+    console.error('Error parsing JSON response:', error);
+    // Return a generic error response
+    return {
+      success: false,
+      message: 'Invalid response format from server'
+    };
+  }
+};;

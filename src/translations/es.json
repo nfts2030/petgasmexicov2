@@ -210,6 +210,7 @@
     "alert_error": "Hubo un error al enviar el mensaje",
     "alert_fill_fields": "Por favor completa todos los campos requeridos",
     "alert_accept_privacy": "Debes aceptar la política de privacidad",
+    "message_stored_notice": "Puede haber un retraso en el envío del correo electrónico.",
     "location": "Ubicación de PETGAS México"
   },
   "creditos": {
