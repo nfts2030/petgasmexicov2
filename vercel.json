@@ -17,31 +17,20 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/contact",
-      "dest": "/api/contact.ts",
-      "methods": ["POST", "OPTIONS"]
+      "source": "/api/contact",
+      "destination": "/api/contact.ts"
     },
     {
-      "src": "/api/health",
-      "dest": "/api/health.ts",
-      "methods": ["GET", "OPTIONS"]
+      "source": "/api/health",
+      "destination": "/api/health.ts"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
-      }
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
   "headers": [
     {
       "source": "/(.*)",
@@ -59,6 +48,17 @@
           "value": "1; mode=block"
         }
       ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
-  ]
+  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist"
 }
