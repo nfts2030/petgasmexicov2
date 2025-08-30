@@ -574,12 +574,14 @@ const Header: React.FC = () => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink 
-                  to="/contacto" 
-                  $isActive={location.pathname === '/contacto'}
+                <a 
+                  href="https://petgas.com.mx/contacto/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="nav-link"
                 >
                   {t('header.contact')}
-                </NavLink>
+                </a>
               </NavItem>
               <NavItem>
                 <NavLink 
