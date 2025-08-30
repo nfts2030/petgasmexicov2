@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 const ServicesContainer = styled.section`
   padding: 6rem 2rem;
   background-color: #f9f9f9;
-  
+
   @media (max-width: 768px) {
     padding: 4rem 1.5rem;
   }
@@ -21,7 +21,7 @@ const SectionTitle = styled.h2`
   display: inline-block;
   left: 50%;
   transform: translateX(-50%);
-  
+
   &::after {
     content: '';
     position: absolute;
@@ -32,7 +32,7 @@ const SectionTitle = styled.h2`
     height: 3px;
     background-color: #11914b;
   }
-  
+
   @media (max-width: 768px) {
     font-size: 2rem;
   }
@@ -54,13 +54,13 @@ const ServicesGrid = styled(motion.div).attrs({
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
+        delayChildren: 0.3,
+      },
+    },
   },
-  initial: "hidden",
-  whileInView: "visible",
-  viewport: { once: true }
+  initial: 'hidden',
+  whileInView: 'visible',
+  viewport: { once: true },
 })`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -76,11 +76,11 @@ const ServiceCard = styled(motion.div).attrs({
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.5
-      }
-    }
+        duration: 0.5,
+      },
+    },
   },
-  whileHover: { y: -10 }
+  whileHover: { y: -10 },
 })`
   background: white;
   border-radius: 10px;
@@ -90,7 +90,7 @@ const ServiceCard = styled(motion.div).attrs({
   display: flex;
   flex-direction: column;
   height: 100%;
-  
+
   &:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
@@ -130,7 +130,7 @@ const ServiceIcon = styled.div<ServiceIconProps>`
   box-shadow: none;
   overflow: visible;
   pointer-events: none;
-  
+
   & > * {
     max-width: 100%;
     max-height: 100%;
@@ -139,13 +139,13 @@ const ServiceIcon = styled.div<ServiceIconProps>`
     object-fit: contain;
     object-position: center;
   }
-  
+
   i {
     font-size: 3rem;
     color: #11914b;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -155,17 +155,23 @@ const ServiceIcon = styled.div<ServiceIconProps>`
     border-radius: 50%;
     animation: pulse 2s infinite;
   }
-  
+
   @keyframes pulse {
-    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0; }
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1.3);
+      opacity: 0;
+    }
   }
 `;
 
 const ServiceImage = styled.div.attrs<ServiceImageProps>(({ $image }) => ({
   style: {
-    backgroundImage: $image ? `url(${$image})` : 'none'
-  }
+    backgroundImage: $image ? `url(${$image})` : 'none',
+  },
 }))`
   width: 100%;
   height: 200px;
@@ -174,7 +180,7 @@ const ServiceImage = styled.div.attrs<ServiceImageProps>(({ $image }) => ({
   background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
-  
+
   &::after {
     content: '';
     position: absolute;
@@ -185,7 +191,7 @@ const ServiceImage = styled.div.attrs<ServiceImageProps>(({ $image }) => ({
     background: linear-gradient(135deg, rgba(17, 145, 75, 0.85) 0%, rgba(10, 75, 42, 0.9) 100%);
     transition: all 0.4s ease;
   }
-  
+
   img {
     width: 100%;
     height: 100%;
@@ -193,9 +199,9 @@ const ServiceImage = styled.div.attrs<ServiceImageProps>(({ $image }) => ({
     position: relative;
     z-index: 1;
     transition: transform 0.5s ease;
-    display: ${props => props.$image ? 'block' : 'none'};
+    display: ${(props) => (props.$image ? 'block' : 'none')};
   }
-  
+
   .service-title {
     position: absolute;
     bottom: 20px;
@@ -211,21 +217,21 @@ const ServiceImage = styled.div.attrs<ServiceImageProps>(({ $image }) => ({
     opacity: 0;
     transition: all 0.4s ease;
   }
-  
+
   &:hover {
     .service-title {
       transform: translateY(0);
       opacity: 1;
     }
-    
+
     ${ServiceIcon} {
       transform: translate(-50%, -100%) scale(0.8);
-      
+
       i {
         transform: scale(1.1);
       }
     }
-    
+
     img {
       transform: scale(1.1);
     }
@@ -237,14 +243,14 @@ const ServiceContent = styled.div`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  
+
   h3 {
     font-size: 1.5rem;
     color: #0a4b2a;
     margin-bottom: 1rem;
     position: relative;
     padding-bottom: 0.75rem;
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -255,7 +261,7 @@ const ServiceContent = styled.div`
       background-color: #11914b;
     }
   }
-  
+
   p {
     color: #666;
     margin-bottom: 1.5rem;
@@ -272,32 +278,31 @@ const ServiceLink = styled.a`
   text-decoration: none;
   margin-top: auto;
   transition: all 0.3s ease;
-  
+
   i {
     margin-left: 0.5rem;
     transition: transform 0.3s ease;
   }
-  
+
   &:hover {
     color: #0a4b2a;
-    
+
     i {
       transform: translateX(5px);
     }
   }
 `;
 
-
-
 const services: Service[] = [
   {
     id: 1,
     title: 'Transformación de Plásticos por Pirolisis No Catalitica',
-    description: 'Aprovechamos las cadenas de carbono que contiene el plástico para gasificarlas y condensarlas en combustibles limpios.',
+    description:
+      'Aprovechamos las cadenas de carbono que contiene el plástico para gasificarlas y condensarlas en combustibles limpios.',
     icon: '',
     customIcon: null,
-    image: '/services/transformacion.jpg'
-  }
+    image: '/services/transformacion.jpg',
+  },
 ];
 
 const ServicesSection: React.FC = () => {
@@ -307,15 +312,15 @@ const ServicesSection: React.FC = () => {
       <SectionSubtitle>
         Soluciones integrales para la gestión y transformación de residuos plásticos
       </SectionSubtitle>
-      
+
       <ServicesGrid>
         {services.map((service) => (
           <ServiceCard key={service.id}>
             <ServiceImage $image={service.image} key={service.id}>
               {service.image && (
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
+                <img
+                  src={service.image}
+                  alt={service.title}
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
@@ -334,20 +339,26 @@ const ServicesSection: React.FC = () => {
                   typeof service.customIcon === 'string' ? (
                     <img src={service.customIcon} alt={service.title} />
                   ) : (
-                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <service.customIcon />
-                  </div>
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <service.customIcon />
+                    </div>
                   )
                 ) : null}
               </ServiceIcon>
-              <div className="service-title">
-                {service.title}
-              </div>
+              <div className="service-title">{service.title}</div>
             </ServiceImage>
             <ServiceContent>
               <h3>{service.title}</h3>
               <p>{service.description}</p>
-              <ServiceLink href="/contacto" as={Link} to="/contacto">
+              <ServiceLink href="https://petgas.com.mx/contacto/">
                 Saber más <i className="fas fa-arrow-right"></i>
               </ServiceLink>
             </ServiceContent>

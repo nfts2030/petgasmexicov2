@@ -46,17 +46,17 @@ const HeroSection = styled.section`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  
+
   /* Ajustes para iOS */
   @supports (-webkit-touch-callout: none) {
     -webkit-overflow-scrolling: touch;
   }
-  
+
   /* Ajustes para dispositivos muy pequeños */
   @media (max-width: 360px) {
     padding: 10px 0;
   }
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -64,13 +64,11 @@ const HeroSection = styled.section`
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
+    background:
       radial-gradient(circle at 20% 30%, rgba(124, 218, 36, 0.1) 0%, transparent 25%),
       radial-gradient(circle at 80% 70%, rgba(10, 75, 42, 0.2) 0%, transparent 25%);
     z-index: 1;
   }
-  
-
 `;
 
 const HeroContent = styled.div`
@@ -83,11 +81,11 @@ const HeroContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+
   @media (max-width: 768px) {
     padding: 10px 15px;
   }
-  
+
   /* Asegurar que el contenido no se desborde en iOS */
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
@@ -103,12 +101,12 @@ const HeroTitle = styled.h1`
   z-index: 2;
   padding: 0 15px;
   color: #0a4b2a; /* Verde Petgas */
-  
+
   @media (max-width: 768px) {
     font-size: 1.8rem;
     margin-bottom: 0.3rem;
   }
-  
+
   @media (max-width: 480px) {
     font-size: 1.6rem;
   }
@@ -127,14 +125,14 @@ const HeroSubtitle = styled.p`
   border-radius: 4px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-  
+
   @media (max-width: 768px) {
     font-size: 0.95rem;
     margin: 0.5rem auto;
     padding: 8px 12px;
     line-height: 1.4;
   }
-  
+
   @media (max-width: 480px) {
     font-size: 0.9rem;
     padding: 6px 10px;
@@ -153,7 +151,7 @@ const TeamGrid = styled.div`
   gap: 2.5rem;
   margin: 3rem 0;
   padding: 0 20px;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -168,15 +166,15 @@ const TeamMember = styled.div<{ $isVisible: boolean; $delay: number; $department
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  opacity: ${({ $isVisible }) => $isVisible ? 1 : 0};
-  transform: ${({ $isVisible }) => $isVisible ? 'translateY(0)' : 'translateY(30px)'};
+  opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
+  transform: ${({ $isVisible }) => ($isVisible ? 'translateY(0)' : 'translateY(30px)')};
   transition: all 0.6s ease-out ${({ $delay }) => $delay}s;
-  
+
   &:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
   }
-  
+
   @media (max-width: 768px) {
     max-width: 350px;
     margin: 0 auto 30px;
@@ -194,7 +192,7 @@ const MemberImage = styled.div<{ $imageUrl?: string }>`
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
-  
+
   /* Efecto de borde brillante */
   &::after {
     content: '';
@@ -211,7 +209,7 @@ const MemberImage = styled.div<{ $imageUrl?: string }>`
     z-index: 1;
     animation: borderGlow 3s ease infinite;
   }
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -222,9 +220,7 @@ const MemberImage = styled.div<{ $imageUrl?: string }>`
     background: transparent;
     z-index: 1;
   }
-  
 
-  
   .logo-spinner-container {
     position: absolute;
     z-index: 1; /* Detrás de la foto */
@@ -239,7 +235,7 @@ const MemberImage = styled.div<{ $imageUrl?: string }>`
     align-items: center;
     justify-content: center;
     animation: pulse 2s ease-in-out infinite;
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -253,7 +249,7 @@ const MemberImage = styled.div<{ $imageUrl?: string }>`
       border-right-color: #0a4b2a;
       animation: spin 3s linear infinite;
     }
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -268,29 +264,49 @@ const MemberImage = styled.div<{ $imageUrl?: string }>`
       animation: spinReverse 2.5s linear infinite;
     }
   }
-  
+
   @keyframes borderGlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
-  
+
   @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
-  
+
   @keyframes spinReverse {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(-360deg); }
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
   }
-  
+
   @keyframes pulse {
-    0% { transform: scale(1.15); }
-    50% { transform: scale(1.25); }
-    100% { transform: scale(1.15); }
+    0% {
+      transform: scale(1.15);
+    }
+    50% {
+      transform: scale(1.25);
+    }
+    100% {
+      transform: scale(1.15);
+    }
   }
-  
+
   ${TeamMember}:hover & .logo-spinner-container {
     transform: scale(0.85);
   }
@@ -302,7 +318,7 @@ const MemberInfo = styled.div`
   position: relative;
   background: #fff;
   z-index: 2;
-  
+
   h3 {
     margin: 0 0 8px 0;
     color: #0a4b2a;
@@ -310,7 +326,7 @@ const MemberInfo = styled.div`
     font-weight: 700;
     position: relative;
     display: inline-block;
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -323,13 +339,13 @@ const MemberInfo = styled.div`
       transition: width 0.3s ease;
     }
   }
-  
+
   p {
     margin: 0 0 5px 0;
     color: #555;
     font-size: 0.95rem;
     line-height: 1.6;
-    
+
     &.role {
       color: #7cda24;
       font-weight: 600;
@@ -337,9 +353,9 @@ const MemberInfo = styled.div`
       font-size: 0.95rem;
       letter-spacing: 0.5px;
     }
-    
+
     /* Estilos de división movidos al componente DepartmentBadge */
-    
+
     &.bio {
       margin-top: 15px;
       color: #666;
@@ -358,7 +374,7 @@ const SocialLinks = styled.div`
   margin-top: 20px;
   opacity: 1; /* Hacer visible por defecto */
   transform: none; /* Eliminar la animación inicial */
-  
+
   a {
     color: #0a4b2a;
     background: #f0f9f0;
@@ -374,7 +390,7 @@ const SocialLinks = styled.div`
     border: 1px solid #e0f0e0;
     position: relative;
     overflow: hidden;
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -387,38 +403,40 @@ const SocialLinks = styled.div`
       transition: opacity 0.3s ease;
       z-index: 0;
     }
-    
+
     i {
       position: relative;
       z-index: 1;
-      transition: transform 0.3s ease, color 0.3s ease;
+      transition:
+        transform 0.3s ease,
+        color 0.3s ease;
     }
-    
+
     &:hover {
       transform: translateY(-3px) scale(1.1);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      
+
       &::before {
         opacity: 1;
       }
-      
+
       i {
         color: white;
         transform: scale(1.1);
       }
     }
-    
+
     &:active {
       transform: translateY(-1px) scale(0.98);
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
-    
+
     /* Estilo específico para el ícono de correo */
-    &[aria-label*="correo"] {
+    &[aria-label*='correo'] {
       i {
         color: #d44638; /* Rojo de Gmail */
       }
-      
+
       &:hover i {
         color: white;
       }
@@ -455,8 +473,8 @@ const teamMembers: TeamMember[] = [
     division: 'team.division_general_management',
     social: {
       email: 'drg@petgas.com.mx',
-      linkedin: '#'
-    }
+      linkedin: '#',
+    },
   },
   {
     id: 2,
@@ -468,8 +486,8 @@ const teamMembers: TeamMember[] = [
     division: 'team.division_commercial_area',
     social: {
       email: 'jer@petgas.com.mx',
-      linkedin: '#'
-    }
+      linkedin: '#',
+    },
   },
   {
     id: 3,
@@ -481,8 +499,8 @@ const teamMembers: TeamMember[] = [
     division: 'team.division_global_linkage',
     social: {
       email: 'jef@petgas.com.mx',
-      linkedin: '#'
-    }
+      linkedin: '#',
+    },
   },
   {
     id: 4,
@@ -494,8 +512,8 @@ const teamMembers: TeamMember[] = [
     division: 'team.division_legal_area',
     social: {
       email: 'legal@petgas.com.mx',
-      linkedin: '#'
-    }
+      linkedin: '#',
+    },
   },
   {
     id: 5,
@@ -507,8 +525,8 @@ const teamMembers: TeamMember[] = [
     division: 'team.division_global_linkage',
     social: {
       email: 'dey@petgas.com.mx',
-      linkedin: '#'
-    }
+      linkedin: '#',
+    },
   },
   {
     id: 6,
@@ -520,8 +538,8 @@ const teamMembers: TeamMember[] = [
     division: 'team.division_technology',
     social: {
       email: 'fbp@petgas.com.mx',
-      linkedin: '#'
-    }
+      linkedin: '#',
+    },
   },
   {
     id: 7,
@@ -533,8 +551,8 @@ const teamMembers: TeamMember[] = [
     division: 'team.division_research',
     social: {
       email: 'quimica@petgas.com.mx',
-      linkedin: '#'
-    }
+      linkedin: '#',
+    },
   },
   {
     id: 8,
@@ -546,10 +564,10 @@ const teamMembers: TeamMember[] = [
     division: 'team.division_board_member',
     social: {
       email: 'christopher.trapp@petgas.com.mx',
-      linkedin: '#'
-    }
+      linkedin: '#',
+    },
   },
-  
+
   // Divisiones
   {
     id: 9,
@@ -561,8 +579,8 @@ const teamMembers: TeamMember[] = [
     division: 'team.division_petgas_oceans',
     social: {
       email: 'oceans@petgas.com.mx',
-      linkedin: '#'
-    }
+      linkedin: '#',
+    },
   },
   {
     id: 10,
@@ -574,8 +592,8 @@ const teamMembers: TeamMember[] = [
     division: 'team.division_executive_international_partnerships',
     social: {
       email: 'spd@petgas.com.mx',
-      linkedin: '#'
-    }
+      linkedin: '#',
+    },
   },
   {
     id: 11,
@@ -587,24 +605,24 @@ const teamMembers: TeamMember[] = [
     division: 'team.division_web3',
     social: {
       email: 'efs@petgas.com.mx',
-      linkedin: '#'
-    }
-  }
+      linkedin: '#',
+    },
+  },
 ];
 
 const EquipoPage: React.FC = () => {
   const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
-  
+
   useEffect(() => {
     // Scroll to top when the component mounts
     window.scrollTo(0, 0);
-    
+
     // Trigger animation
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, 100);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -613,57 +631,59 @@ const EquipoPage: React.FC = () => {
       <HeroSection>
         <HeroContent>
           <HeroTitle>
-            <AnimatedGradient>
-              {t('team.page_title')}
-            </AnimatedGradient>
+            <AnimatedGradient>{t('team.page_title')}</AnimatedGradient>
           </HeroTitle>
-          <HeroSubtitle>
-            {t('team.page_subtitle')}
-          </HeroSubtitle>
+          <HeroSubtitle>{t('team.page_subtitle')}</HeroSubtitle>
         </HeroContent>
       </HeroSection>
-      
+
       <TeamContainer>
         <DepartmentTitle department="Dirección General">
           {t('team.management_team')}
         </DepartmentTitle>
         <TeamGrid>
           {teamMembers.map((member, index) => (
-            <TeamMember 
+            <TeamMember
               key={member.id}
               $isVisible={isVisible}
               $delay={index * 0.1}
               $departmentColor={getDepartmentColor(member.division)}
               className="team-member"
             >
-              <MemberImage 
-                className="member-image"
-                $imageUrl={member.image}
-              >
+              <MemberImage className="member-image" $imageUrl={member.image}>
                 <div className="logo-spinner-container">
-                  <LogoSpinner text={member.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()} />
+                  <LogoSpinner
+                    text={member.name
+                      .split(' ')
+                      .map((n) => n[0])
+                      .join('')
+                      .substring(0, 2)
+                      .toUpperCase()}
+                  />
                 </div>
-                <div style={{
-                  position: 'absolute',
-                  top: '20px',
-                  left: '20px',
-                  right: '20px',
-                  bottom: '20px',
-                  borderRadius: '50%',
-                  overflow: 'hidden',
-                  zIndex: 3,
-                  border: 'none',
-                  background: 'transparent'
-                }}>
-                  <img 
-                    src={member.image} 
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '20px',
+                    left: '20px',
+                    right: '20px',
+                    bottom: '20px',
+                    borderRadius: '50%',
+                    overflow: 'hidden',
+                    zIndex: 3,
+                    border: 'none',
+                    background: 'transparent',
+                  }}
+                >
+                  <img
+                    src={member.image}
                     alt={member.name}
                     style={{
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
                       transition: 'transform 0.3s ease',
-                      transform: 'scale(1.05)'
+                      transform: 'scale(1.05)',
                     }}
                     onMouseOver={(e) => {
                       e.currentTarget.style.transform = 'scale(1.1)';
@@ -682,31 +702,31 @@ const EquipoPage: React.FC = () => {
                   {t(member.division)}
                 </DepartmentBadge>
                 <SocialLinks className="social-links">
-                  <a 
-                    href={`mailto:${member.social.email}`} 
-                    aria-label={`${t('team.social_send_email')} ${member.name}`} 
+                  <a
+                    href={`mailto:${member.social.email}`}
+                    aria-label={`${t('team.social_send_email')} ${member.name}`}
                     title={`${t('team.social_send_email')} ${member.social.email}`}
                     className="email-link"
                   >
                     <i className="fas fa-envelope"></i>
                   </a>
                   {member.social.linkedin && (
-                    <a 
-                      href={member.social.linkedin} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      aria-label={`${t('team.social_linkedin_profile')} ${member.name.split(' ')[0]}`} 
+                    <a
+                      href={member.social.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${t('team.social_linkedin_profile')} ${member.name.split(' ')[0]}`}
                       title={t('team.social_linkedin_view')}
                     >
                       <i className="fab fa-linkedin-in"></i>
                     </a>
                   )}
                   {member.social.twitter && (
-                    <a 
-                      href={member.social.twitter} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      aria-label={`${t('team.social_twitter_profile')} ${member.name.split(' ')[0]}`} 
+                    <a
+                      href={member.social.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${t('team.social_twitter_profile')} ${member.name.split(' ')[0]}`}
                       title={t('team.social_twitter_view')}
                     >
                       <i className="fab fa-twitter"></i>
@@ -717,47 +737,51 @@ const EquipoPage: React.FC = () => {
             </TeamMember>
           ))}
         </TeamGrid>
-        
-        <DepartmentTitle department="Área Comercial">
-          {t('team.commercial_team')}
-        </DepartmentTitle>
+
+        <DepartmentTitle department="Área Comercial">{t('team.commercial_team')}</DepartmentTitle>
         <TeamGrid>
           {teamMembers.slice(8).map((member, index) => (
-            <TeamMember 
+            <TeamMember
               key={member.id}
               $isVisible={isVisible}
               $delay={(index + teamMembers.length - 8) * 0.1}
               $departmentColor={getDepartmentColor(member.division)}
               className="team-member"
             >
-              <MemberImage 
-                className="member-image"
-                $imageUrl={member.image}
-              >
+              <MemberImage className="member-image" $imageUrl={member.image}>
                 <div className="logo-spinner-container">
-                  <LogoSpinner text={member.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()} />
+                  <LogoSpinner
+                    text={member.name
+                      .split(' ')
+                      .map((n) => n[0])
+                      .join('')
+                      .substring(0, 2)
+                      .toUpperCase()}
+                  />
                 </div>
-                <div style={{
-                  position: 'absolute',
-                  top: '20px',
-                  left: '20px',
-                  right: '20px',
-                  bottom: '20px',
-                  borderRadius: '50%',
-                  overflow: 'hidden',
-                  zIndex: 3,
-                  border: 'none',
-                  background: 'transparent'
-                }}>
-                  <img 
-                    src={member.image} 
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '20px',
+                    left: '20px',
+                    right: '20px',
+                    bottom: '20px',
+                    borderRadius: '50%',
+                    overflow: 'hidden',
+                    zIndex: 3,
+                    border: 'none',
+                    background: 'transparent',
+                  }}
+                >
+                  <img
+                    src={member.image}
                     alt={member.name}
                     style={{
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
                       transition: 'transform 0.3s ease',
-                      transform: 'scale(1.05)'
+                      transform: 'scale(1.05)',
                     }}
                     onMouseOver={(e) => {
                       e.currentTarget.style.transform = 'scale(1.1)';
@@ -776,20 +800,20 @@ const EquipoPage: React.FC = () => {
                   {t(member.division)}
                 </DepartmentBadge>
                 <SocialLinks className="social-links">
-                  <a 
-                    href={`mailto:${member.social.email}`} 
-                    aria-label={`${t('team.social_send_email')} ${member.name}`} 
+                  <a
+                    href={`mailto:${member.social.email}`}
+                    aria-label={`${t('team.social_send_email')} ${member.name}`}
                     title={`${t('team.social_send_email')} ${member.social.email}`}
                     className="email-link"
                   >
                     <i className="fas fa-envelope"></i>
                   </a>
                   {member.social.linkedin && (
-                    <a 
-                      href={member.social.linkedin} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      aria-label={`${t('team.social_linkedin_profile')} ${member.name.split(' ')[0]}`} 
+                    <a
+                      href={member.social.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${t('team.social_linkedin_profile')} ${member.name.split(' ')[0]}`}
                       title={t('team.social_linkedin_view')}
                     >
                       <i className="fab fa-linkedin-in"></i>
@@ -801,14 +825,12 @@ const EquipoPage: React.FC = () => {
           ))}
         </TeamGrid>
       </TeamContainer>
-      
+
       <div style={{ marginTop: '3rem', textAlign: 'center' }}>
         <h2 style={{ color: '#0a4b2a', marginBottom: '1rem' }}>{t('team.join_team_title')}</h2>
-        <p style={{ marginBottom: '1.5rem' }}>
-          {t('team.join_team_description')}
-        </p>
-        <a 
-          href="/contacto" 
+        <p style={{ marginBottom: '1.5rem' }}>{t('team.join_team_description')}</p>
+        <a
+          href="https://petgas.com.mx/contacto/"
           style={{
             display: 'inline-block',
             padding: '0.8rem 2rem',
@@ -817,7 +839,7 @@ const EquipoPage: React.FC = () => {
             textDecoration: 'none',
             borderRadius: '4px',
             fontWeight: 'bold',
-            transition: 'background-color 0.3s ease'
+            transition: 'background-color 0.3s ease',
           }}
           onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#0d6a3a')}
           onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#0a4b2a')}
