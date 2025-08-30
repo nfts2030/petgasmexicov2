@@ -1,6 +1,5 @@
 // Vercel API endpoint for testing email configuration
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import * as nodemailer from 'nodemailer';
 
 // Helper function to ensure JSON response
 const sendJsonResponse = (response: VercelResponse, status: number, data: any) => {
@@ -35,6 +34,9 @@ export default async function handler(request: VercelRequest, response: VercelRe
 
     if (request.method === 'POST') {
       try {
+        // Dynamically import nodemailer for Vercel compatibility
+        const nodemailer = await import('nodemailer');
+
         // Test the current email configuration
         const transporter = nodemailer.createTransport({
           host: 'mail.petgas.com.mx',
