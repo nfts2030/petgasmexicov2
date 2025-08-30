@@ -1,6 +1,6 @@
 // Vercel API endpoint for contact form
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import nodemailer from 'nodemailer';
+import * as nodemailer from 'nodemailer';
 
 // Helper function to ensure JSON response
 const sendJsonResponse = (response: VercelResponse, status: number, data: any) => {
@@ -108,7 +108,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       // Primary method - original SMTP
       async () => {
         console.log(`[${requestId}] Trying primary SMTP method (port 465)...`);
-        const transporter = nodemailer.createTransporter({
+        const transporter = nodemailer.createTransport({
           host: 'mail.petgas.com.mx',
           port: 465,
           secure: true,
@@ -170,7 +170,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       // Fallback method 1 - Alternative port
       async () => {
         console.log(`[${requestId}] Trying fallback SMTP method (port 587)...`);
-        const transporter = nodemailer.createTransporter({
+        const transporter = nodemailer.createTransport({
           host: 'mail.petgas.com.mx',
           port: 587,
           secure: false,
