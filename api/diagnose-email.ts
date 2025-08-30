@@ -188,20 +188,30 @@ export default async function handler(request: VercelRequest, response: VercelRe
 
     diagnostics.environment_details = envVars;
 
-    // Test 5: Network and DNS test (simplified)
+    // Test 5: Network connectivity test (simplified)
     try {
-      const dns = await import('dns');
-      const mailHost = await dns.promises.resolve('mail.petgas.com.mx');
+      // Simple connectivity test using fetch with timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+      // Try to connect to the mail server on HTTP (just to test connectivity)
+      const response = await fetch('https://mail.petgas.com.mx', {
+        method: 'HEAD',
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
       diagnostics.tests.push({
-        name: 'DNS Resolution',
+        name: 'Network Connectivity',
         status: 'SUCCESS',
-        resolved_ips: mailHost,
+        message: `Server accessible (HTTP ${response.status})`,
       });
     } catch (error: any) {
       diagnostics.tests.push({
-        name: 'DNS Resolution',
+        name: 'Network Connectivity',
         status: 'FAILED',
-        error: error.message,
+        error: error.name === 'AbortError' ? 'Connection timeout' : error.message,
       });
     }
 
