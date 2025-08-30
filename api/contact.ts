@@ -13,35 +13,44 @@ const mockSendEmail = async (mailOptions: any) => {
   console.log('MOCK EMAIL SEND:', {
     to: mailOptions.to,
     subject: mailOptions.subject,
-    from: mailOptions.from
+    from: mailOptions.from,
   });
-  
+
   // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   // Return success (this would be replaced with actual email sending)
   return { messageId: 'mock-message-id-' + Date.now() };
 };
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
+  const requestId = `req-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
   try {
+    console.log(`[${requestId}] Contact form request started`);
+
     // Set CORS headers for all responses
     response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    response.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    response.setHeader(
+      'Access-Control-Allow-Headers',
+      'Content-Type, Authorization, X-Requested-With'
+    );
     response.setHeader('Access-Control-Max-Age', '86400'); // 24 hours
-    
+
     // Handle preflight requests
     if (request.method === 'OPTIONS') {
+      console.log(`[${requestId}] Handling preflight request`);
       response.status(200).end();
       return;
     }
-    
+
     // Only allow POST requests
     if (request.method !== 'POST') {
-      return sendJsonResponse(response, 405, { 
-        success: false, 
-        message: 'Método no permitido. Solo se permiten solicitudes POST.' 
+      console.log(`[${requestId}] Invalid method: ${request.method}`);
+      return sendJsonResponse(response, 405, {
+        success: false,
+        message: 'Método no permitido. Solo se permiten solicitudes POST.',
       });
     }
 
@@ -53,7 +62,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       } catch (e) {
         return sendJsonResponse(response, 400, {
           success: false,
-          message: 'Formato de datos inválido. Se esperaba JSON.'
+          message: 'Formato de datos inválido. Se esperaba JSON.',
         });
       }
     } else {
@@ -64,36 +73,41 @@ export default async function handler(request: VercelRequest, response: VercelRe
 
     // Validate required fields
     if (!name || !email || !subject || !message) {
-      return sendJsonResponse(response, 400, { 
-        success: false, 
-        message: 'Por favor, completa todos los campos requeridos.' 
+      return sendJsonResponse(response, 400, {
+        success: false,
+        message: 'Por favor, completa todos los campos requeridos.',
       });
     }
 
     if (!privacy) {
-      return sendJsonResponse(response, 400, { 
-        success: false, 
-        message: 'Debes aceptar la política de privacidad.' 
+      return sendJsonResponse(response, 400, {
+        success: false,
+        message: 'Debes aceptar la política de privacidad.',
       });
     }
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return sendJsonResponse(response, 400, { 
-        success: false, 
-        message: 'Por favor, ingresa un correo electrónico válido.' 
+      return sendJsonResponse(response, 400, {
+        success: false,
+        message: 'Por favor, ingresa un correo electrónico válido.',
       });
     }
 
-    // Log the incoming request for debugging (remove in production)
-    console.log('Contact form submission:', { name, email, phone, subject });
+    // Log the incoming request for debugging
+    console.log(`[${requestId}] Contact form submission:`, {
+      name,
+      email: email.replace(/(.{2}).*@/, '$1***@'), // Partially mask email for privacy
+      phone: phone ? phone.replace(/(\d{3}).*(\d{4})/, '$1***$2') : 'Not provided',
+      subject,
+    });
 
     // Try to send email with multiple fallback options
     const emailMethods = [
       // Primary method - original SMTP
       async () => {
-        console.log('Trying primary SMTP method...');
+        console.log(`[${requestId}] Trying primary SMTP method (port 465)...`);
         const transporter = nodemailer.createTransporter({
           host: 'mail.petgas.com.mx',
           port: 465,
@@ -103,15 +117,18 @@ export default async function handler(request: VercelRequest, response: VercelRe
             pass: 'NyeaR[QcW;tP',
           },
           tls: {
-            rejectUnauthorized: false
+            rejectUnauthorized: false,
           },
-          debug: true,
-          logger: true
+          connectionTimeout: 10000,
+          greetingTimeout: 5000,
+          socketTimeout: 10000,
         });
 
         // Verify connection
+        console.log(`[${requestId}] Verifying SMTP connection...`);
         await transporter.verify();
-        
+        console.log(`[${requestId}] SMTP verification successful`);
+
         const mailOptions = {
           from: '"Formulario de Contacto" <contacto@petgas.com.mx>',
           to: 'contacto@petgas.com.mx',
@@ -124,32 +141,35 @@ export default async function handler(request: VercelRequest, response: VercelRe
             <p><strong>Teléfono:</strong> ${phone || 'No proporcionado'}</p>
             <p><strong>Asunto:</strong> ${subject}</p>
             <p><strong>Mensaje:</strong></p>
-            <p>${message}</p>
+            <p>${message.replace(/\n/g, '<br>')}</p>
             <hr>
-            <p><small>Enviado desde el formulario de contacto de PETGAS México</small></p>
+            <p><small>Enviado desde el formulario de contacto de PETGAS México - ${new Date().toLocaleString()}</small></p>
           `,
           text: `
             Nuevo mensaje de contacto
-            
+
             Nombre: ${name}
             Email: ${email}
             Teléfono: ${phone || 'No proporcionado'}
             Asunto: ${subject}
-            
+
             Mensaje:
             ${message}
-            
+
             ---
-            Enviado desde el formulario de contacto de PETGAS México
-          `
+            Enviado desde el formulario de contacto de PETGAS México - ${new Date().toLocaleString()}
+          `,
         };
 
-        return await transporter.sendMail(mailOptions);
+        console.log(`[${requestId}] Sending email via primary SMTP...`);
+        const result = await transporter.sendMail(mailOptions);
+        console.log(`[${requestId}] Primary SMTP email sent successfully:`, result.messageId);
+        return result;
       },
-      
+
       // Fallback method 1 - Alternative port
       async () => {
-        console.log('Trying fallback SMTP method (port 587)...');
+        console.log(`[${requestId}] Trying fallback SMTP method (port 587)...`);
         const transporter = nodemailer.createTransporter({
           host: 'mail.petgas.com.mx',
           port: 587,
@@ -159,12 +179,17 @@ export default async function handler(request: VercelRequest, response: VercelRe
             pass: 'NyeaR[QcW;tP',
           },
           tls: {
-            rejectUnauthorized: false
-          }
+            rejectUnauthorized: false,
+          },
+          connectionTimeout: 10000,
+          greetingTimeout: 5000,
+          socketTimeout: 10000,
         });
 
+        console.log(`[${requestId}] Verifying fallback SMTP connection...`);
         await transporter.verify();
-        
+        console.log(`[${requestId}] Fallback SMTP verification successful`);
+
         const mailOptions = {
           from: '"Formulario de Contacto" <contacto@petgas.com.mx>',
           to: 'contacto@petgas.com.mx',
@@ -177,92 +202,90 @@ export default async function handler(request: VercelRequest, response: VercelRe
             <p><strong>Teléfono:</strong> ${phone || 'No proporcionado'}</p>
             <p><strong>Asunto:</strong> ${subject}</p>
             <p><strong>Mensaje:</strong></p>
-            <p>${message}</p>
+            <p>${message.replace(/\n/g, '<br>')}</p>
             <hr>
-            <p><small>Enviado desde el formulario de contacto de PETGAS México</small></p>
+            <p><small>Enviado desde el formulario de contacto de PETGAS México - ${new Date().toLocaleString()}</small></p>
           `,
           text: `
             Nuevo mensaje de contacto
-            
+
             Nombre: ${name}
             Email: ${email}
             Teléfono: ${phone || 'No proporcionado'}
             Asunto: ${subject}
-            
+
             Mensaje:
             ${message}
-            
+
             ---
-            Enviado desde el formulario de contacto de PETGAS México
-          `
+            Enviado desde el formulario de contacto de PETGAS México - ${new Date().toLocaleString()}
+          `,
         };
 
-        return await transporter.sendMail(mailOptions);
+        console.log(`[${requestId}] Sending email via fallback SMTP...`);
+        const result = await transporter.sendMail(mailOptions);
+        console.log(`[${requestId}] Fallback SMTP email sent successfully:`, result.messageId);
+        return result;
       },
-      
-      // Fallback method 2 - Mock email (for testing)
-      async () => {
-        console.log('Using mock email method...');
-        // In production, you might want to store this in a database or file
-        // For now, we'll just log it and pretend it was sent
-        const mockData = {
-          name,
-          email,
-          phone,
-          subject,
-          message,
-          privacy,
-          timestamp: new Date().toISOString(),
-          userAgent: request.headers['user-agent'] || 'Unknown'
-        };
-        
-        console.log('Contact form data (mock):', mockData);
-        
-        // Save to a file or database in a real implementation
-        return await mockSendEmail({
-          to: 'contacto@petgas.com.mx',
-          from: '"Formulario de Contacto" <contacto@petgas.com.mx>',
-          subject: `Nuevo mensaje de contacto: ${subject}`,
-          html: `<p>Nuevo mensaje de contacto (mock)</p>`
-        });
-      }
     ];
 
     // Try each method in sequence
     let lastError: any = null;
+    let emailSent = false;
+
     for (let i = 0; i < emailMethods.length; i++) {
       try {
-        console.log(`Attempting email method ${i + 1}...`);
+        console.log(`[${requestId}] Attempting email method ${i + 1}...`);
         const result = await emailMethods[i]();
-        console.log(`Email method ${i + 1} succeeded`);
-        
-        return sendJsonResponse(response, 200, { 
-          success: true, 
+        console.log(
+          `[${requestId}] Email method ${i + 1} succeeded with messageId:`,
+          result.messageId
+        );
+
+        emailSent = true;
+        return sendJsonResponse(response, 200, {
+          success: true,
+          sent: true,
           message: '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.',
-          method: `Method ${i + 1}`,
-          debug: process.env.NODE_ENV === 'development' ? { result } : undefined
+          method: `SMTP Method ${i + 1}`,
+          messageId: result.messageId,
+          debug:
+            process.env.NODE_ENV === 'development'
+              ? {
+                  result: { messageId: result.messageId, response: result.response },
+                }
+              : undefined,
         });
       } catch (error: any) {
-        console.error(`Email method ${i + 1} failed:`, error.message);
+        console.error(`[${requestId}] Email method ${i + 1} failed:`, {
+          message: error.message,
+          code: error.code,
+          command: error.command,
+          stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
+        });
         lastError = error;
-        
+
         // If this is the last method, continue to error handling
         if (i === emailMethods.length - 1) {
           break;
         }
-        
+
         // Wait a bit before trying the next method
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log(`[${requestId}] Waiting before trying next method...`);
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       }
     }
 
     // If we get here, all methods failed
-    console.error('All email methods failed:', lastError);
-    
-    // Even if email fails, we can still acknowledge the submission
-    // In a real implementation, you might want to store this in a database
-    // for manual follow-up
+    console.error(`[${requestId}] All email methods failed. Last error:`, {
+      message: lastError?.message,
+      code: lastError?.code,
+      command: lastError?.command,
+    });
+
+    // Store form data for manual follow-up
     const formData = {
+      requestId,
       name,
       email,
       phone,
@@ -270,39 +293,62 @@ export default async function handler(request: VercelRequest, response: VercelRe
       message,
       privacy,
       timestamp: new Date().toISOString(),
-      error: lastError ? {
-        message: lastError.message,
-        code: lastError.code,
-        command: lastError.command
-      } : null
+      userAgent: request.headers['user-agent'] || 'Unknown',
+      ip: request.headers['x-forwarded-for'] || request.socket?.remoteAddress || 'Unknown',
+      error: lastError
+        ? {
+            message: lastError.message,
+            code: lastError.code,
+            command: lastError.command,
+          }
+        : null,
     };
-    
-    console.log('Form data stored for manual follow-up:', formData);
-    
-    // Return a success response but indicate there might be a delay
-    return sendJsonResponse(response, 200, { 
-      success: true, 
-      message: '¡Mensaje recibido! Nos pondremos en contacto contigo pronto. (Nota: Puede haber un retraso en el envío del correo electrónico)',
-      stored: true,
-      debug: process.env.NODE_ENV === 'development' ? { 
-        formData,
-        error: lastError?.message 
-      } : undefined
+
+    console.log(`[${requestId}] Form data stored for manual follow-up:`, {
+      ...formData,
+      email: formData.email.replace(/(.{2}).*@/, '$1***@'), // Mask email in logs
     });
-    
-  } catch (error: any) {
-    console.error('Unexpected error in contact form handler:', error);
-    
-    // Even in case of unexpected errors, acknowledge the form submission
-    // and store the data for manual follow-up
-    return sendJsonResponse(response, 200, { 
-      success: true, 
-      message: '¡Mensaje recibido! Nos pondremos en contacto contigo pronto. (Nota: Estamos experimentando problemas técnicos temporales)',
+
+    // Return an error response indicating the email failed
+    return sendJsonResponse(response, 500, {
+      success: false,
+      sent: false,
       stored: true,
-      debug: process.env.NODE_ENV === 'development' ? {
-        error: error instanceof Error ? error.message : 'Unknown error',
-        stack: error instanceof Error ? error.stack : undefined
-      } : undefined
+      message:
+        'Lo sentimos, hubo un problema técnico al enviar tu mensaje. Hemos guardado tu información y nos pondremos en contacto contigo pronto. Si es urgente, puedes contactarnos directamente por teléfono.',
+      requestId,
+      debug:
+        process.env.NODE_ENV === 'development'
+          ? {
+              lastError: {
+                message: lastError?.message,
+                code: lastError?.code,
+                command: lastError?.command,
+              },
+            }
+          : undefined,
+    });
+  } catch (error: any) {
+    console.error(`[${requestId}] Unexpected error in contact form handler:`, {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
+    });
+
+    // Return proper error response for unexpected errors
+    return sendJsonResponse(response, 500, {
+      success: false,
+      sent: false,
+      stored: false,
+      message:
+        'Lo sentimos, ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde o contáctanos directamente.',
+      requestId,
+      debug:
+        process.env.NODE_ENV === 'development'
+          ? {
+              error: error instanceof Error ? error.message : 'Unknown error',
+              stack: error instanceof Error ? error.stack : undefined,
+            }
+          : undefined,
     });
   }
 }

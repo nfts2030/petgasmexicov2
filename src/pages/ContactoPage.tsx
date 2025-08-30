@@ -21,14 +21,14 @@ const Form = styled.form`
 
 const FormGroup = styled.div`
   margin-bottom: 1.5rem;
-  
+
   label {
     display: block;
     margin-bottom: 0.5rem;
     color: #333;
     font-weight: 500;
   }
-  
+
   input,
   textarea,
   select {
@@ -38,14 +38,14 @@ const FormGroup = styled.div`
     border-radius: 4px;
     font-size: 1rem;
     transition: border-color 0.3s ease;
-    
+
     &:focus {
       outline: none;
       border-color: #0a4b2a;
       box-shadow: 0 0 0 2px rgba(10, 75, 42, 0.2);
     }
   }
-  
+
   textarea {
     min-height: 150px;
     resize: vertical;
@@ -63,11 +63,11 @@ const SubmitButton = styled.button`
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: 100%;
-  
+
   &:hover {
     background-color: #0d6a3a;
   }
-  
+
   &:disabled {
     background-color: #ccc;
     cursor: not-allowed;
@@ -88,14 +88,13 @@ const Alert = styled.div<{ $show: boolean; type: 'success' | 'error' | 'warning'
   border-radius: 4px;
   color: white;
   font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 9999;
   max-width: 400px;
   animation: ${fadeIn} 0.3s ease-out;
-  background-color: ${props => 
-    props.type === 'success' ? '#4CAF50' : 
-    props.type === 'warning' ? '#FF9800' : '#F44336'};
-  display: ${props => props.$show ? 'block' : 'none'};
+  background-color: ${(props) =>
+    props.type === 'success' ? '#4CAF50' : props.type === 'warning' ? '#FF9800' : '#F44336'};
+  display: ${(props) => (props.$show ? 'block' : 'none')};
   transition: opacity 0.3s ease;
   cursor: pointer;
 `;
@@ -126,108 +125,135 @@ const ContactoPage: FC = () => {
     phone: '',
     subject: '',
     message: '',
-    privacy: false
+    privacy: false,
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>({ 
-    show: false, 
-    success: false, 
-    message: '' 
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>({
+    show: false,
+    success: false,
+    message: '',
   });
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value, type } = e.target as HTMLInputElement;
     const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
-    
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    } as FormData));
+
+    setFormData(
+      (prev) =>
+        ({
+          ...prev,
+          [name]: type === 'checkbox' ? checked : value,
+        }) as FormData
+    );
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validar el formulario
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       showAlert(t('contact.alert_fill_fields'), false);
       return;
     }
-    
+
     if (!formData.privacy) {
       showAlert(t('contact.alert_accept_privacy'), false);
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       const result = await submitContactForm(formData);
-      
-      // Mostrar mensaje de éxito o advertencia
-      if (result.sent) {
-        // Email enviado exitosamente
-        showAlert(result.message || '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.', true);
-      } else if (result.stored) {
-        // Email no se pudo enviar pero se guardó
-        showAlert(
-          result.message || 
-          '¡Mensaje recibido! Sin embargo, hubo un problema al enviar la notificación. Hemos guardado tu mensaje y nos pondremos en contacto contigo pronto.',
-          true,
-          true // warning flag
-        );
+
+      // Mostrar mensaje basado en la respuesta del servidor
+      if (result.success) {
+        if (result.sent) {
+          // Email enviado exitosamente
+          showAlert(
+            result.message ||
+              '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.',
+            true
+          );
+        } else if (result.stored) {
+          // Email no se pudo enviar pero se guardó
+          showAlert(
+            result.message ||
+              '¡Mensaje recibido! Sin embargo, hubo un problema al enviar la notificación por correo. Hemos guardado tu mensaje y nos pondremos en contacto contigo pronto.',
+            true,
+            true // warning flag
+          );
+        } else {
+          // Caso general de éxito
+          showAlert(
+            result.message || '¡Mensaje recibido! Nos pondremos en contacto contigo pronto.',
+            true
+          );
+        }
+
+        // Limpiar el formulario solo si fue exitoso
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: '',
+          privacy: false,
+        });
       } else {
-        showAlert(result.message || '¡Mensaje recibido!', true);
+        // El servidor retornó success: false
+        showAlert(
+          result.message ||
+            'Hubo un problema al procesar tu mensaje. Por favor, inténtalo de nuevo.',
+          false
+        );
       }
-      
-      // Limpiar el formulario
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: '',
-        privacy: false
-      });
     } catch (error) {
+      // Error de red o del cliente
       const errorMessage = error instanceof Error ? error.message : t('contact.alert_error');
       showAlert(errorMessage, false);
     } finally {
       setIsSubmitting(false);
     }
   };
-  
+
   const showAlert = (message: string, success: boolean, warning: boolean = false) => {
     setSubmitStatus({
       show: true,
       success,
       warning,
-      message
+      message,
     });
-    
+
     // Ocultar la alerta después de 5 segundos
     setTimeout(() => {
-      setSubmitStatus(prev => ({ ...prev, show: false }));
+      setSubmitStatus((prev) => ({ ...prev, show: false }));
     }, 5000);
   };
-  
+
   return (
     <PageLayout title={t('contact.title')}>
       {/* Alertas */}
-      <Alert 
-        $show={submitStatus.show} 
+      <Alert
+        $show={submitStatus.show}
         type={submitStatus.warning ? 'warning' : submitStatus.success ? 'success' : 'error'}
-        onClick={() => setSubmitStatus(prev => ({ ...prev, show: false }))}
+        onClick={() => setSubmitStatus((prev) => ({ ...prev, show: false }))}
       >
         {submitStatus.message}
       </Alert>
 
       <ContactContainer>
         <Form onSubmit={handleSubmit} id="contactForm">
-          <h3 style={{ marginTop: 0, marginBottom: '1.5rem', color: '#0a4b2a' }}>{t('contact.form_title')}</h3>
-          <p style={{ marginTop: '-1rem', marginBottom: '1.5rem', color: '#555' }}>{t('contact.form_subtitle')}</p>
-          
+          <h3 style={{ marginTop: 0, marginBottom: '1.5rem', color: '#0a4b2a' }}>
+            {t('contact.form_title')}
+          </h3>
+          <p style={{ marginTop: '-1rem', marginBottom: '1.5rem', color: '#555' }}>
+            {t('contact.form_subtitle')}
+          </p>
+
           <FormGroup>
             <label htmlFor="name">{t('contact.full_name')}</label>
             <input
@@ -240,7 +266,7 @@ const ContactoPage: FC = () => {
               disabled={isSubmitting}
             />
           </FormGroup>
-          
+
           <FormGroup>
             <label htmlFor="email">{t('contact.email_address')}</label>
             <input
@@ -253,7 +279,7 @@ const ContactoPage: FC = () => {
               disabled={isSubmitting}
             />
           </FormGroup>
-          
+
           <FormGroup>
             <label htmlFor="phone">{t('contact.phone_number')}</label>
             <input
@@ -265,7 +291,7 @@ const ContactoPage: FC = () => {
               disabled={isSubmitting}
             />
           </FormGroup>
-          
+
           <FormGroup>
             <label htmlFor="subject">{t('contact.subject')}</label>
             <select
@@ -285,7 +311,7 @@ const ContactoPage: FC = () => {
               <option value="otro">{t('contact.other')}</option>
             </select>
           </FormGroup>
-          
+
           <FormGroup>
             <label htmlFor="message">{t('contact.message')}</label>
             <textarea
@@ -298,7 +324,7 @@ const ContactoPage: FC = () => {
               rows={5}
             ></textarea>
           </FormGroup>
-          
+
           <FormGroup style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
             <input
               type="checkbox"
@@ -310,11 +336,15 @@ const ContactoPage: FC = () => {
               disabled={isSubmitting}
               style={{ marginRight: '0.5rem', marginTop: '0.25rem' }}
             />
-            <label htmlFor="privacy" style={{ margin: 0, fontWeight: 'normal', fontSize: '0.9rem' }} dangerouslySetInnerHTML={{ __html: t('contact.privacy_policy') }} />
+            <label
+              htmlFor="privacy"
+              style={{ margin: 0, fontWeight: 'normal', fontSize: '0.9rem' }}
+              dangerouslySetInnerHTML={{ __html: t('contact.privacy_policy') }}
+            />
           </FormGroup>
-          
-          <SubmitButton 
-            type="submit" 
+
+          <SubmitButton
+            type="submit"
             disabled={isSubmitting}
             style={{ backgroundColor: isSubmitting ? '#ccc' : '#0a4b2a' }}
           >
@@ -323,7 +353,9 @@ const ContactoPage: FC = () => {
                 <i className="fas fa-spinner fa-spin" style={{ marginRight: '0.5rem' }}></i>
                 {t('contact.sending')}
               </>
-            ) : t('contact.send_message')}
+            ) : (
+              t('contact.send_message')
+            )}
           </SubmitButton>
         </Form>
       </ContactContainer>
