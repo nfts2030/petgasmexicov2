@@ -17,7 +17,7 @@ const fadeIn = keyframes`
 
 // Styled components
 const HeroSection = styled.section`
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('/img/combustibles.png');
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/combustibles_hero.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -209,6 +209,15 @@ const FuelImage = styled.div`
   overflow: hidden;
   position: relative;
   
+  video, img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
   &::after {
     content: '';
     position: absolute;
@@ -236,7 +245,42 @@ const FuelImage = styled.div`
   }
 `;
 
-// Fuel content styles moved to inline components
+const FuelContent = styled.div`
+  padding: 1.8rem;
+  color: #2d3436;
+  
+  h3 {
+    color: #0a4b2a;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  
+  p {
+    color: #4a6b57;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  
+  .fuel-properties {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    li {
+      color: #2d3436;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: flex-start;
+      line-height: 1.5;
+      
+      svg {
+        margin-top: 0.2rem;
+        flex-shrink: 0;
+      }
+    }
+  }
+`;
 
 const CombustiblesPage: React.FC = () => {
   const { t } = useLanguage();
@@ -389,7 +433,7 @@ const CombustiblesPage: React.FC = () => {
     {
       id: 3,
       name: t('combustibles.heavy_petdiesel_name'),
-      image: '/img/combustibles/avion.png',
+      image: '/combustibles_hero.png',
       description: t('combustibles.heavy_petdiesel_description'),
       properties: [t('combustibles.heavy_petdiesel_prop1'), t('combustibles.heavy_petdiesel_prop2'), t('combustibles.heavy_petdiesel_prop3')]
     },
@@ -403,7 +447,7 @@ const CombustiblesPage: React.FC = () => {
     {
       id: 5,
       name: t('combustibles.petsoleo_name'),
-      image: '/img/combustibles/petdiesel.jpg',
+      image: '/combustibles_hero.png',
       description: t('combustibles.petsoleo_description'),
       properties: [t('combustibles.petsoleo_prop1'), t('combustibles.petsoleo_prop2'), t('combustibles.petsoleo_prop3')]
     },
@@ -482,29 +526,39 @@ const CombustiblesPage: React.FC = () => {
               >
                 <FuelImage>
                 {fuel.video ? (
-                  <video 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      transition: 'transform 0.3s ease-in-out',
-                    }}
-                    onMouseOver={(e) => {
-                      const target = e.target as HTMLVideoElement;
-                      target.style.transform = 'scale(1.05)';
-                    }}
-                    onMouseOut={(e) => {
-                      const target = e.target as HTMLVideoElement;
-                      target.style.transform = 'scale(1)';
-                    }}
-                  >
-                    <source src={fuel.video} type="video/mp4" />
-                    Tu navegador no soporta el elemento de video.
-                  </video>
+                  <div style={{
+                    width: '100%',
+                    height: '100%',
+                    overflow: 'hidden',
+                    position: 'relative'
+                  }}>
+                    <video 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        transition: 'transform 0.3s ease-in-out',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0
+                      }}
+                      onMouseOver={(e) => {
+                        const target = e.target as HTMLVideoElement;
+                        target.style.transform = 'scale(1.05)';
+                      }}
+                      onMouseOut={(e) => {
+                        const target = e.target as HTMLVideoElement;
+                        target.style.transform = 'scale(1)';
+                      }}
+                    >
+                      <source src={fuel.video} type="video/mp4" />
+                      Tu navegador no soporta el elemento de video.
+                    </video>
+                  </div>
                 ) : (
                   <img 
                     src={fuel.image} 
@@ -534,7 +588,7 @@ const CombustiblesPage: React.FC = () => {
                   />
                 )}
               </FuelImage>
-                <div className="fuel-content">
+                <FuelContent>
                   <h3>{fuel.name}</h3>
                   <p>{fuel.description}</p>
                   <ul className="fuel-properties">
@@ -544,7 +598,7 @@ const CombustiblesPage: React.FC = () => {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </FuelContent>
               </FuelCard>
             ))}
           </FuelsGrid>
