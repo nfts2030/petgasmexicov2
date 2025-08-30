@@ -286,14 +286,7 @@ const PruebasEmail: FC = () => {
     }));
   };
 
-  const getStatusColor = (status: 'idle' | 'loading' | 'success' | 'error') => {
-    switch (status) {
-      case 'loading': return '#007bff';
-      case 'success': return '#28a745';
-      case 'error': return '#dc3545';
-      default: return '#6c757d';
-    }
-  };
+  // Status color logic removed as it's not being used
 
   const getStatusText = (status: 'idle' | 'loading' | 'success' | 'error') => {
     switch (status) {
