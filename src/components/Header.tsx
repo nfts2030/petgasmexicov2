@@ -358,6 +358,44 @@ interface NavLinkProps {
   $highlight?: boolean;
 }
 
+const ContactLink = styled.a`
+  color: #fff !important;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #00c853, #00e676);
+  box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1rem;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  text-transform: uppercase;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 200, 83, 0.4);
+    background: linear-gradient(135deg, #00c853, #69f0ae);
+    color: #fff !important;
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(0, 200, 83, 0.3);
+  }
+  
+  @media (max-width: 1200px) {
+    margin: 0.5rem 1rem;
+    width: calc(100% - 2rem);
+  }
+`;
+
 const NavLink = styled(Link)<NavLinkProps>`
   color: #fff;
   text-decoration: none;
@@ -574,14 +612,13 @@ const Header: React.FC = () => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <a 
+                <ContactLink 
                   href="https://petgas.com.mx/contacto/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="nav-link"
                 >
                   {t('header.contact')}
-                </a>
+                </ContactLink>
               </NavItem>
               <NavItem>
                 <NavLink 
